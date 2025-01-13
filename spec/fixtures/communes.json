@@ -1,0 +1,53 @@
+[
+  {
+    "code": "72038",
+    "nom": "Boëssé-le-Sec",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217200385",
+    "codesPostaux": [
+      "72400"
+    ],
+    "population": 541
+  },
+  {
+    "code": "72039",
+    "nom": "Bonnétable",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "anciensCodes": [
+      "72014"
+    ],
+    "siren": "217200393",
+    "codesPostaux": [
+      "72110"
+    ],
+    "population": 3735
+  },
+  {
+    "code": "72040",
+    "nom": "La Bosse",
+    "typeLiaison": 3,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217200401",
+    "codesPostaux": [
+      "72400"
+    ],
+    "population": 146
+  }
+]

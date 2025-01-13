@@ -1,6 +1,9 @@
 AllCops:
   TargetRubyVersion: 3.0
 
+Layout/LineLength:
+  Enabled: false
+
 Metrics/AbcSize:
   Enabled: false
 
@@ -8,6 +11,9 @@ Metrics/BlockLength:
   Enabled: false
 
 Metrics/MethodLength:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false
 
 Style/StringLiterals:
