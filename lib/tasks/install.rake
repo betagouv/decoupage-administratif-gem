@@ -5,7 +5,7 @@ require 'uri'
 require 'json'
 require 'FileUtils'
 
-DATA_DIR = File.join('data', 'decoupage_administratif')
+DATA_DIR = File.join(Gem::Specification.find_by_name('decoupage_administratif').gem_dir, 'data')
 
 namespace :decoupage_administratif do
   desc 'Download files'
@@ -20,9 +20,7 @@ namespace :decoupage_administratif do
         uri = URI(url)
         response = Net::HTTP.get_response(uri)
 
-        unless response.is_a?(Net::HTTPSuccess)
-          raise "Download failed with status: #{response.code} #{response.message}"
-        end
+        raise "Download failed with status: #{response.code} #{response.message}" unless response.is_a?(Net::HTTPSuccess)
 
         File.open(destination, 'wb') do |file|
           file.write(response.body)
