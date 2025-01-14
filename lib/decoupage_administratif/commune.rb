@@ -28,6 +28,10 @@ module DecoupageAdministratif
       def communes
         @communes ||= all
       end
+
+      def find_by_code(code)
+        communes.find { |commune| commune.code == code }
+      end
     end
   end
 end
