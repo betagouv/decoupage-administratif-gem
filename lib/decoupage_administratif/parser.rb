@@ -5,7 +5,8 @@ module DecoupageAdministratif
     attr_reader :data
 
     def initialize(model)
-      @file_path = File.join(File.dirname(__FILE__), "../../data/#{model}.json")
+      @model = model
+      @file_path = File.join(File.dirname(__FILE__), "../../data/#{@model}.json")
       load_data
     end
 
@@ -16,9 +17,9 @@ module DecoupageAdministratif
       @data = JSON.parse(file)
     rescue Errno::ENOENT
       raise Error,
-            "File #{@file_path} doesn not exist. You have to install the gem with 'rake decoupage_administratif:install'"
+            "File #{@model}.json does not exist. You have to install the gem with 'rake decoupage_administratif:install'"
     rescue JSON::ParserError
-      raise Error, "File #{@file_path} is not valid JSON"
+      raise Error, "File #{@model}.json is not valid JSON"
     end
   end
 end
