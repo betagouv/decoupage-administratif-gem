@@ -1,0 +1,26 @@
+[
+  {
+    "code": "76",
+    "region": "28",
+    "chefLieu": "76540",
+    "nom": "Seine-Maritime",
+    "typeLiaison": 3,
+    "zone": "metro"
+  },
+  {
+    "code": "77",
+    "region": "11",
+    "chefLieu": "77288",
+    "nom": "Seine-et-Marne",
+    "typeLiaison": 0,
+    "zone": "metro"
+  },
+  {
+    "code": "78",
+    "region": "11",
+    "chefLieu": "78646",
+    "nom": "Yvelines",
+    "typeLiaison": 4,
+    "zone": "metro"
+  }
+]
