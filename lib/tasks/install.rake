@@ -3,7 +3,6 @@
 require 'net/http'
 require 'uri'
 require 'json'
-require 'FileUtils'
 
 DATA_DIR = File.join(Gem::Specification.find_by_name('decoupage_administratif').gem_dir, 'data')
 
