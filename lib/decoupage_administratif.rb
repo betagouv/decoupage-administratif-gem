@@ -5,6 +5,7 @@ require_relative "decoupage_administratif/parser"
 require_relative "decoupage_administratif/commune"
 require_relative "decoupage_administratif/departement"
 require_relative "decoupage_administratif/region"
+require_relative "decoupage_administratif/epci"
 
 module DecoupageAdministratif
   class Error < StandardError; end
