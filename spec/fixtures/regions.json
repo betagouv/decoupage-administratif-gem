@@ -1,0 +1,23 @@
+[
+  {
+    "code": "52",
+    "chefLieu": "44109",
+    "nom": "Pays de la Loire",
+    "typeLiaison": 4,
+    "zone": "metro"
+  },
+  {
+    "code": "53",
+    "chefLieu": "35238",
+    "nom": "Bretagne",
+    "typeLiaison": 0,
+    "zone": "metro"
+  },
+  {
+    "code": "75",
+    "chefLieu": "33063",
+    "nom": "Nouvelle-Aquitaine",
+    "typeLiaison": 3,
+    "zone": "metro"
+  }
+]
