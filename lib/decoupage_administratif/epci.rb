@@ -11,7 +11,7 @@ module DecoupageAdministratif
 
     class << self
       def all
-        Parser.new('epcis').data.map do |epci_data|
+        Parser.new('epci').data.map do |epci_data|
           Epci.new(
             code: epci_data["code"],
             nom: epci_data["nom"]
