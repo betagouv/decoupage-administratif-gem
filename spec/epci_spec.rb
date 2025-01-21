@@ -3,11 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe DecoupageAdministratif::Epci do
-  let(:parsed_data) { JSON.parse(File.read('spec/fixtures/epcis.json')) }
+  let(:parsed_data) { JSON.parse(File.read('spec/fixtures/epci.json')) }
   let(:parser) { instance_double(DecoupageAdministratif::Parser, data: parsed_data) }
 
   before do
-    allow(DecoupageAdministratif::Parser).to receive(:new).with('epcis').and_return(parser)
+    allow(DecoupageAdministratif::Parser).to receive(:new).with('epci').and_return(parser)
   end
 
   describe '#all' do
