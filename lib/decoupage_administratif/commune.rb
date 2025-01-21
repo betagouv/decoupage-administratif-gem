@@ -2,14 +2,14 @@
 
 module DecoupageAdministratif
   class Commune
-    attr_reader :code, :nom, :zone, :region, :departement
+    attr_reader :code, :nom, :zone, :region, :departement_code
 
-    def initialize(code:, nom:, zone:, region:, departement:)
+    def initialize(code:, nom:, zone:, region:, departement_code:)
       @code = code
       @nom = nom
       @zone = zone
       @region = region
-      @departement = departement
+      @departement_code = departement_code
     end
 
     class << self
@@ -20,7 +20,7 @@ module DecoupageAdministratif
             nom: commune_data["nom"],
             zone: commune_data["zone"],
             region: commune_data["region"],
-            departement: commune_data["departement"]
+            departement_code: commune_data["departement"]
           )
         end
       end
@@ -32,6 +32,10 @@ module DecoupageAdministratif
       def find_by_code(code)
         communes.find { |commune| commune.code == code }
       end
+    end
+
+    def departement
+      DecoupageAdministratif::Departement.find_by_code(@departement_code)
     end
   end
 end
