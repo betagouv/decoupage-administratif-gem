@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe DecoupageAdministratif::Commune do
-  let(:parsed_data) { JSON.parse(File.read('spec/fixtures/communes.json')) }
+  let(:parsed_data) { JSON.parse(File.read("spec/fixtures/#{model}.json")) }
   let(:parser) { instance_double(DecoupageAdministratif::Parser, data: parsed_data) }
 
   before do
@@ -15,7 +15,7 @@ RSpec.describe DecoupageAdministratif::Commune do
     subject { DecoupageAdministratif::Commune.all }
 
     it "Returns all communes" do
-      expect(subject.size).to eq(3)
+      expect(subject.size).to eq(4)
       expect(subject.first).to have_attributes(
         code: "72038",
         nom: "Boëssé-le-Sec",
@@ -46,8 +46,6 @@ RSpec.describe DecoupageAdministratif::Commune do
 
   describe '#departement' do
     let(:model) { 'departements' }
-    let(:parsed_data) { JSON.parse(File.read('spec/fixtures/departements.json')) }
-
     let(:commune) { DecoupageAdministratif::Commune.new(code: '78380', nom: 'Maule', zone: 'metro', region: '11', departement_code: '78') }
 
     subject { commune.departement }
