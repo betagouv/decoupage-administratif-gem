@@ -13,7 +13,7 @@ module DecoupageAdministratif
 
     class << self
       def all
-        Parser.new('departements').data.map do |departement_data|
+        @all ||= Parser.new('departements').data.map do |departement_data|
           DecoupageAdministratif::Departement.new(
             code: departement_data["code"],
             nom: departement_data["nom"],
@@ -30,6 +30,10 @@ module DecoupageAdministratif
       def find_by_code(code)
         departements.find { |departement| departement.code == code }
       end
+    end
+
+    def communes
+      @communes ||= DecoupageAdministratif::Commune.all.select { |commune| commune.departement_code == @code }
     end
   end
 end

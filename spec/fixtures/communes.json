@@ -49,5 +49,21 @@
       "72400"
     ],
     "population": 146
+  },
+  {
+    "code": "01042",
+    "nom": "Bey",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "012",
+    "departement": "01",
+    "region": "84",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "210100426",
+    "codesPostaux": [
+      "01290"
+    ],
+    "population": 290
   }
 ]
