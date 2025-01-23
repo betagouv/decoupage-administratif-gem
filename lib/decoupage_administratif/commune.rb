@@ -14,7 +14,7 @@ module DecoupageAdministratif
 
     class << self
       def all
-        @all ||= Parser.new('communes').data.map do |commune_data|
+        @all ||= CommuneCollection.new(Parser.new('communes').data.map do |commune_data|
           Commune.new(
             code: commune_data["code"],
             nom: commune_data["nom"],
@@ -22,7 +22,7 @@ module DecoupageAdministratif
             region: commune_data["region"],
             departement_code: commune_data["departement"]
           )
-        end
+        end)
       end
 
       def communes
@@ -37,5 +37,9 @@ module DecoupageAdministratif
     def departement
       @departement ||= DecoupageAdministratif::Departement.find_by_code(@departement_code)
     end
+  end
+
+  class CommuneCollection < Array
+    include DecoupageAdministratif::CollectionMethods
   end
 end
