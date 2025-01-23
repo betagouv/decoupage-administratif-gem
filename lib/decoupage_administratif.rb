@@ -12,5 +12,4 @@ require 'decoupage_administratif/railtie' if defined?(Rails)
 
 module DecoupageAdministratif
   class Error < StandardError; end
-  # Your code goes here...
 end
