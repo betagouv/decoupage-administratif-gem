@@ -2,7 +2,7 @@
 
 module DecoupageAdministratif
   class Epci
-    attr_reader :code, :nom
+    attr_reader :code, :nom, :membres
 
     def initialize(code:, nom:, membres: [])
       @code = code
@@ -27,6 +27,12 @@ module DecoupageAdministratif
 
       def find_by_code(code)
         epcis.find { |epci| epci.code == code }
+      end
+
+      def find_by_communes_codes(codes)
+        DecoupageAdministratif::EpciCollection.new(epcis.select do |epci|
+          epci.membres.map { |m| codes.include?(m["code"]) }.all?
+        end)
       end
     end
 

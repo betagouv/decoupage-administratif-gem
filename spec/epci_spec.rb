@@ -70,4 +70,20 @@ RSpec.describe DecoupageAdministratif::Epci do
       expect(subject.size).to eq(12)
     end
   end
+
+  describe "find_by_communes_codes" do
+    let(:model) { 'epci' }
+    let(:codes) { %w[72329 72241 72090 72300 72359 72335 72382 72271 72303 72094] }
+
+    subject { DecoupageAdministratif::Epci.find_by_communes_codes(codes) }
+
+    it 'Returns the epci with the given communes codes' do
+      is_expected.to all(be_a(DecoupageAdministratif::Epci))
+      expect(subject.size).to eq(1)
+      expect(subject.first).to have_attributes(
+        nom: "CC Le Gesnois Bilurien",
+        code: "200072684"
+      )
+    end
+  end
 end
