@@ -2,14 +2,15 @@
 
 module DecoupageAdministratif
   class Commune
-    attr_reader :code, :nom, :zone, :region, :departement_code
+    attr_reader :code, :nom, :zone, :region, :departement_code, :commune_type
 
-    def initialize(code:, nom:, zone:, region:, departement_code:)
+    def initialize(code:, nom:, zone:, region:, departement_code:, commune_type:)
       @code = code
       @nom = nom
       @zone = zone
       @region = region
       @departement_code = departement_code
+      @commune_type = commune_type
     end
 
     class << self
@@ -20,7 +21,8 @@ module DecoupageAdministratif
             nom: commune_data["nom"],
             zone: commune_data["zone"],
             region: commune_data["region"],
-            departement_code: commune_data["departement"]
+            departement_code: commune_data["departement"],
+            commune_type: commune_data["type"]
           )
         end)
       end
