@@ -31,7 +31,7 @@ RSpec.describe DecoupageAdministratif::Commune do
     subject { DecoupageAdministratif::Commune.communes_actuelles }
 
     it "Returns all communes actuelles" do
-      expect(subject.size).to eq(4)
+      expect(subject.size).to eq(3)
       expect(subject.last).to have_attributes(
         code: "01042",
         nom: "Bey",

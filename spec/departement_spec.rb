@@ -54,7 +54,7 @@ RSpec.describe DecoupageAdministratif::Departement do
         code: '72038',
         nom: 'Boëssé-le-Sec'
       )
-      expect(subject.size).to eq(3)
+      expect(subject.size).to eq(2)
     end
   end
 end
