@@ -65,5 +65,16 @@
       "01290"
     ],
     "population": 290
+  },
+  {
+    "code": "01015",
+    "nom": "Arbignieu",
+    "typeLiaison": 1,
+    "zone": "metro",
+    "type": "commune-deleguee",
+    "chefLieu": "01015",
+    "arrondissement": "011",
+    "departement": "01",
+    "region": "84"
   }
 ]

@@ -4,7 +4,7 @@ module DecoupageAdministratif
   class Commune
     attr_reader :code, :nom, :zone, :region, :departement_code, :commune_type
 
-    def initialize(code:, nom:, zone:, region:, departement_code:, commune_type:)
+    def initialize(code:, nom:, zone:, region:, departement_code:, commune_type: "commune-actuelle")
       @code = code
       @nom = nom
       @zone = zone
@@ -25,6 +25,10 @@ module DecoupageAdministratif
             commune_type: commune_data["type"]
           )
         end)
+      end
+
+      def communes_actuelles
+        communes.select { |commune| commune.commune_type == "commune-actuelle" }
       end
 
       def communes

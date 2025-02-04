@@ -15,13 +15,29 @@ RSpec.describe DecoupageAdministratif::Commune do
     subject { DecoupageAdministratif::Commune.all }
 
     it "Returns all communes" do
-      expect(subject.size).to eq(4)
+      expect(subject.size).to eq(5)
       expect(subject.first).to have_attributes(
         code: "72038",
         nom: "Boëssé-le-Sec",
         zone: "metro",
         region: "52",
         departement_code: "72"
+      )
+    end
+  end
+
+  describe '#communes_actuelles' do
+    let(:model) { 'communes' }
+    subject { DecoupageAdministratif::Commune.communes_actuelles }
+
+    it "Returns all communes actuelles" do
+      expect(subject.size).to eq(4)
+      expect(subject.last).to have_attributes(
+        code: "01042",
+        nom: "Bey",
+        zone: "metro",
+        region: "84",
+        departement_code: "01"
       )
     end
   end
