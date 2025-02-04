@@ -9,7 +9,8 @@ DATA_DIR = File.join(Gem::Specification.find_by_name('decoupage_administratif').
 namespace :decoupage_administratif do
   desc 'Download files'
   task :install do
-    collection = %w[communes departements regions arrondissements epci ept]
+    collection = %w[communes departements regions epci]
+    # collection = %w[communes departements regions arrondissements epci ept]
     FileUtils.mkdir_p(DATA_DIR)
 
     collection.each do |item|
