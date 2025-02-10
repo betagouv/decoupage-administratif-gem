@@ -84,4 +84,19 @@ RSpec.describe DecoupageAdministratif::Commune do
       )
     end
   end
+
+  describe '#epci' do
+    let(:model) { 'epci' }
+    let(:commune) { DecoupageAdministratif::Commune.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region: '52', departement_code: '72') }
+
+    subject { commune.epci }
+
+    it 'Returns the epci of the commune' do
+      is_expected.to be_a(DecoupageAdministratif::Epci)
+      is_expected.to have_attributes(
+        code: '200072676',
+        nom: 'CC Maine Saosnois'
+      )
+    end
+  end
 end

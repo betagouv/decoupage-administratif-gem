@@ -43,6 +43,10 @@ module DecoupageAdministratif
     def departement
       @departement ||= DecoupageAdministratif::Departement.find_by_code(@departement_code)
     end
+
+    def epci
+      @epci ||= DecoupageAdministratif::Epci.all.find { |epci| epci.membres.map { |m| m["code"] }.include?(@code) }
+    end
   end
 
   class CommuneCollection < Array
