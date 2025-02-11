@@ -20,7 +20,7 @@ RSpec.describe DecoupageAdministratif::Commune do
         code: "72038",
         nom: "Boëssé-le-Sec",
         zone: "metro",
-        region: "52",
+        region_code: "52",
         departement_code: "72"
       )
     end
@@ -36,7 +36,7 @@ RSpec.describe DecoupageAdministratif::Commune do
         code: "01042",
         nom: "Bey",
         zone: "metro",
-        region: "84",
+        region_code: "84",
         departement_code: "01"
       )
     end
@@ -54,7 +54,7 @@ RSpec.describe DecoupageAdministratif::Commune do
         code: code,
         nom: "Bonnétable",
         zone: "metro",
-        region: "52",
+        region_code: "52",
         departement_code: "72"
       )
     end
@@ -72,7 +72,7 @@ RSpec.describe DecoupageAdministratif::Commune do
 
   describe '#departement' do
     let(:model) { 'departements' }
-    let(:commune) { DecoupageAdministratif::Commune.new(code: '78380', nom: 'Maule', zone: 'metro', region: '11', departement_code: '78') }
+    let(:commune) { DecoupageAdministratif::Commune.new(code: '78380', nom: 'Maule', zone: 'metro', region_code: '11', departement_code: '78') }
 
     subject { commune.departement }
 
@@ -87,7 +87,7 @@ RSpec.describe DecoupageAdministratif::Commune do
 
   describe '#epci' do
     let(:model) { 'epci' }
-    let(:commune) { DecoupageAdministratif::Commune.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region: '52', departement_code: '72') }
+    let(:commune) { DecoupageAdministratif::Commune.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72') }
 
     subject { commune.epci }
 
@@ -96,6 +96,21 @@ RSpec.describe DecoupageAdministratif::Commune do
       is_expected.to have_attributes(
         code: '200072676',
         nom: 'CC Maine Saosnois'
+      )
+    end
+  end
+
+  describe '#region' do
+    let(:model) { 'regions' }
+    let(:commune) { DecoupageAdministratif::Commune.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72') }
+
+    subject { commune.region }
+
+    it "Returns the region of the commune" do
+      is_expected.to be_a(DecoupageAdministratif::Region)
+      is_expected.to have_attributes(
+        code: "52",
+        nom: "Pays de la Loire"
       )
     end
   end

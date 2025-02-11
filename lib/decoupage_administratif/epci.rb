@@ -29,6 +29,7 @@ module DecoupageAdministratif
         epcis.find { |epci| epci.code == code }
       end
 
+      # Cherche une EPCI qui comporte tous les codes précisés
       def find_by_communes_codes(codes)
         DecoupageAdministratif::EpciCollection.new(epcis.select do |epci|
           epci.membres.map { |m| codes.include?(m["code"]) }.all?

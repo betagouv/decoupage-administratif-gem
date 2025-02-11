@@ -2,13 +2,13 @@
 
 module DecoupageAdministratif
   class Commune
-    attr_reader :code, :nom, :zone, :region, :departement_code, :commune_type
+    attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type
 
-    def initialize(code:, nom:, zone:, region:, departement_code:, commune_type: "commune-actuelle")
+    def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: "commune-actuelle")
       @code = code
       @nom = nom
       @zone = zone
-      @region = region
+      @region_code = region_code
       @departement_code = departement_code
       @commune_type = commune_type
     end
@@ -20,7 +20,7 @@ module DecoupageAdministratif
             code: commune_data["code"],
             nom: commune_data["nom"],
             zone: commune_data["zone"],
-            region: commune_data["region"],
+            region_code: commune_data["region"],
             departement_code: commune_data["departement"],
             commune_type: commune_data["type"]
           )
@@ -46,6 +46,10 @@ module DecoupageAdministratif
 
     def epci
       @epci ||= DecoupageAdministratif::Epci.all.find { |epci| epci.membres.map { |m| m["code"] }.include?(@code) }
+    end
+
+    def region
+      @region ||= DecoupageAdministratif::Region.find_by_code(@region_code)
     end
   end
 

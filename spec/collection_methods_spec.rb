@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe DecoupageAdministratif::CollectionMethods do
   let(:collection) { DecoupageAdministratif::CommuneCollection.new([commune, commune, commune]) }
-  let(:commune) { DecoupageAdministratif::Commune.new(code: "72038", nom: "Boëssé-le-Sec", zone: "metro", departement_code: "72", region: "53") }
+  let(:commune) { DecoupageAdministratif::Commune.new(code: "72038", nom: "Boëssé-le-Sec", zone: "metro", departement_code: "72", region_code: "53") }
 
   describe "#first" do
     it "returns a single commune when called without argument" do
