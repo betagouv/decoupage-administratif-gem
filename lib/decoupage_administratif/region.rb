@@ -2,7 +2,7 @@
 
 module DecoupageAdministratif
   class Region
-    attr_reader :code, :nom, :zone, :region, :departement
+    attr_reader :code, :nom, :zone, :region
 
     def initialize(code:, nom:, zone:)
       @code = code
@@ -12,13 +12,13 @@ module DecoupageAdministratif
 
     class << self
       def all
-        Parser.new('regions').data.map do |region_data|
+        @all ||= RegionCollection.new(Parser.new('regions').data.map do |region_data|
           Region.new(
             code: region_data["code"],
             nom: region_data["nom"],
             zone: region_data["zone"]
           )
-        end
+        end)
       end
 
       def regions
@@ -29,5 +29,15 @@ module DecoupageAdministratif
         regions.find { |region| region.code == code }
       end
     end
+
+    def departements
+      @departements ||= DecoupageAdministratif::Departement.all.select do |departement|
+        departement.code_region == @code
+      end
+    end
+  end
+
+  class RegionCollection < Array
+    include DecoupageAdministratif::CollectionMethods
   end
 end

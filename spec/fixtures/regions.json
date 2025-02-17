@@ -1,5 +1,82 @@
 [
   {
+    "code": "01",
+    "chefLieu": "97105",
+    "nom": "Guadeloupe",
+    "typeLiaison": 3,
+    "zone": "drom"
+  },
+  {
+    "code": "02",
+    "chefLieu": "97209",
+    "nom": "Martinique",
+    "typeLiaison": 3,
+    "zone": "drom"
+  },
+  {
+    "code": "03",
+    "chefLieu": "97302",
+    "nom": "Guyane",
+    "typeLiaison": 3,
+    "zone": "drom"
+  },
+  {
+    "code": "04",
+    "chefLieu": "97411",
+    "nom": "La Réunion",
+    "typeLiaison": 0,
+    "zone": "drom"
+  },
+  {
+    "code": "06",
+    "chefLieu": "97611",
+    "nom": "Mayotte",
+    "typeLiaison": 0,
+    "zone": "drom"
+  },
+  {
+    "code": "11",
+    "chefLieu": "75056",
+    "nom": "Île-de-France",
+    "typeLiaison": 1,
+    "zone": "metro"
+  },
+  {
+    "code": "24",
+    "chefLieu": "45234",
+    "nom": "Centre-Val de Loire",
+    "typeLiaison": 2,
+    "zone": "metro"
+  },
+  {
+    "code": "27",
+    "chefLieu": "21231",
+    "nom": "Bourgogne-Franche-Comté",
+    "typeLiaison": 0,
+    "zone": "metro"
+  },
+  {
+    "code": "28",
+    "chefLieu": "76540",
+    "nom": "Normandie",
+    "typeLiaison": 0,
+    "zone": "metro"
+  },
+  {
+    "code": "32",
+    "chefLieu": "59350",
+    "nom": "Hauts-de-France",
+    "typeLiaison": 4,
+    "zone": "metro"
+  },
+  {
+    "code": "44",
+    "chefLieu": "67482",
+    "nom": "Grand Est",
+    "typeLiaison": 2,
+    "zone": "metro"
+  },
+  {
     "code": "52",
     "chefLieu": "44109",
     "nom": "Pays de la Loire",
@@ -19,5 +96,89 @@
     "nom": "Nouvelle-Aquitaine",
     "typeLiaison": 3,
     "zone": "metro"
+  },
+  {
+    "code": "76",
+    "chefLieu": "31555",
+    "nom": "Occitanie",
+    "typeLiaison": 1,
+    "zone": "metro"
+  },
+  {
+    "code": "84",
+    "chefLieu": "69123",
+    "nom": "Auvergne-Rhône-Alpes",
+    "typeLiaison": 1,
+    "zone": "metro"
+  },
+  {
+    "code": "93",
+    "chefLieu": "13055",
+    "nom": "Provence-Alpes-Côte d'Azur",
+    "typeLiaison": 0,
+    "zone": "metro"
+  },
+  {
+    "code": "94",
+    "chefLieu": "2A004",
+    "nom": "Corse",
+    "typeLiaison": 0,
+    "zone": "metro"
+  },
+  {
+    "code": "975",
+    "chefLieu": "97502",
+    "nom": "Saint-Pierre-et-Miquelon",
+    "typeLiaison": 0,
+    "zone": "com"
+  },
+  {
+    "code": "977",
+    "chefLieu": "97701",
+    "nom": "Saint-Barthélemy",
+    "typeLiaison": 0,
+    "zone": "com"
+  },
+  {
+    "code": "978",
+    "chefLieu": "97801",
+    "nom": "Saint-Martin",
+    "typeLiaison": 0,
+    "zone": "com"
+  },
+  {
+    "code": "984",
+    "chefLieu": "97502",
+    "nom": "Terres australes et antarctiques françaises",
+    "typeLiaison": 0,
+    "zone": "com"
+  },
+  {
+    "code": "986",
+    "chefLieu": "98613",
+    "nom": "Wallis et Futuna",
+    "typeLiaison": 0,
+    "zone": "com"
+  },
+  {
+    "code": "987",
+    "chefLieu": "98735",
+    "nom": "Polynésie française",
+    "typeLiaison": 0,
+    "zone": "com"
+  },
+  {
+    "code": "988",
+    "chefLieu": "98818",
+    "nom": "Nouvelle-Calédonie",
+    "typeLiaison": 0,
+    "zone": "com"
+  },
+  {
+    "code": "989",
+    "chefLieu": "98901",
+    "nom": "Île de Clipperton",
+    "typeLiaison": 0,
+    "zone": "com"
   }
 ]
