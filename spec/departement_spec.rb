@@ -57,4 +57,19 @@ RSpec.describe DecoupageAdministratif::Departement do
       expect(subject.size).to eq(2)
     end
   end
+
+  describe '#region' do
+    let(:model) { 'regions' }
+    let(:departement) { DecoupageAdministratif::Departement.new(code: '72', nom: 'Sarthe', zone: 'metro', code_region: '52') }
+
+    subject { departement.region }
+
+    it 'Returns the region of the departement' do
+      is_expected.to be_a(DecoupageAdministratif::Region)
+      is_expected.to have_attributes(
+        code: '52',
+        nom: 'Pays de la Loire'
+      )
+    end
+  end
 end

@@ -37,6 +37,10 @@ module DecoupageAdministratif
         commune.departement_code == @code && commune.commune_type == "commune-actuelle"
       end
     end
+
+    def region
+      @region ||= DecoupageAdministratif::Region.find_by_code(@code_region)
+    end
   end
 
   class DepartementCollection < Array

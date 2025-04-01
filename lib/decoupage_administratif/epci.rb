@@ -42,6 +42,10 @@ module DecoupageAdministratif
         DecoupageAdministratif::Commune.find_by_code(membre["code"])
       end)
     end
+
+    def regions
+      @regions ||= communes.map(&:region).uniq
+    end
   end
 
   class EpciCollection < Array
