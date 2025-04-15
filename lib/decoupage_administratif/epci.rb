@@ -32,14 +32,21 @@ module DecoupageAdministratif
       # Cherche une EPCI qui comporte tous les codes précisés
       def find_by_communes_codes(codes)
         DecoupageAdministratif::EpciCollection.new(epcis.select do |epci|
-          epci.membres.map { |m| codes.include?(m["code"]) }.all?
+          epci.membres.map do |m|
+            codes.include?( m["code"])
+          end.all?
         end)
       end
     end
 
     def communes
       @communes ||= DecoupageAdministratif::CommuneCollection.new(@membres.map! do |membre|
-        DecoupageAdministratif::Commune.find_by_code(membre["code"])
+        code_membre = if membre.is_a?(Hash)
+                 membre["code"]
+               else
+                 membre.code
+               end
+        DecoupageAdministratif::Commune.find_by_code(code_membre)
       end)
     end
 
