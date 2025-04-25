@@ -56,4 +56,20 @@ RSpec.describe DecoupageAdministratif::Region do
       )
     end
   end
+
+  describe 'communes' do
+    let(:model) { 'communes' }
+    let!(:region) { DecoupageAdministratif::Region.new(code: '84', nom: 'Auvergne-Rhône-Alpes', zone: 'metro') }
+
+    subject { region.communes }
+
+    it 'Returns the communes of the region' do
+      expect(subject.size).to eq(2)
+      is_expected.to all(be_a(DecoupageAdministratif::Commune))
+      expect(subject.first).to have_attributes(
+        code: '01042',
+        nom: 'Bey'
+      )
+    end
+  end
 end

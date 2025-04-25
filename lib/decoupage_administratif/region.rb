@@ -35,6 +35,12 @@ module DecoupageAdministratif
         departement.code_region == @code
       end
     end
+
+    def communes
+      @communes ||= DecoupageAdministratif::Commune.all.select do |commune|
+        commune.region_code == @code
+      end
+    end
   end
 
   class RegionCollection < Array
