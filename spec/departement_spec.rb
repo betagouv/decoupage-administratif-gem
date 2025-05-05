@@ -15,11 +15,11 @@ RSpec.describe DecoupageAdministratif::Departement do
     subject { DecoupageAdministratif::Departement.all }
 
     it "Returns all departements" do
-      expect(subject.size).to eq(3)
+      expect(subject.size).to eq(5)
       expect(subject.first).to have_attributes(
-        code: "76",
-        nom: "Seine-Maritime",
-        code_region: "28",
+        code: "01",
+        nom: "Ain",
+        code_region: "84",
         zone: "metro"
       )
     end
@@ -51,10 +51,10 @@ RSpec.describe DecoupageAdministratif::Departement do
     it 'Returns the communes of the departement' do
       is_expected.to all(be_a(DecoupageAdministratif::Commune))
       expect(subject.first).to have_attributes(
-        code: '72038',
-        nom: 'Boëssé-le-Sec'
+        code: '72180',
+        nom: 'Mamers'
       )
-      expect(subject.size).to eq(2)
+      expect(subject.size).to eq(13)
     end
   end
 

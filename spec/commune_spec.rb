@@ -15,10 +15,10 @@ RSpec.describe DecoupageAdministratif::Commune do
     subject { DecoupageAdministratif::Commune.all }
 
     it "Returns all communes" do
-      expect(subject.size).to eq(5)
+      expect(subject.size).to eq(16)
       expect(subject.first).to have_attributes(
-        code: "72038",
-        nom: "Boëssé-le-Sec",
+        code: "72180",
+        nom: "Mamers",
         zone: "metro",
         region_code: "52",
         departement_code: "72"
@@ -31,7 +31,7 @@ RSpec.describe DecoupageAdministratif::Commune do
     subject { DecoupageAdministratif::Commune.communes_actuelles }
 
     it "Returns all communes actuelles" do
-      expect(subject.size).to eq(3)
+      expect(subject.size).to eq(14)
       expect(subject.last).to have_attributes(
         code: "01042",
         nom: "Bey",
@@ -66,7 +66,7 @@ RSpec.describe DecoupageAdministratif::Commune do
     subject { DecoupageAdministratif::Commune.all.first(2).codes }
 
     it 'Returns the codes of the communes' do
-      is_expected.to eq(%w[72038 72039])
+      is_expected.to eq(%w[72180 72189])
     end
   end
 

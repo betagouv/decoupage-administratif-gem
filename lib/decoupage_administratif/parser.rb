@@ -20,7 +20,7 @@ module DecoupageAdministratif
       @data = JSON.parse(file)
     rescue Errno::ENOENT
       raise Error,
-            "File #{@file_path}.json does not exist. You have to install the gem with 'rake decoupage_administratif:install'"
+            "File #{@file_path} does not exist. You have to install the gem with 'rake decoupage_administratif:install'"
     rescue JSON::ParserError
       raise Error, "File #{@model}.json is not valid JSON"
     end

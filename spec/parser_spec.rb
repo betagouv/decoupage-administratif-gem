@@ -32,7 +32,7 @@ RSpec.describe DecoupageAdministratif::Parser do
       it 'raises an error' do
         expect { described_class.new('invalid') }.to raise_error(
           DecoupageAdministratif::Error,
-          "File #{File.expand_path("#{fixtures_dir}/invalid.json")} does not exist. You have to install the gem with 'rake decoupage_administratif:install'"
+          "File #{File.expand_path("#{fixtures_dir}/data/invalid.json")} does not exist. You have to install the gem with 'rake decoupage_administratif:install'"
         )
       end
     end
