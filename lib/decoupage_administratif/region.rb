@@ -38,7 +38,7 @@ module DecoupageAdministratif
 
     def communes
       @communes ||= DecoupageAdministratif::Commune.all.select do |commune|
-        commune.region_code == @code
+        commune.region_code == @code && commune.commune_type == "commune-actuelle"
       end
     end
   end

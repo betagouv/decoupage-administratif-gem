@@ -63,8 +63,8 @@ RSpec.describe DecoupageAdministratif::Region do
 
     subject { region.communes }
 
-    it 'Returns the communes of the region' do
-      expect(subject.size).to eq(2)
+    it 'Returns the actual communes of the region' do
+      expect(subject.size).to eq(1)
       is_expected.to all(be_a(DecoupageAdministratif::Commune))
       expect(subject.first).to have_attributes(
         code: '01042',

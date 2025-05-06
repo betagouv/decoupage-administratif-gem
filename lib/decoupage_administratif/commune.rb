@@ -28,7 +28,7 @@ module DecoupageAdministratif
       end
 
       def communes_actuelles
-        communes.select { |commune| commune.commune_type == "commune-actuelle" }
+        @communes_actuelles ||= communes.select { |commune| commune.commune_type == "commune-actuelle" }
       end
 
       def communes

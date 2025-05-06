@@ -48,7 +48,7 @@ RSpec.describe DecoupageAdministratif::Departement do
 
     subject { departement.communes }
 
-    it 'Returns the communes of the departement' do
+    it 'Returns the actual communes of the departement' do
       is_expected.to all(be_a(DecoupageAdministratif::Commune))
       expect(subject.first).to have_attributes(
         code: '72180',
