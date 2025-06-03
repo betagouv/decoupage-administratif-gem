@@ -63,7 +63,6 @@ RSpec.describe DecoupageAdministratif::Search do
           departement_code: "72"
         )
       end
-
     end
   end
 end

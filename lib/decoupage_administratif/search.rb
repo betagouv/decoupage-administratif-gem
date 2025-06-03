@@ -14,53 +14,65 @@ module DecoupageAdministratif
       @codes = group_by_departement
       @codes = find_communes_by_codes
 
-      departements = search_for_departements
-      epcis = search_for_epcis
-      communes = search_for_communes
+      search_for_departements
+      search_for_region
+      search_for_epcis
+      search_for_communes
 
       return {
-        departements: departements,
-        epcis: epcis,
-        communes: communes
+        regions: @regions,
+        departements: @departements,
+        epcis: @epcis,
+        communes: @communes
       }
     end
 
     private
 
     def search_for_departements
-      departements = []
+      @departements = []
       @codes.each do |departement, communes|
 
         # if the departement has the same number of communes as the codes and all communes code are in code_insee we return the departement
         if departement.communes.count == communes.count && departement.communes.map(&:code).sort == communes.map(&:code).sort
-          departements << departement
+          @departements << departement
           # delete the depaertement from the hash
           @codes.delete(departement)
         end
       end
-      departements
+    end
+
+    def search_for_region
+      @regions = []
+      regions = DecoupageAdministratif::Region.all
+      regions.each do |region|
+        if region.departements.all? { |departement| @departements.map(&:code).include? departement.code }
+          @regions << region
+          region.departements.each do |departement|
+            @departements.delete(departement)
+          end
+        end
+      end
     end
 
     def search_for_epcis
-      epcis = []
+      @epcis = []
       @codes.each do |_, communes|
         # if the departement has the same number of communes as the codes and all communes code are in code_insee we return the departement
-        epcis = DecoupageAdministratif::Epci.find_by_communes_codes(communes.map(&:code))
-        epcis.each do |epci|
+        @epcis = DecoupageAdministratif::Epci.find_by_communes_codes(communes.map(&:code))
+        @epcis.each do |epci|
           communes.reject! do |commune|
             epci.communes.include?(commune)
           end
         end
       end
-      epcis
     end
 
     def search_for_communes
-      communes_collection = []
+      @communes = []
       @codes.each do |_, communes|
-        communes.map { |commune| communes_collection << commune }
+        communes.map { |commune| @communes << commune }
       end
-        communes_collection
     end
 
     def group_by_departement
@@ -78,7 +90,6 @@ module DecoupageAdministratif
 
     def find_communes_by_codes
       @codes.transform_values do |codes_insee|
-
         codes_insee.map do |code|
           commune = DecoupageAdministratif::Commune.find_by_code(code)
           next if commune.nil?
