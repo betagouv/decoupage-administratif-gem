@@ -44,7 +44,7 @@ module DecoupageAdministratif
 
     def communes
       @communes ||= DecoupageAdministratif::CommuneCollection.new(@membres.map! do |membre|
-        DecoupageAdministratif::Commune.find_by(code: membre["code"])
+        DecoupageAdministratif::Commune.find_by(code: membre["code"])
       end)
     end
 

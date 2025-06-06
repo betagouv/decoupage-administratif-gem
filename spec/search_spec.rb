@@ -18,7 +18,7 @@ RSpec.describe DecoupageAdministratif::Search do
 
   describe '#by_insee_codes' do
     context "find departement" do
-      subject { DecoupageAdministratif::Search.new(["01042", "01015"]).by_insee_codes }
+      subject { DecoupageAdministratif::Search.new(%w[01042 01015]).by_insee_codes }
 
       it "Returns a departement" do
         expect(subject[:departements].size).to eq(1)
@@ -38,7 +38,7 @@ RSpec.describe DecoupageAdministratif::Search do
         expect(subject[:epcis].size).to eq(1)
         expect(subject[:epcis].first).to have_attributes(
           code: "200072676",
-          nom: "CC Maine Saosnois",
+          nom: "CC Maine Saosnois"
         )
       end
     end
