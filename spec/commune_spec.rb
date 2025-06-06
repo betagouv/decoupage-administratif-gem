@@ -42,21 +42,23 @@ RSpec.describe DecoupageAdministratif::Commune do
     end
   end
 
-  describe 'find_by_code' do
-    let(:model) { 'communes' }
-    let(:code) { '72039' }
+  describe 'find_by' do
+    context 'when searching by code' do
+      let(:model) { 'communes' }
+      let(:code) { '72039' }
 
-    subject { DecoupageAdministratif::Commune.find_by_code(code) }
+      subject { DecoupageAdministratif::Commune.find_by(code: code) }
 
-    it 'Returns the commune with the given code' do
-      is_expected.to be_a(DecoupageAdministratif::Commune)
-      is_expected.to have_attributes(
-        code: code,
-        nom: "Bonnétable",
-        zone: "metro",
-        region_code: "52",
-        departement_code: "72"
-      )
+      it 'Returns the commune with the given code' do
+        is_expected.to be_a(DecoupageAdministratif::Commune)
+        is_expected.to have_attributes(
+          code: code,
+          nom: "Bonnétable",
+          zone: "metro",
+          region_code: "52",
+          departement_code: "72"
+        )
+      end
     end
   end
 

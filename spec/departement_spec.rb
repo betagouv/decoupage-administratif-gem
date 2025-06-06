@@ -25,20 +25,22 @@ RSpec.describe DecoupageAdministratif::Departement do
     end
   end
 
-  describe "#find_by_code" do
-    let(:model) { 'departements' }
-    let(:code) { '78' }
+  describe "#find_by" do
+    context 'when searching by code' do
+      let(:model) { 'departements' }
+      let(:code) { '78' }
 
-    subject { DecoupageAdministratif::Departement.find_by_code(code) }
+      subject { DecoupageAdministratif::Departement.find_by(code: code) }
 
-    it 'Returns the departement with the given code' do
-      is_expected.to be_a(DecoupageAdministratif::Departement)
-      is_expected.to have_attributes(
-        code: code,
-        nom: "Yvelines",
-        zone: "metro",
-        code_region: "11"
-      )
+      it 'Returns the departement with the given code' do
+        is_expected.to be_a(DecoupageAdministratif::Departement)
+        is_expected.to have_attributes(
+          code: code,
+          nom: "Yvelines",
+          zone: "metro",
+          code_region: "11"
+        )
+      end
     end
   end
 

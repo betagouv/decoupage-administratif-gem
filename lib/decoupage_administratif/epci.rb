@@ -2,6 +2,7 @@
 
 module DecoupageAdministratif
   class Epci
+    extend BaseModel
     attr_reader :code, :nom, :membres
 
     def initialize(code:, nom:, membres: [])
@@ -25,10 +26,6 @@ module DecoupageAdministratif
         @epcis ||= all
       end
 
-      def find_by_code(code)
-        epcis.find { |epci| epci.code == code }
-      end
-
       # Cherche une EPCI qui comporte tous les codes précisés
       def find_by_communes_codes(codes)
         DecoupageAdministratif::EpciCollection.new(epcis.select do |epci|
@@ -47,7 +44,7 @@ module DecoupageAdministratif
 
     def communes
       @communes ||= DecoupageAdministratif::CommuneCollection.new(@membres.map! do |membre|
-        DecoupageAdministratif::Commune.find_by_code(membre["code"])
+        DecoupageAdministratif::Commune.find_by(code: membre["code"])
       end)
     end
 

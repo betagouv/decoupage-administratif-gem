@@ -23,18 +23,20 @@ RSpec.describe DecoupageAdministratif::Epci do
     end
   end
 
-  describe 'find_by_code' do
-    let(:model) { 'epci' }
-    let(:code) { '200072684' }
+  describe 'find_by' do
+    context 'when searching by code' do
+      let(:model) { 'epci' }
+      let(:code) { '200072684' }
 
-    subject { DecoupageAdministratif::Epci.find_by_code(code) }
+      subject { DecoupageAdministratif::Epci.find_by(code: code) }
 
-    it 'Returns the epci with the given code' do
-      is_expected.to be_a(DecoupageAdministratif::Epci)
-      is_expected.to have_attributes(
-        code: code,
-        nom: "CC Le Gesnois Bilurien"
-      )
+      it 'Returns the epci with the given code' do
+        is_expected.to be_a(DecoupageAdministratif::Epci)
+        is_expected.to have_attributes(
+          code: code,
+          nom: "CC Le Gesnois Bilurien"
+        )
+      end
     end
   end
 

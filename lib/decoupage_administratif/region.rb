@@ -2,6 +2,7 @@
 
 module DecoupageAdministratif
   class Region
+    extend BaseModel
     attr_reader :code, :nom, :zone, :region
 
     def initialize(code:, nom:, zone:)
@@ -23,10 +24,6 @@ module DecoupageAdministratif
 
       def regions
         @regions ||= all
-      end
-
-      def find_by_code(code)
-        regions.find { |region| region.code == code }
       end
     end
 

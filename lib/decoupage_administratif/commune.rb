@@ -34,14 +34,10 @@ module DecoupageAdministratif
       def communes
         @communes ||= all
       end
-
-      def find_by_code(code)
-        communes.find { |commune| commune.code == code }
-      end
     end
 
     def departement
-      @departement ||= DecoupageAdministratif::Departement.find_by_code(@departement_code)
+      @departement ||= DecoupageAdministratif::Departement.find_by(code: @departement_code)
     end
 
     def epci
@@ -49,7 +45,7 @@ module DecoupageAdministratif
     end
 
     def region
-      @region ||= DecoupageAdministratif::Region.find_by_code(@region_code)
+      @region ||= DecoupageAdministratif::Region.find_by(code: @region_code)
     end
   end
 

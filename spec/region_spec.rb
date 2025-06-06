@@ -25,19 +25,21 @@ RSpec.describe DecoupageAdministratif::Region do
     end
   end
 
-  describe 'find_by_code' do
-    let(:model) { 'regions' }
-    let(:code) { '53' }
+  describe 'find_by' do
+    context 'when searching by code' do
+      let(:model) { 'regions' }
+      let(:code) { '53' }
 
-    subject { DecoupageAdministratif::Region.find_by_code(code) }
+      subject { DecoupageAdministratif::Region.find_by(code: code) }
 
-    it 'Returns the region with the given code' do
-      is_expected.to be_a(DecoupageAdministratif::Region)
-      is_expected.to have_attributes(
-        code: code,
-        nom: "Bretagne",
-        zone: "metro"
-      )
+      it 'Returns the region with the given code' do
+        is_expected.to be_a(DecoupageAdministratif::Region)
+        is_expected.to have_attributes(
+          code: code,
+          nom: "Bretagne",
+          zone: "metro"
+        )
+      end
     end
   end
 
