@@ -5,6 +5,7 @@ module DecoupageAdministratif
     extend BaseModel
     attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type
 
+    # rubocop:disable Metrics/ParameterLists
     def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: "commune-actuelle")
       @code = code
       @nom = nom
@@ -13,7 +14,8 @@ module DecoupageAdministratif
       @departement_code = departement_code
       @commune_type = commune_type
     end
-
+    # rubocop:enable Metrics/ParameterLists
+    #
     class << self
       def all
         @all ||= CommuneCollection.new(Parser.new('communes').data.map do |commune_data|
