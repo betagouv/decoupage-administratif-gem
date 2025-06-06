@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DecoupageAdministratif
   module BaseModel
     def find_by(criteria)

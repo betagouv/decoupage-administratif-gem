@@ -2,6 +2,7 @@
 
 module DecoupageAdministratif
   class Commune
+    extend BaseModel
     attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type
 
     def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: "commune-actuelle")
