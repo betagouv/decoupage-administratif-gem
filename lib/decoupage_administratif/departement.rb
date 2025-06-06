@@ -36,7 +36,7 @@ module DecoupageAdministratif
     end
 
     def region
-      @region ||= DecoupageAdministratif::Region.find_by(code: @code_region)
+      @region ||= DecoupageAdministratif::Region.find_by(code: @code_region)
     end
   end
 
