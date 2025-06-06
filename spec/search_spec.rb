@@ -6,14 +6,17 @@ RSpec.describe DecoupageAdministratif::Search do
   let(:parsed_data1) { JSON.parse(File.read("spec/fixtures/departements.json")) }
   let(:parsed_data2) { JSON.parse(File.read("spec/fixtures/communes.json")) }
   let(:parsed_data3) { JSON.parse(File.read("spec/fixtures/epci.json")) }
+  let(:parsed_data4) { JSON.parse(File.read("spec/fixtures/regions.json")) }
   let(:parser1) { instance_double(DecoupageAdministratif::Parser, data: parsed_data1) }
   let(:parser2) { instance_double(DecoupageAdministratif::Parser, data: parsed_data2) }
   let(:parser3) { instance_double(DecoupageAdministratif::Parser, data: parsed_data3) }
+  let(:parser4) { instance_double(DecoupageAdministratif::Parser, data: parsed_data4) }
 
   before do
     allow(DecoupageAdministratif::Parser).to receive(:new).with('departements').and_return(parser1)
     allow(DecoupageAdministratif::Parser).to receive(:new).with('communes').and_return(parser2)
     allow(DecoupageAdministratif::Parser).to receive(:new).with('epci').and_return(parser3)
+    allow(DecoupageAdministratif::Parser).to receive(:new).with('regions').and_return(parser4)
   end
 
   describe '#by_insee_codes' do

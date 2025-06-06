@@ -8,6 +8,14 @@
     "zone":"metro"
   },
   {
+    "code":"26",
+    "region":"84",
+    "chefLieu":"26362",
+    "nom":"Drôme",
+    "typeLiaison":3,
+    "zone":"metro"
+  },
+  {
     "code":"72",
     "region":"52",
     "chefLieu":"72181",

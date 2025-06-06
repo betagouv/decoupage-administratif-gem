@@ -46,7 +46,9 @@ module DecoupageAdministratif
       @regions = []
       regions = DecoupageAdministratif::Region.all
       regions.each do |region|
-        if region.departements.all? { |departement| @departements.map(&:code).include? departement.code }
+        if region.departements.all? do |departement|
+          @departements.map(&:code).include? departement.code
+        end
           @regions << region
           region.departements.each do |departement|
             @departements.delete(departement)
@@ -84,14 +86,14 @@ module DecoupageAdministratif
         else
           code[0..1]
         end
-        DecoupageAdministratif::Departement.find_by_code(code)
+        DecoupageAdministratif::Departement.find_by(code: code)
       end
     end
 
     def find_communes_by_codes
       @codes.transform_values do |codes_insee|
         codes_insee.map do |code|
-          commune = DecoupageAdministratif::Commune.find_by_code(code)
+          commune = DecoupageAdministratif::Commune.find_by(code: code)
           next if commune.nil?
           commune.commune_type == "commune-actuelle" ? commune : nil
         end.compact
