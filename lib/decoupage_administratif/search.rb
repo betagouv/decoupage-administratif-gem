@@ -2,8 +2,8 @@
 
 module DecoupageAdministratif
   class Search
-    def initialize(codes)
-      @codes = codes.uniq
+    def initialize(codes = nil)
+      @codes = codes&.uniq
     end
 
     # Search for territories by municipality.
@@ -23,6 +23,18 @@ module DecoupageAdministratif
         departements: @departements,
         epcis: @epcis,
         communes: @communes
+      }
+    end
+
+    # Return the territories associated with a given INSEE code.
+    def find_territories_by_insee_code(code_insee)
+      commune = DecoupageAdministratif::Commune.find_by(code: code_insee)
+      return {} if commune.nil?
+
+      {
+        epci: commune.epci,
+        departement: commune.departement,
+        region: commune.region
       }
     end
 
