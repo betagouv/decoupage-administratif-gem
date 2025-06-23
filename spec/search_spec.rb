@@ -79,7 +79,7 @@ RSpec.describe DecoupageAdministratif::Search do
 
       it "returns the associated territories" do
         result = DecoupageAdministratif::Search.new([]).find_territories_by_insee_code("94068")
-        expect(result[:epcis]).to eq("Métropole du Grand Paris")
+        expect(result[:epci]).to eq("Métropole du Grand Paris")
         expect(result[:departement]).to eq("Val-de-Marne")
         expect(result[:region]).to eq("Île-de-France")
       end
