@@ -30,23 +30,28 @@ module DecoupageAdministratif
         end)
       end
 
+      # Returns a collection of all actual communes.
       def communes_actuelles
         @communes_actuelles ||= communes.select { |commune| commune.commune_type == "commune-actuelle" }
       end
 
+      # Returns a collection of all communes, including historical ones.
       def communes
         @communes ||= all
       end
     end
 
+    # Return the department of the commune.
     def departement
       @departement ||= DecoupageAdministratif::Departement.find_by(code: @departement_code)
     end
 
+    # Return the EPCI of the commune.
     def epci
       @epci ||= DecoupageAdministratif::Epci.all.find { |epci| epci.membres.map { |m| m["code"] }.include?(@code) }
     end
 
+    # Return the region of the commune.
     def region
       @region ||= DecoupageAdministratif::Region.find_by(code: @region_code)
     end

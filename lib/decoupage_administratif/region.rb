@@ -22,17 +22,20 @@ module DecoupageAdministratif
         end)
       end
 
+      # Returns a collection of all regions.
       def regions
         @regions ||= all
       end
     end
 
+    # Returns a collection of all departments in the region.
     def departements
       @departements ||= DecoupageAdministratif::Departement.all.select do |departement|
         departement.code_region == @code
       end
     end
 
+    # Returns a collection of all actual communes in the region.
     def communes
       @communes ||= DecoupageAdministratif::Commune.all.select do |commune|
         commune.region_code == @code && commune.commune_type == "commune-actuelle"

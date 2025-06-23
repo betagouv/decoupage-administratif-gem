@@ -22,11 +22,12 @@ module DecoupageAdministratif
         end)
       end
 
+      # Returns a collection of all EPCI.
       def epcis
         @epcis ||= all
       end
 
-      # Cherche une EPCI qui comporte tous les codes précisés
+      # Search for an EPCI that includes all the specified codes
       def find_by_communes_codes(codes)
         DecoupageAdministratif::EpciCollection.new(epcis.select do |epci|
           epci.membres.map do |m|
@@ -42,12 +43,15 @@ module DecoupageAdministratif
       end
     end
 
+    # Return a collection of all communes in the EPCI.
     def communes
       @communes ||= DecoupageAdministratif::CommuneCollection.new(@membres.map! do |membre|
         DecoupageAdministratif::Commune.find_by(code: membre["code"])
       end)
     end
 
+    # Return the regions of the Epci.
+    # Sometimes an EPCI can have communes from different regions.
     def regions
       @regions ||= communes.map(&:region).uniq
     end
