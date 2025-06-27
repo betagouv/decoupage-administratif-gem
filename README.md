@@ -82,7 +82,7 @@ Pour lancer les tests :
 
 Pour une console interactive :
 
-    irb
+    bin/console
 
 Puis importer la gem :
 
@@ -185,7 +185,7 @@ To run the tests:
 
 For an interactive console :
 
-    irb
+    bin/console
 
 Then import the gem :
 
