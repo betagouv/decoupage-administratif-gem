@@ -12,3 +12,7 @@ RuboCop::RakeTask.new
 task default: %i[spec rubocop]
 
 import "lib/tasks/install.rake"
+
+post_install do
+  system('rake decoupage_administratif:install')
+end
