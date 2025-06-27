@@ -60,9 +60,21 @@ puts region.departements
 
 ## Développement
 
-Après avoir cloné le dépôt :
+Build la gem après avoir cloné le dépôt :
 
-    bin/setup
+    gem build decoupage_administratif.gemspec
+
+Installer la gem localement :
+
+    gem install ./decoupage_administratif-0.1.0.gem
+
+Vérifier la version installée :
+
+    ruby -r 'decoupage_administratif' -e 'puts DecoupageAdministratif::VERSION'
+
+Télécharger les données :
+
+    rake decoupage_administratif:install
 
 Pour lancer les tests :
 
@@ -70,11 +82,11 @@ Pour lancer les tests :
 
 Pour une console interactive :
 
-    bin/console
+    irb
 
-Pour installer la gem localement :
+Puis importer la gem :
 
-    bundle exec rake install
+    require 'decoupage_administratif'
 
 Pour publier une nouvelle version :
 
@@ -153,21 +165,31 @@ puts region.departements
 
 ## Development
 
-After cloning the repository :
+Build the gem after cloning the repository:
+    gem build decoupage_administratif.gemspec
 
-    bin/setup
+Install the gem locally:
 
-To run the tests :
+    gem install ./decoupage_administratif-0.1.0.gem
 
+Check the installed version:
+
+    ruby -r 'decoupage_administratif' -e 'puts DecoupageAdministratif::VERSION'
+
+Download the data :
+
+    rake decoupage_administratif:install
+
+To run the tests:
     rake spec
 
 For an interactive console :
 
-    bin/console
+    irb
 
-To install the gem locally :
+Then import the gem :
 
-    bundle exec rake install
+    require 'decoupage_administratif'
 
 To publish a new version :
 
