@@ -96,6 +96,18 @@ Pour publier une nouvelle version :
 
       bundle exec rake release
 
+### Yard
+
+Cette gem utilise [Yard](https://yardoc.org/) pour la documentation. Pour générer la documentation, exécutez :
+
+    yard doc
+
+pour lancer le serveur de documentation, exécutez :
+
+    yard server
+
+Vous pouvez ensuite accéder à la documentation à l'adresse : <http://localhost:8808>.
+
 ## Contribution
 
 Les issues et pull requests sont les bienvenues sur : <https://github.com/BetaGouv/decoupage_administratif>
@@ -199,6 +211,18 @@ To publish a new version :
 - Run :
 
       bundle exec rake release
+
+### Yard
+
+This gem uses [Yard](https://yardoc.org/) for documentation. To generate the documentation, run:
+
+    yard doc
+
+to start the documentation server, run:
+
+    yard server
+
+You can then access the documentation at: <http://localhost:8808>.
 
 ## Contribution
 

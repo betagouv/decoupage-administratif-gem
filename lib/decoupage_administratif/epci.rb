@@ -5,6 +5,10 @@ module DecoupageAdministratif
     extend BaseModel
     attr_reader :code, :nom, :membres
 
+    # @param code [String] the SIREN code of the EPCI
+    # @param nom [String] the name of the EPCI
+    # @param membres [Array<Hash>] the members of the EPCI, each member is a hash with "nom" and "code" keys
+    # @return [Epci] a new Epci instance
     def initialize(code:, nom:, membres: [])
       @code = code
       @nom = nom
@@ -12,6 +16,7 @@ module DecoupageAdministratif
     end
 
     class << self
+      # @return [EpciCollection] a collection of all EPCI
       def all
         EpciCollection.new(Parser.new('epci').data.map do |epci_data|
           Epci.new(
@@ -23,6 +28,8 @@ module DecoupageAdministratif
       end
 
       # Search for an EPCI that includes all the specified codes
+      # @param codes [Array<String>] an array of commune codes
+      # @return [EpciCollection] a collection of EPCI that include all the specified codes
       def find_by_communes_codes(codes)
         DecoupageAdministratif::EpciCollection.new(all.select do |epci|
           epci.membres.map do |m|
@@ -38,14 +45,14 @@ module DecoupageAdministratif
       end
     end
 
-    # Return a collection of all communes in the EPCI.
+    # @return [CommuneCollection] a collection of all communes that are members of the EPCI
     def communes
       @communes ||= DecoupageAdministratif::CommuneCollection.new(@membres.map! do |membre|
         DecoupageAdministratif::Commune.find_by(code: membre["code"])
       end)
     end
 
-    # Return the regions of the Epci.
+    # @return [Array<Region>] an array of regions that the EPCI communes belong to
     # Sometimes an EPCI can have communes from different regions.
     def regions
       @regions ||= communes.map(&:region).uniq

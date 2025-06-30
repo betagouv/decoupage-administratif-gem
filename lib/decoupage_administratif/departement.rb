@@ -5,6 +5,11 @@ module DecoupageAdministratif
     extend BaseModel
     attr_reader :code, :nom, :zone, :code_region
 
+    # @param code [String] the INSEE code of the department
+    # @param nom [String] the name of the department
+    # @param zone [String] the zone of the department ("metro", "drom", "com")
+    # @param code_region [String] the INSEE code of the region
+    # @return [Departement] a new Departement instance
     def initialize(code:, nom:, zone:, code_region:)
       @code = code
       @nom = nom
@@ -12,6 +17,7 @@ module DecoupageAdministratif
       @code_region = code_region
     end
 
+    # @return [DepartementCollection] a collection of all departments
     def self.all
       @all ||= DepartementCollection.new(Parser.new('departements').data.map do |departement_data|
         DecoupageAdministratif::Departement.new(
@@ -23,14 +29,14 @@ module DecoupageAdministratif
       end)
     end
 
-    # Return the a collection of all communes in the department.
+    # @return [CommuneCollection] a collection of all actual communes in the department
     def communes
       @communes ||= DecoupageAdministratif::Commune.all.select do |commune|
         commune.departement_code == @code && commune.commune_type == "commune-actuelle"
       end
     end
 
-    # Return the region of the department.
+    # @return [Region] the region of the department
     def region
       @region ||= DecoupageAdministratif::Region.find_by(code: @code_region)
     end

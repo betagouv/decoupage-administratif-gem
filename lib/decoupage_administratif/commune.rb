@@ -6,6 +6,13 @@ module DecoupageAdministratif
     attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type
 
     # rubocop:disable Metrics/ParameterLists
+    # @param code [String] the INSEE code of the commune
+    # @param nom [String] the name of the commune
+    # @param zone [String] the zone of the commune ("metro", "drom", "com")
+    # @param region_code [String] the INSEE code of the region
+    # @param departement_code [String] the INSEE code of the department
+    # @param commune_type [String] the type of the commune (default: "commune-actuelle")
+    # @return [Commune] a new Commune instance
     def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: "commune-actuelle")
       @code = code
       @nom = nom
@@ -15,7 +22,8 @@ module DecoupageAdministratif
       @commune_type = commune_type
     end
     # rubocop:enable Metrics/ParameterLists
-    #
+
+    # @return [CommuneCollection] a collection of all communes
     def self.all
       @all ||= CommuneCollection.new(Parser.new('communes').data.map do |commune_data|
         Commune.new(
@@ -29,22 +37,22 @@ module DecoupageAdministratif
       end)
     end
 
-    # Returns a collection of all actual communes.
+    # @return [CommuneCollection] a collection of all actual communes
     def self.communes_actuelles
       @communes_actuelles ||= all.select { |commune| commune.commune_type == "commune-actuelle" }
     end
 
-    # Return the department of the commune.
+    # @return [Departement] the department of the commune
     def departement
       @departement ||= DecoupageAdministratif::Departement.find_by(code: @departement_code)
     end
 
-    # Return the EPCI of the commune.
+    # @return [Epci] the EPCI of the commune, if it belongs to one
     def epci
       @epci ||= DecoupageAdministratif::Epci.all.find { |epci| epci.membres.map { |m| m["code"] }.include?(@code) }
     end
 
-    # Return the region of the commune.
+    # @return [Region] the region of the commune
     def region
       @region ||= DecoupageAdministratif::Region.find_by(code: @region_code)
     end

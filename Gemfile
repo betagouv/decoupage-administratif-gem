@@ -10,4 +10,5 @@ gem "rake", "~> 13.0"
 group :development, :test do
   gem "rubocop", require: false
   gem "rubocop-rspec", require: false
+  gem "yard"
 end

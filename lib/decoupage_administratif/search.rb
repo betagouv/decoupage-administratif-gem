@@ -9,6 +9,7 @@ module DecoupageAdministratif
     # Search for territories by municipality.
     # If the list of municipalities represents a department or an EPCI, the corresponding territories are displayed.
     # If the codes do not correspond to any territory, a list of municipalities is returned.
+    # @return [Hash] a hash containing the regions, departments, EPCI, and communes found
     def by_insee_codes
       @codes = group_by_departement
       @codes = find_communes_by_codes
@@ -27,6 +28,8 @@ module DecoupageAdministratif
     end
 
     # Return the territories associated with a given INSEE code.
+    # @param code_insee [String] the INSEE code of the commune
+    # @return [Hash] a hash containing the EPCI, department, and region associated with the commune
     def find_territories_by_commune_insee_code(code_insee)
       commune = DecoupageAdministratif::Commune.find_by(code: code_insee)
       return {} if commune.nil?

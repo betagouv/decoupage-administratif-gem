@@ -6,6 +6,8 @@ module DecoupageAdministratif
   class Parser
     attr_reader :data
 
+    # @param model [String] the name of the model to parse (e.g., 'communes', 'departements', 'regions')
+    # @return [Parser] a new Parser instance
     def initialize(model)
       @model = model
       gem_dir = Gem::Specification.find_by_name('decoupage_administratif').gem_dir
