@@ -33,13 +33,14 @@ Exemple d’utilisation basique :
 DecoupageAdministratif::Region.all
 
 # Trouver une commune par code INSEE
+# Une commune a un commune_type qui peut être `commune-actuelle`, `commune-deleguee` (anciennes communes) ou `commune-associee` (anciennes communes avec un statut spécial)
 commune = DecoupageAdministratif::Commune.find_by(code: '75056')
 puts commune.nom # => "Paris"
 
 # Lister les départements d'une région
 DecoupageAdministratif::Region.find_by(code: '84').departements
 
-# Lister toutes les communes d’un département
+# Lister toutes les communes actuelles d’un département
 departement = DecoupageAdministratif::Departement.find_by(code: '72')
 puts departement.communes
 
@@ -138,13 +139,14 @@ Basic usage example:
 DecoupageAdministratif::Region.all
 
 # Find a municipality by INSEE code
+# A municipality has a `commune_type` which can be `commune-actuelle` (current municipalities), `commune-deleguee` (former municipalities), or `commune-associee` (former municipalities with a special status)
 commune = DecoupageAdministratif::Commune.find_by(code: '75056')
 puts commune.nom # => "Paris"
 
 # List departments of a region
 DecoupageAdministratif::Region.find_by(code: '84').departements
 
-# List all municipalities of a department
+# List all current municipalities of a department
 departement = DecoupageAdministratif::Departement.find_by(code: '72')
 puts departement.communes
 
