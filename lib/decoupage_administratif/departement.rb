@@ -12,22 +12,15 @@ module DecoupageAdministratif
       @code_region = code_region
     end
 
-    class << self
-      def all
-        @all ||= DepartementCollection.new(Parser.new('departements').data.map do |departement_data|
-          DecoupageAdministratif::Departement.new(
-            code: departement_data["code"],
-            nom: departement_data["nom"],
-            zone: departement_data["zone"],
-            code_region: departement_data["region"]
-          )
-        end)
-      end
-
-      # Returns a collection of all departments.
-      def departements
-        @departements ||= all
-      end
+    def self.all
+      @all ||= DepartementCollection.new(Parser.new('departements').data.map do |departement_data|
+        DecoupageAdministratif::Departement.new(
+          code: departement_data["code"],
+          nom: departement_data["nom"],
+          zone: departement_data["zone"],
+          code_region: departement_data["region"]
+        )
+      end)
     end
 
     # Return the a collection of all communes in the department.

@@ -11,21 +11,14 @@ module DecoupageAdministratif
       @zone = zone
     end
 
-    class << self
-      def all
-        @all ||= RegionCollection.new(Parser.new('regions').data.map do |region_data|
-          Region.new(
-            code: region_data["code"],
-            nom: region_data["nom"],
-            zone: region_data["zone"]
-          )
-        end)
-      end
-
-      # Returns a collection of all regions.
-      def regions
-        @regions ||= all
-      end
+    def self.all
+      @all ||= RegionCollection.new(Parser.new('regions').data.map do |region_data|
+        Region.new(
+          code: region_data["code"],
+          nom: region_data["nom"],
+          zone: region_data["zone"]
+        )
+      end)
     end
 
     # Returns a collection of all departments in the region.

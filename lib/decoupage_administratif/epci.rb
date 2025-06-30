@@ -22,14 +22,9 @@ module DecoupageAdministratif
         end)
       end
 
-      # Returns a collection of all EPCI.
-      def epcis
-        @epcis ||= all
-      end
-
       # Search for an EPCI that includes all the specified codes
       def find_by_communes_codes(codes)
-        DecoupageAdministratif::EpciCollection.new(epcis.select do |epci|
+        DecoupageAdministratif::EpciCollection.new(all.select do |epci|
           epci.membres.map do |m|
             # Normaly a member is a hash but sometimes it's a DecoupageAdministratif::Commune
             # It's a bug

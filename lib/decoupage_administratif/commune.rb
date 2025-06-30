@@ -16,29 +16,22 @@ module DecoupageAdministratif
     end
     # rubocop:enable Metrics/ParameterLists
     #
-    class << self
-      def all
-        @all ||= CommuneCollection.new(Parser.new('communes').data.map do |commune_data|
-          Commune.new(
-            code: commune_data["code"],
-            nom: commune_data["nom"],
-            zone: commune_data["zone"],
-            region_code: commune_data["region"],
-            departement_code: commune_data["departement"],
-            commune_type: commune_data["type"]
-          )
-        end)
-      end
+    def self.all
+      @all ||= CommuneCollection.new(Parser.new('communes').data.map do |commune_data|
+        Commune.new(
+          code: commune_data["code"],
+          nom: commune_data["nom"],
+          zone: commune_data["zone"],
+          region_code: commune_data["region"],
+          departement_code: commune_data["departement"],
+          commune_type: commune_data["type"]
+        )
+      end)
+    end
 
-      # Returns a collection of all actual communes.
-      def communes_actuelles
-        @communes_actuelles ||= communes.select { |commune| commune.commune_type == "commune-actuelle" }
-      end
-
-      # Returns a collection of all communes, including historical ones.
-      def communes
-        @communes ||= all
-      end
+    # Returns a collection of all actual communes.
+    def self.communes_actuelles
+      @communes_actuelles ||= all.select { |commune| commune.commune_type == "commune-actuelle" }
     end
 
     # Return the department of the commune.
