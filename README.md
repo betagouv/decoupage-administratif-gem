@@ -33,18 +33,18 @@ Exemple d’utilisation basique :
 DecoupageAdministratif::Region.all
 
 # Trouver une commune par code INSEE
-commune = DecoupageAdministratif::Commune.find('75056')
+commune = DecoupageAdministratif::Commune.find_by(code: '75056')
 puts commune.nom # => "Paris"
 
 # Lister les départements d'une région
-DecoupageAdministratif::Region.find('84').departements
+DecoupageAdministratif::Region.find_by(code: '84').departements
 
 # Lister toutes les communes d’un département
-departement = DecoupageAdministratif::Departement.find('72')
+departement = DecoupageAdministratif::Departement.find_by(code: '72')
 puts departement.communes
 
 # Trouver un EPCI par son SIREN
-epci = DecoupageAdministratif::Epci.find('200054781')
+epci = DecoupageAdministratif::Epci.find_by(code: '200054781')
 puts epci.nom
 
 # Lister les communes d’un EPCI
@@ -138,18 +138,18 @@ Basic usage example:
 DecoupageAdministratif::Region.all
 
 # Find a municipality by INSEE code
-commune = DecoupageAdministratif::Commune.find('75056')
+commune = DecoupageAdministratif::Commune.find_by(code: '75056')
 puts commune.nom # => "Paris"
 
 # List departments of a region
-DecoupageAdministratif::Region.find('84').departements
+DecoupageAdministratif::Region.find_by(code: '84').departements
 
 # List all municipalities of a department
-departement = DecoupageAdministratif::Departement.find('72')
+departement = DecoupageAdministratif::Departement.find_by(code: '72')
 puts departement.communes
 
 # Find an EPCI by its SIREN
-epci = DecoupageAdministratif::Epci.find('200054781')
+epci = DecoupageAdministratif::Epci.find_by(code: '200054781')
 puts epci.nom
 
 # List municipalities of an EPCI

@@ -69,7 +69,7 @@ RSpec.describe DecoupageAdministratif::Search do
     end
   end
 
-  describe '#find_territories_by_insee_code' do
+  describe '#find_territories_by_commune_insee_code' do
     context "when the code INSEE corresponds to a valid commune" do
       let(:commune) { instance_double(DecoupageAdministratif::Commune, code: "94068", epci: "Métropole du Grand Paris", departement: "Val-de-Marne", region: "Île-de-France") }
 
@@ -78,7 +78,7 @@ RSpec.describe DecoupageAdministratif::Search do
       end
 
       it "returns the associated territories" do
-        result = DecoupageAdministratif::Search.new([]).find_territories_by_insee_code("94068")
+        result = DecoupageAdministratif::Search.new([]).find_territories_by_commune_insee_code("94068")
         expect(result[:epci]).to eq("Métropole du Grand Paris")
         expect(result[:departement]).to eq("Val-de-Marne")
         expect(result[:region]).to eq("Île-de-France")
@@ -91,7 +91,7 @@ RSpec.describe DecoupageAdministratif::Search do
       end
 
       it "returns an empty hash" do
-        result = DecoupageAdministratif::Search.new([]).find_territories_by_insee_code("99999")
+        result = DecoupageAdministratif::Search.new([]).find_territories_by_commune_insee_code("99999")
         expect(result).to eq({})
       end
     end

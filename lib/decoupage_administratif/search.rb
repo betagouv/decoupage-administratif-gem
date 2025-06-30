@@ -27,7 +27,7 @@ module DecoupageAdministratif
     end
 
     # Return the territories associated with a given INSEE code.
-    def find_territories_by_insee_code(code_insee)
+    def find_territories_by_commune_insee_code(code_insee)
       commune = DecoupageAdministratif::Commune.find_by(code: code_insee)
       return {} if commune.nil?
 
