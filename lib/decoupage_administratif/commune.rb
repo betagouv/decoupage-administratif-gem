@@ -3,6 +3,19 @@
 module DecoupageAdministratif
   class Commune
     extend BaseModel
+
+    # @!attribute [r] code
+    #   @return [String] INSEE code of the commune
+    # @!attribute [r] nom
+    #   @return [String] Name of the commune
+    # @!attribute [r] zone
+    #   @return [String] Zone of the commune ("metro", "drom", "com")
+    # @!attribute [r] region_code
+    #   @return [String] INSEE code of the region
+    # @!attribute [r] departement_code
+    #   @return [String] INSEE code of the department
+    # @!attribute [r] commune_type
+    #   @return [String] Type of the commune (default: "commune-actuelle")
     attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type
 
     # rubocop:disable Metrics/ParameterLists
@@ -41,6 +54,7 @@ module DecoupageAdministratif
       @communes_actuelles ||= all.select { |commune| commune.commune_type == "commune-actuelle" }
     end
 
+    # @raise [TypeError] if no department is found for the code
     # @return [Departement] the department of the commune
     def departement
       departement = DecoupageAdministratif::Departement.find_by(code: @departement_code)
@@ -49,11 +63,15 @@ module DecoupageAdministratif
       @departement ||= departement
     end
 
-    # @return [Epci] the EPCI of the commune, if it belongs to one
+    # @return [Epci, nil] the EPCI of the commune, if it belongs to one
     def epci
-      @epci ||= DecoupageAdministratif::Epci.all.find { |epci| epci.membres.map { |m| m["code"] }.include?(@code) }
+      found_epci = DecoupageAdministratif::Epci.all.find do |epci|
+        epci.membres.any? { |m| m["code"] == @code }
+      end
+      found_epci.is_a?(DecoupageAdministratif::Epci) ? (@epci ||= found_epci) : nil
     end
 
+    # @raise [TypeError] if no region is found for the code
     # @return [Region] the region of the commune
     def region
       region = DecoupageAdministratif::Region.find_by(code: @region_code)

@@ -3,6 +3,13 @@
 module DecoupageAdministratif
   class Region
     extend BaseModel
+
+    # @!attribute [r] code
+    #   @return [String] INSEE code of the region
+    # @!attribute [r] nom
+    #   @return [String] Name of the region
+    # @!attribute [r] zone
+    #   @return [String] Zone of the region ("metro", "drom", "com")
     attr_reader :code, :nom, :zone
 
     # @param code [String] the INSEE code of the region
@@ -25,7 +32,7 @@ module DecoupageAdministratif
       end
     end
 
-    # @return [DepartementCollection] a collection of all departments in the region
+    # @return [Array<Departement>] a collection of all departments in the region
     def departements
       @departements ||= DecoupageAdministratif::Departement.all.select do |departement|
         departement.code_region == @code

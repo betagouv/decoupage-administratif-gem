@@ -67,6 +67,26 @@ RSpec.describe DecoupageAdministratif::Search do
         )
       end
     end
+
+    context "no matching codes" do
+      subject { DecoupageAdministratif::Search.new(["99999", "88888"]).by_insee_codes }
+
+      it "returns only empty arrays" do
+        expect(subject[:regions]).to eq([])
+        expect(subject[:departements]).to eq([])
+        expect(subject[:epcis]).to eq([])
+        expect(subject[:communes]).to eq([])
+      end
+    end
+
+    context "partially matching codes" do
+      subject { DecoupageAdministratif::Search.new(["72180", "99999"]).by_insee_codes }
+
+      it "returns only the valid commune" do
+        expect(subject[:communes].map(&:code)).to include("72180")
+        expect(subject[:communes].map(&:code)).not_to include("99999")
+      end
+    end
   end
 
   describe '#find_territories_by_commune_insee_code' do

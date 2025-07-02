@@ -3,6 +3,13 @@
 module DecoupageAdministratif
   class Epci
     extend BaseModel
+
+    # @!attribute [r] code
+    #   @return [String] SIREN code of the EPCI
+    # @!attribute [r] nom
+    #   @return [String] Name of the EPCI
+    # @!attribute [r] membres
+    #   @return [Array<Hash>] Members of the EPCI, each member is a hash with "nom" and "code" keys
     attr_reader :code, :nom, :membres
 
     # @param code [String] the SIREN code of the EPCI
@@ -21,7 +28,7 @@ module DecoupageAdministratif
           Epci.new(
             code: epci_data["code"],
             nom: epci_data["nom"],
-            membres: epci_data["membres"].map! { |membre| membre.slice("nom", "code") }
+            membres: epci_data["membres"].map { |membre| membre.slice("nom", "code") }
           )
         end
       end
@@ -32,8 +39,7 @@ module DecoupageAdministratif
       def find_by_communes_codes(codes)
         all.select do |epci|
           epci.membres.map do |m|
-            # Normaly a member is a hash but sometimes it's a DecoupageAdministratif::Commune
-            # It's a bug
+            # Normally a member is a hash, but sometimes it's a DecoupageAdministratif::Commune (bug handled)
             if m.is_a?(DecoupageAdministratif::Commune)
               codes.include?(m.code)
             else
@@ -45,9 +51,12 @@ module DecoupageAdministratif
     end
 
     # @return [Array<Commune>] a collection of all communes that are members of the EPCI
+    # @raise [TypeError] if a commune code is not found
     def communes
-      @communes ||= @membres.map! do |membre|
-        DecoupageAdministratif::Commune.find_by(code: membre["code"])
+      @communes ||= @membres.map do |membre|
+        commune = DecoupageAdministratif::Commune.find_by(code: membre["code"])
+        raise TypeError, "Commune not found for code #{membre["code"]}" unless commune.is_a?(DecoupageAdministratif::Commune)
+        commune
       end.compact
     end
 

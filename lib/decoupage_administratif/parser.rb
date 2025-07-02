@@ -4,10 +4,13 @@ require 'json'
 
 module DecoupageAdministratif
   class Parser
+    # @!attribute [r] data
+    #   @return [Array<Hash>] Parsed data from the JSON file for the given model
     attr_reader :data
 
     # @param model [String] the name of the model to parse (e.g., 'communes', 'departements', 'regions')
     # @return [Parser] a new Parser instance
+    # @note Only expected model names should be used to avoid loading unwanted files. The file path is constructed from the model name.
     def initialize(model)
       @model = model
       gem_dir = Gem::Specification.find_by_name('decoupage_administratif').gem_dir

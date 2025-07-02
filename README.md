@@ -37,6 +37,12 @@ DecoupageAdministratif::Region.all
 commune = DecoupageAdministratif::Commune.find_by(code: '75056')
 puts commune.nom # => "Paris"
 
+# Trouver tous les territoires associés à une commune par son code INSEE
+territoires = DecoupageAdministratif::Search.new.find_territories_by_commune_insee_code('75056')
+puts territoires[:epci]      # => EPCI de la commune (ex : Métropole du Grand Paris)
+puts territoires[:departement] # => Département de la commune (ex : Paris)
+puts territoires[:region]      # => Région de la commune (ex : Île-de-France)
+
 # Lister les départements d'une région
 DecoupageAdministratif::Region.find_by(code: '84').departements
 
@@ -154,6 +160,12 @@ DecoupageAdministratif::Region.all
 # A municipality has a `commune_type` which can be `commune-actuelle` (current municipalities), `commune-deleguee` (former municipalities), or `commune-associee` (former municipalities with a special status)
 commune = DecoupageAdministratif::Commune.find_by(code: '75056')
 puts commune.nom # => "Paris"
+
+# Find all territories associated with a municipality by its INSEE code
+territoires = DecoupageAdministratif::Search.new.find_territories_by_commune_insee_code('75056')
+puts territoires[:epci]      # => EPCI of the municipality (e.g., Métropole du Grand Paris)
+puts territoires[:departement] # => Department of the municipality (e.g., Paris)
+puts territoires[:region]      # => Region of the municipality (e.g., Île-de-France)
 
 # List departments of a region
 DecoupageAdministratif::Region.find_by(code: '84').departements

@@ -3,30 +3,19 @@ module DecoupageAdministratif
     extend BaseModel
     attr_reader code: String
     attr_reader nom: String
-    attr_reader zone: String
-    attr_reader membres: Array[{
-      code: String,
-      nom: String
-    }]
+    attr_reader membres: Array[{ code: String, nom: String }]
 
     def initialize: (
         code: String,
         nom: String,
-        membres: Array[{
-          code: String,
-          nom: String
-        }]
+        membres: Array[{ code: String, nom: String }]
       ) -> void
 
     def self.all: () -> Array[Epci]
 
-    def self.find_by_communes_codes: () -> Array[Epci]
-
-    def departements: () -> Array[Departement]
+    def self.find_by_communes_codes: (Array[String]) -> Array[Epci]
 
     def communes: () -> Array[Commune]
-
-    def region: () -> Region
 
     def regions: () -> Array[Region]
   end

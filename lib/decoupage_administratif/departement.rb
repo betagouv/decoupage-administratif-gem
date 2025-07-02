@@ -3,6 +3,14 @@
 module DecoupageAdministratif
   class Departement
     extend BaseModel
+    # @!attribute [r] code
+    #   @return [String] INSEE code of the department
+    # @!attribute [r] nom
+    #   @return [String] Name of the department
+    # @!attribute [r] zone
+    #   @return [String] Zone of the department ("metro", "drom", "com")
+    # @!attribute [r] code_region
+    #   @return [String] INSEE code of the region
     attr_reader :code, :nom, :zone, :code_region
 
     # @param code [String] the INSEE code of the department
@@ -35,9 +43,12 @@ module DecoupageAdministratif
       end
     end
 
+    # @raise [TypeError] if no region is found for the code
     # @return [Region] the region of the department
     def region
-      @region ||= DecoupageAdministratif::Region.find_by(code: @code_region)
+      region = DecoupageAdministratif::Region.find_by(code: @code_region)
+      raise TypeError, "No region found for code #{@code_region}" unless region.is_a?(DecoupageAdministratif::Region)
+      @region ||= region
     end
   end
 end

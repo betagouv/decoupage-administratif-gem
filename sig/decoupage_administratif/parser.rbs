@@ -1,11 +1,11 @@
 module DecoupageAdministratif
   class Parser
-    attr_reader data: String
+    attr_reader data: Array[Hash[String, untyped]]
 
     def initialize: (String) -> void
 
     private
 
-    def load_data: -> String
+    def load_data: () -> void
   end
 end

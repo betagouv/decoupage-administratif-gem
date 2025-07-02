@@ -4,13 +4,13 @@ module DecoupageAdministratif
     attr_reader code: String
     attr_reader nom: String
     attr_reader zone: String
-    attr_reader region_code: String
+    attr_reader code_region: String
 
     def initialize: (
         code: String,
         nom: String,
         zone: String,
-        region_code: String
+        code_region: String
       ) -> void
 
 
