@@ -1,0 +1,20 @@
+module DecoupageAdministratif
+  class Region
+    extend BaseModel
+    attr_reader code: String
+    attr_reader nom: String
+    attr_reader zone: String
+
+    def initialize: (
+        code: String,
+        nom: String,
+        zone: String,
+      ) -> void
+
+    def self.all: () -> Array[Region]
+
+    def communes: () -> Array[Commune]
+
+    def departements: () -> Array[Departement]
+  end
+end

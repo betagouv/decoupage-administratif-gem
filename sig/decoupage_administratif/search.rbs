@@ -1,0 +1,19 @@
+module DecoupageAdministratif
+  class Search
+    def by_insee_codes: () -> Hash[Symbol, untyped]
+
+    def find_territories_by_commune_insee_code: (String) -> Hash[Symbol, untyped]
+
+    private
+
+    def find_communes_by_codes: () -> Array[Commune]
+
+    def search_for_communes: () -> Array[Commune]
+
+    def search_for_departements: () -> Array[Departement]
+
+    def search_for_epcis: () -> Array[Epci]
+
+    def search_for_region: () -> Array[Region]
+  end
+end

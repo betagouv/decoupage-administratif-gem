@@ -9,7 +9,6 @@ module DecoupageAdministratif
     # @param nom [String] the name of the department
     # @param zone [String] the zone of the department ("metro", "drom", "com")
     # @param code_region [String] the INSEE code of the region
-    # @return [Departement] a new Departement instance
     def initialize(code:, nom:, zone:, code_region:)
       @code = code
       @nom = nom
@@ -17,19 +16,19 @@ module DecoupageAdministratif
       @code_region = code_region
     end
 
-    # @return [DepartementCollection] a collection of all departments
+    # @return [Array<Departement>] a collection of all departments
     def self.all
-      @all ||= DepartementCollection.new(Parser.new('departements').data.map do |departement_data|
+      @all ||= Parser.new('departements').data.map do |departement_data|
         DecoupageAdministratif::Departement.new(
           code: departement_data["code"],
           nom: departement_data["nom"],
           zone: departement_data["zone"],
           code_region: departement_data["region"]
         )
-      end)
+      end
     end
 
-    # @return [CommuneCollection] a collection of all actual communes in the department
+    # @return [Array<Commune>] a collection of all actual communes in the department
     def communes
       @communes ||= DecoupageAdministratif::Commune.all.select do |commune|
         commune.departement_code == @code && commune.commune_type == "commune-actuelle"
@@ -40,9 +39,5 @@ module DecoupageAdministratif
     def region
       @region ||= DecoupageAdministratif::Region.find_by(code: @code_region)
     end
-  end
-
-  class DepartementCollection < Array
-    include DecoupageAdministratif::CollectionMethods
   end
 end

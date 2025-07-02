@@ -8,7 +8,6 @@ module DecoupageAdministratif
     # @param code [String] the SIREN code of the EPCI
     # @param nom [String] the name of the EPCI
     # @param membres [Array<Hash>] the members of the EPCI, each member is a hash with "nom" and "code" keys
-    # @return [Epci] a new Epci instance
     def initialize(code:, nom:, membres: [])
       @code = code
       @nom = nom
@@ -16,22 +15,22 @@ module DecoupageAdministratif
     end
 
     class << self
-      # @return [EpciCollection] a collection of all EPCI
+      # @return [Array<Epci>] a collection of all EPCI
       def all
-        EpciCollection.new(Parser.new('epci').data.map do |epci_data|
+        Parser.new('epci').data.map do |epci_data|
           Epci.new(
             code: epci_data["code"],
             nom: epci_data["nom"],
             membres: epci_data["membres"].map! { |membre| membre.slice("nom", "code") }
           )
-        end)
+        end
       end
 
       # Search for an EPCI that includes all the specified codes
       # @param codes [Array<String>] an array of commune codes
-      # @return [EpciCollection] a collection of EPCI that include all the specified codes
+      # @return [Array<Epci>] a collection of EPCI that include all the specified codes
       def find_by_communes_codes(codes)
-        DecoupageAdministratif::EpciCollection.new(all.select do |epci|
+        all.select do |epci|
           epci.membres.map do |m|
             # Normaly a member is a hash but sometimes it's a DecoupageAdministratif::Commune
             # It's a bug
@@ -41,15 +40,15 @@ module DecoupageAdministratif
               codes.include?(m['code'])
             end
           end.all?
-        end)
+        end
       end
     end
 
-    # @return [CommuneCollection] a collection of all communes that are members of the EPCI
+    # @return [Array<Commune>] a collection of all communes that are members of the EPCI
     def communes
-      @communes ||= DecoupageAdministratif::CommuneCollection.new(@membres.map! do |membre|
+      @communes ||= @membres.map! do |membre|
         DecoupageAdministratif::Commune.find_by(code: membre["code"])
-      end)
+      end.compact
     end
 
     # @return [Array<Region>] an array of regions that the EPCI communes belong to
@@ -57,9 +56,5 @@ module DecoupageAdministratif
     def regions
       @regions ||= communes.map(&:region).uniq
     end
-  end
-
-  class EpciCollection < Array
-    include DecoupageAdministratif::CollectionMethods
   end
 end

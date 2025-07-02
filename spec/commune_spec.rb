@@ -62,16 +62,6 @@ RSpec.describe DecoupageAdministratif::Commune do
     end
   end
 
-  describe '#codes' do
-    let(:model) { 'communes' }
-
-    subject { DecoupageAdministratif::Commune.all.first(2).codes }
-
-    it 'Returns the codes of the communes' do
-      is_expected.to eq(%w[72180 72189])
-    end
-  end
-
   describe '#departement' do
     let(:model) { 'departements' }
     let(:commune) { DecoupageAdministratif::Commune.new(code: '78380', nom: 'Maule', zone: 'metro', region_code: '11', departement_code: '78') }

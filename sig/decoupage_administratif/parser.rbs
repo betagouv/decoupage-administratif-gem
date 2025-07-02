@@ -1,0 +1,11 @@
+module DecoupageAdministratif
+  class Parser
+    attr_reader data: String
+
+    def initialize: (String) -> void
+
+    private
+
+    def load_data: -> String
+  end
+end

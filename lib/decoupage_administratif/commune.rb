@@ -12,7 +12,6 @@ module DecoupageAdministratif
     # @param region_code [String] the INSEE code of the region
     # @param departement_code [String] the INSEE code of the department
     # @param commune_type [String] the type of the commune (default: "commune-actuelle")
-    # @return [Commune] a new Commune instance
     def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: "commune-actuelle")
       @code = code
       @nom = nom
@@ -23,9 +22,9 @@ module DecoupageAdministratif
     end
     # rubocop:enable Metrics/ParameterLists
 
-    # @return [CommuneCollection] a collection of all communes
+    # @return [Array<Commune>] a collection of all communes
     def self.all
-      @all ||= CommuneCollection.new(Parser.new('communes').data.map do |commune_data|
+      @all ||= Parser.new('communes').data.map do |commune_data|
         Commune.new(
           code: commune_data["code"],
           nom: commune_data["nom"],
@@ -34,17 +33,20 @@ module DecoupageAdministratif
           departement_code: commune_data["departement"],
           commune_type: commune_data["type"]
         )
-      end)
+      end
     end
 
-    # @return [CommuneCollection] a collection of all actual communes
+    # @return [Array<Commune>] a collection of all actual communes
     def self.communes_actuelles
       @communes_actuelles ||= all.select { |commune| commune.commune_type == "commune-actuelle" }
     end
 
     # @return [Departement] the department of the commune
     def departement
-      @departement ||= DecoupageAdministratif::Departement.find_by(code: @departement_code)
+      departement = DecoupageAdministratif::Departement.find_by(code: @departement_code)
+      raise TypeError, "No department found for code #{@departement_code}" unless departement.is_a?(DecoupageAdministratif::Departement)
+
+      @departement ||= departement
     end
 
     # @return [Epci] the EPCI of the commune, if it belongs to one
@@ -54,11 +56,10 @@ module DecoupageAdministratif
 
     # @return [Region] the region of the commune
     def region
-      @region ||= DecoupageAdministratif::Region.find_by(code: @region_code)
-    end
-  end
+      region = DecoupageAdministratif::Region.find_by(code: @region_code)
+      raise TypeError, "Aucune région trouvée pour le code #{@region_code}" unless region.is_a?(DecoupageAdministratif::Region)
 
-  class CommuneCollection < Array
-    include DecoupageAdministratif::CollectionMethods
+      @region ||= region
+    end
   end
 end
