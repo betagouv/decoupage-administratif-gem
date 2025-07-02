@@ -48,6 +48,7 @@ module DecoupageAdministratif
     def region
       region = DecoupageAdministratif::Region.find_by(code: @code_region)
       raise TypeError, "No region found for code #{@code_region}" unless region.is_a?(DecoupageAdministratif::Region)
+
       @region ||= region
     end
   end

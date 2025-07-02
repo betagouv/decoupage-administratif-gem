@@ -69,7 +69,7 @@ RSpec.describe DecoupageAdministratif::Search do
     end
 
     context "no matching codes" do
-      subject { DecoupageAdministratif::Search.new(["99999", "88888"]).by_insee_codes }
+      subject { DecoupageAdministratif::Search.new(%w[99999 88888]).by_insee_codes }
 
       it "returns only empty arrays" do
         expect(subject[:regions]).to eq([])
@@ -80,7 +80,7 @@ RSpec.describe DecoupageAdministratif::Search do
     end
 
     context "partially matching codes" do
-      subject { DecoupageAdministratif::Search.new(["72180", "99999"]).by_insee_codes }
+      subject { DecoupageAdministratif::Search.new(%w[72180 99999]).by_insee_codes }
 
       it "returns only the valid commune" do
         expect(subject[:communes].map(&:code)).to include("72180")

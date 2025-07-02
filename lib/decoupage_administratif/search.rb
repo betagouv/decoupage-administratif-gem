@@ -88,16 +88,32 @@ module DecoupageAdministratif
     # @return [void]
     def search_for_departements
       @departements = []
-      return if @codes.keys.uniq.count == 1 && @codes.keys.first.nil?
+      return if only_nil_key?
+
+      departements_to_delete = []
       @codes.each do |departement, communes|
-        # if the departement has the same number of communes as the codes and all communes code are in code_insee we return the departement
-        next if departement.nil?
-        next unless departement.communes.count == communes.count && departement.communes.map(&:code).sort == communes.map(&:code).sort
+        next unless should_add_departement?(departement, communes)
 
         @departements << departement
-        # delete the depaertement from the hash
-        @codes.delete(departement)
+        departements_to_delete << departement
       end
+      departements_to_delete.each { |dep_code| @codes.delete(dep_code) }
+    end
+
+    # Check if only one key and it is nil
+    # @return [Boolean]
+    def only_nil_key?
+      @codes.keys.uniq.count == 1 && @codes.keys.first.nil?
+    end
+
+    # Should add departement to result?
+    # @param departement [Departement, nil]
+    # @param communes [Array<Commune>]
+    # @return [Boolean]
+    def should_add_departement?(departement, communes)
+      return false if departement.nil?
+
+      departement.communes.count == communes.count && departement.communes.map(&:code).sort == communes.map(&:code).sort
     end
 
     # Search for regions matching the codes.
@@ -105,6 +121,7 @@ module DecoupageAdministratif
     def search_for_region
       @regions = []
       return if @departements.empty?
+
       regions = DecoupageAdministratif::Region.all
       regions.each do |region|
         next unless region.departements.all? do |departement|
@@ -123,6 +140,7 @@ module DecoupageAdministratif
     def search_for_epcis
       @epcis = []
       return if @codes.keys.uniq.count == 1 && @codes.keys.first.nil?
+
       @codes.each_value do |communes|
         # if the departement has the same number of communes as the codes and all communes code are in code_insee we return the departement
         @epcis = DecoupageAdministratif::Epci.find_by_communes_codes(communes.map(&:code))
@@ -139,6 +157,7 @@ module DecoupageAdministratif
     def search_for_communes
       @communes = []
       return if @codes.keys.uniq.count == 1 && @codes.keys.first.nil?
+
       @codes.each_value do |communes|
         communes.map { |commune| @communes << commune }
       end
