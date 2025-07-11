@@ -19,10 +19,38 @@ Ou installez-la directement :
 
     gem install decoupage_administratif
 
-Téléchargez les fichiers :
+Mise à jour des données (optionnel) :
 
-    rake decoupage_administratif:install
+    rake decoupage_administratif:update
 
+### Configuration
+
+**Données embarquées :** La gem inclut maintenant les données par défaut et fonctionne directement sans installation additionnelle.
+
+**Données personnalisées :** Vous pouvez utiliser des données plus récentes en les téléchargeant :
+
+```bash
+# Mettre à jour vers les dernières données (optionnel)
+rake decoupage_administratif:update
+```
+
+**Répertoire personnalisé :**
+```bash
+# Via variable d'environnement
+export DECOUPAGE_DATA_DIR=/path/to/your/data/directory
+rake decoupage_administratif:update
+```
+
+```ruby
+# Via code (pour Rails)
+# config/initializers/decoupage_administratif.rb
+DecoupageAdministratif::Config.data_directory = Rails.root.join('tmp', 'decoupage_data')
+```
+
+**Ordre de priorité :**
+1. Données dans le répertoire personnalisé (`DECOUPAGE_DATA_DIR`)
+2. Données dans `~/.local/share/decoupage_administratif/`
+3. **Données embarquées dans la gem** (fallback automatique)
 
 ## Utilisation
 
@@ -73,9 +101,9 @@ Vérifier la version installée :
 
     ruby -r 'decoupage_administratif' -e 'puts DecoupageAdministratif::VERSION'
 
-Télécharger les données :
+Mettre à jour les données :
 
-    rake decoupage_administratif:install
+    rake decoupage_administratif:update
 
 Pour lancer les tests :
 
@@ -138,9 +166,38 @@ Or install it directly:
 
     gem install decoupage_administratif
 
-Download the data files:
+Update data files (optional):
 
-    rake decoupage_administratif:install
+    rake decoupage_administratif:update
+
+### Configuration
+
+**Embedded data:** The gem now includes default data and works directly without additional installation.
+
+**Custom data:** You can use more recent data by downloading it:
+
+```bash
+# Update to latest data (optional)
+rake decoupage_administratif:update
+```
+
+**Custom directory:**
+```bash
+# Via environment variable
+export DECOUPAGE_DATA_DIR=/path/to/your/data/directory
+rake decoupage_administratif:update
+```
+
+```ruby
+# Via code (for Rails)
+# config/initializers/decoupage_administratif.rb
+DecoupageAdministratif::Config.data_directory = Rails.root.join('tmp', 'decoupage_data')
+```
+
+**Priority order:**
+1. Data in custom directory (`DECOUPAGE_DATA_DIR`)
+2. Data in `~/.local/share/decoupage_administratif/`
+3. **Embedded data in the gem** (automatic fallback)
 
 ## Usage
 
@@ -190,9 +247,9 @@ Check the installed version:
 
     ruby -r 'decoupage_administratif' -e 'puts DecoupageAdministratif::VERSION'
 
-Download the data :
+Update the data:
 
-    rake decoupage_administratif:install
+    rake decoupage_administratif:update
 
 To run the tests:
     rake spec
