@@ -86,10 +86,10 @@ puts epci.nom
 puts epci.communes
 
 # Rechercher une commune par nom (insensible à la casse)
-DecoupageAdministratif::Commune.search('paris')
+DecoupageAdministratif::Commune.find_by(nom: 'paris')
 
 # Lister les départements d’une région
-region = DecoupageAdministratif::Region.search('Bretagne').first
+region = DecoupageAdministratif::Region.find_by(nom: 'Bretagne').first
 puts region.departements
 ```
 
@@ -239,10 +239,10 @@ puts epci.nom
 puts epci.communes
 
 # Search for a municipality by name (case-insensitive)
-DecoupageAdministratif::Commune.search('paris')
+DecoupageAdministratif::Commune.find_by(nom: 'paris')
 
 # List departments of a region
-region = DecoupageAdministratif::Region.search('Bretagne').first
+region = DecoupageAdministratif::Region.find_by(nom: 'Bretagne').first
 puts region.departements
 ```
 
