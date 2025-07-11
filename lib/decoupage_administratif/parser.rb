@@ -13,8 +13,7 @@ module DecoupageAdministratif
     # @note Only expected model names should be used to avoid loading unwanted files. The file path is constructed from the model name.
     def initialize(model)
       @model = model
-      gem_dir = Gem::Specification.find_by_name('decoupage_administratif').gem_dir
-      @file_path = File.join(gem_dir, 'data', "#{@model}.json")
+      @file_path = File.join(DecoupageAdministratif::Config.data_directory, "#{@model}.json")
       load_data
     end
 
@@ -24,8 +23,17 @@ module DecoupageAdministratif
       file = File.read(@file_path)
       @data = JSON.parse(file)
     rescue Errno::ENOENT
-      raise Error,
-            "File #{@file_path} does not exist. You have to install the gem with 'rake decoupage_administratif:install'"
+      # Try to load from embedded data if external file not found
+      @file_path = File.join(DecoupageAdministratif::Config.embedded_data_directory, "#{@model}.json")
+      begin
+        file = File.read(@file_path)
+        @data = JSON.parse(file)
+      rescue Errno::ENOENT
+        raise Error,
+              "File #{@file_path} does not exist. You can update the data with 'rake decoupage_administratif:update'"
+      rescue JSON::ParserError
+        raise Error, "File #{@model}.json is not valid JSON"
+      end
     rescue JSON::ParserError
       raise Error, "File #{@model}.json is not valid JSON"
     end
