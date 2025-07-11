@@ -143,7 +143,7 @@ module DecoupageAdministratif
 
       @codes.each_value do |communes|
         # if the departement has the same number of communes as the codes and all communes code are in code_insee we return the departement
-        @epcis = DecoupageAdministratif::Epci.find_by_communes_codes(communes.map(&:code))
+        @epcis = DecoupageAdministratif::Epci.search_by_communes_codes(communes.map(&:code))
         @epcis.each do |epci|
           communes.reject! do |commune|
             epci.communes.include?(commune)
