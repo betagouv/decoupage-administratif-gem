@@ -1,33 +1,304 @@
 # DecoupageAdministratif
+English version below
 
-Gem permettant d’accéder aux données du découpage administratif français issu de https://github.com/datagouv/decoupage-administratif.
+Gem Ruby permettant d’accéder facilement aux données du découpage administratif français (régions, départements, communes, EPCI) à partir des jeux de données de Datagouv : <https://github.com/datagouv/decoupage-administratif>.
+
+## Territoires couverts 
+- Régions
+- Départements
+- Communes
+- EPCI (Établissements Publics de Coopération Intercommunale)
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Ajoutez la gem à votre Gemfile :
 
-Install the gem and add to the application's Gemfile by executing:
+    bundle add decoupage_administratif
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+Ou installez-la directement :
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+    gem install decoupage_administratif
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+Mise à jour des données (optionnel) :
+
+    rake decoupage_administratif:update
+
+### Configuration
+
+**Données embarquées :** La gem inclut maintenant les données par défaut et fonctionne directement sans installation additionnelle.
+
+**Données personnalisées :** Vous pouvez utiliser des données plus récentes en les téléchargeant :
+
+```bash
+# Mettre à jour vers les dernières données (optionnel)
+rake decoupage_administratif:update
+```
+
+**Répertoire personnalisé :**
+```bash
+# Via variable d'environnement
+export DECOUPAGE_DATA_DIR=/path/to/your/data/directory
+rake decoupage_administratif:update
+```
+
+```ruby
+# Via code (pour Rails)
+# config/initializers/decoupage_administratif.rb
+DecoupageAdministratif::Config.data_directory = Rails.root.join('tmp', 'decoupage_data')
+```
+
+**Ordre de priorité :**
+1. Données dans le répertoire personnalisé (`DECOUPAGE_DATA_DIR`)
+2. Données dans `~/.local/share/decoupage_administratif/`
+3. **Données embarquées dans la gem** (fallback automatique)
+
+## Utilisation
+
+Exemple d’utilisation basique :
+
+```ruby
+# Lister toutes les régions
+DecoupageAdministratif::Region.all
+
+# Trouver une commune par code INSEE
+# Une commune a un commune_type qui peut être `commune-actuelle`, `commune-deleguee` (anciennes communes) ou `commune-associee` (anciennes communes avec un statut spécial)
+commune = DecoupageAdministratif::Commune.find_by(code: '75056')
+puts commune.nom # => "Paris"
+
+# Trouver tous les territoires associés à une commune par son code INSEE
+territoires = DecoupageAdministratif::Search.new.find_territories_by_commune_insee_code('75056')
+puts territoires[:epci]      # => EPCI de la commune (ex : Métropole du Grand Paris)
+puts territoires[:departement] # => Département de la commune (ex : Paris)
+puts territoires[:region]      # => Région de la commune (ex : Île-de-France)
+
+# Lister les départements d'une région
+DecoupageAdministratif::Region.find_by(code: '84').departements
+
+# Lister toutes les communes actuelles d’un département
+departement = DecoupageAdministratif::Departement.find_by(code: '72')
+puts departement.communes
+
+# Trouver un EPCI par son SIREN
+epci = DecoupageAdministratif::Epci.find_by(code: '200054781')
+puts epci.nom
+
+# Lister les communes d’un EPCI
+puts epci.communes
+
+# Rechercher une commune par nom (insensible à la casse)
+DecoupageAdministratif::Commune.search('paris')
+
+# Lister les départements d’une région
+region = DecoupageAdministratif::Region.search('Bretagne').first
+puts region.departements
+```
+
+## Développement
+
+Build la gem après avoir cloné le dépôt :
+
+    gem build decoupage_administratif.gemspec
+
+Installer la gem localement :
+
+    gem install ./decoupage_administratif-0.1.0.gem
+
+Vérifier la version installée :
+
+    ruby -r 'decoupage_administratif' -e 'puts DecoupageAdministratif::VERSION'
+
+Mettre à jour les données :
+
+    rake decoupage_administratif:update
+
+Pour lancer les tests :
+
+    rake spec
+
+Pour une console interactive :
+
+    bin/console
+
+Puis importer la gem :
+
+    require 'decoupage_administratif'
+
+Pour publier une nouvelle version :
+
+- Mettez à jour le numéro de version dans `lib/decoupage_administratif/version.rb`
+- Exécutez :
+
+      bundle exec rake release
+
+### Yard
+
+Cette gem utilise [Yard](https://yardoc.org/) pour la documentation. Pour générer la documentation, exécutez :
+
+    yard doc
+
+pour lancer le serveur de documentation, exécutez :
+
+    yard server
+
+Vous pouvez ensuite accéder à la documentation à l'adresse : <http://localhost:8808>.
+
+## Contribution
+
+Les issues et pull requests sont les bienvenues sur : <https://github.com/BetaGouv/decoupage_administratif>
+
+## Licence
+
+Ce projet est sous licence [MIT](https://opensource.org/licenses/MIT).
+
+Données : © Etalab, disponibles sous licence ouverte.
+
+## English version
+
+Ruby gem to easily access French administrative division data (regions, departments, municipalities, EPCI) from official datasets: <https://github.com/datagouv/decoupage-administratif>.
+
+## Covered territories
+- Regions
+- Departments
+- Municipalities (communes)
+- EPCI (Public Establishments for Inter-municipal Cooperation)
+
+## Installation
+
+Add the gem to your Gemfile:
+
+    bundle add decoupage_administratif
+
+Or install it directly:
+
+    gem install decoupage_administratif
+
+Update data files (optional):
+
+    rake decoupage_administratif:update
+
+### Configuration
+
+**Embedded data:** The gem now includes default data and works directly without additional installation.
+
+**Custom data:** You can use more recent data by downloading it:
+
+```bash
+# Update to latest data (optional)
+rake decoupage_administratif:update
+```
+
+**Custom directory:**
+```bash
+# Via environment variable
+export DECOUPAGE_DATA_DIR=/path/to/your/data/directory
+rake decoupage_administratif:update
+```
+
+```ruby
+# Via code (for Rails)
+# config/initializers/decoupage_administratif.rb
+DecoupageAdministratif::Config.data_directory = Rails.root.join('tmp', 'decoupage_data')
+```
+
+**Priority order:**
+1. Data in custom directory (`DECOUPAGE_DATA_DIR`)
+2. Data in `~/.local/share/decoupage_administratif/`
+3. **Embedded data in the gem** (automatic fallback)
 
 ## Usage
 
-TODO: Write usage instructions here
+Basic usage example:
+
+```ruby
+# List all regions
+DecoupageAdministratif::Region.all
+
+# Find a municipality by INSEE code
+# A municipality has a `commune_type` which can be `commune-actuelle` (current municipalities), `commune-deleguee` (former municipalities), or `commune-associee` (former municipalities with a special status)
+commune = DecoupageAdministratif::Commune.find_by(code: '75056')
+puts commune.nom # => "Paris"
+
+# Find all territories associated with a municipality by its INSEE code
+territoires = DecoupageAdministratif::Search.new.find_territories_by_commune_insee_code('75056')
+puts territoires[:epci]      # => EPCI of the municipality (e.g., Métropole du Grand Paris)
+puts territoires[:departement] # => Department of the municipality (e.g., Paris)
+puts territoires[:region]      # => Region of the municipality (e.g., Île-de-France)
+
+# List departments of a region
+DecoupageAdministratif::Region.find_by(code: '84').departements
+
+# List all current municipalities of a department
+departement = DecoupageAdministratif::Departement.find_by(code: '72')
+puts departement.communes
+
+# Find an EPCI by its SIREN
+epci = DecoupageAdministratif::Epci.find_by(code: '200054781')
+puts epci.nom
+
+# List municipalities of an EPCI
+puts epci.communes
+
+# Search for a municipality by name (case-insensitive)
+DecoupageAdministratif::Commune.search('paris')
+
+# List departments of a region
+region = DecoupageAdministratif::Region.search('Bretagne').first
+puts region.departements
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Build the gem after cloning the repository:
+    gem build decoupage_administratif.gemspec
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Install the gem locally:
 
-## Contributing
+    gem install ./decoupage_administratif-0.1.0.gem
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/decoupage_administratif.
+Check the installed version:
+
+    ruby -r 'decoupage_administratif' -e 'puts DecoupageAdministratif::VERSION'
+
+Update the data:
+
+    rake decoupage_administratif:update
+
+To run the tests:
+    rake spec
+
+For an interactive console :
+
+    bin/console
+
+Then import the gem :
+
+    require 'decoupage_administratif'
+
+To publish a new version :
+
+- Update the version number in `lib/decoupage_administratif/version.rb`
+- Run :
+
+      bundle exec rake release
+
+### Yard
+
+This gem uses [Yard](https://yardoc.org/) for documentation. To generate the documentation, run:
+
+    yard doc
+
+to start the documentation server, run:
+
+    yard server
+
+You can then access the documentation at: <http://localhost:8808>.
+
+## Contribution
+
+Issues and pull requests are welcome at : <https://github.com/BetaGouv/decoupage_administratif>
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT](https://opensource.org/licenses/MIT) license.
+
+Data : © Etalab, available under open license.
