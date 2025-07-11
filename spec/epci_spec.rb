@@ -73,11 +73,11 @@ RSpec.describe DecoupageAdministratif::Epci do
     end
   end
 
-  describe "find_by_communes_codes" do
+  describe "search_by_communes_codes" do
     let(:model) { 'epci' }
     let(:codes) { %w[72329 72241 72090 72300 72359 72335 72382 72271 72303 72094] }
 
-    subject { DecoupageAdministratif::Epci.find_by_communes_codes(codes) }
+    subject { DecoupageAdministratif::Epci.search_by_communes_codes(codes) }
 
     it 'Returns the epci with the given communes codes' do
       is_expected.to all(be_a(DecoupageAdministratif::Epci))
