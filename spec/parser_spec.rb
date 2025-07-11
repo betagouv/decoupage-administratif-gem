@@ -30,9 +30,10 @@ RSpec.describe DecoupageAdministratif::Parser do
       end
 
       it 'raises an error' do
+        expected_path = File.join(DecoupageAdministratif::Config.embedded_data_directory, 'invalid.json')
         expect { described_class.new('invalid') }.to raise_error(
           DecoupageAdministratif::Error,
-          "File #{File.expand_path("#{fixtures_dir}/data/invalid.json")} does not exist. You have to install the gem with 'rake decoupage_administratif:install'"
+          "File #{expected_path} does not exist. You can update the data with 'rake decoupage_administratif:update'"
         )
       end
     end

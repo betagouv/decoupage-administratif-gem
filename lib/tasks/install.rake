@@ -3,14 +3,14 @@
 require 'net/http'
 require 'uri'
 require 'json'
-
-DATA_DIR = File.join(Gem::Specification.find_by_name('decoupage_administratif').gem_dir, 'data')
+require_relative '../decoupage_administratif/config'
 
 namespace :decoupage_administratif do
-  desc 'Download files'
-  task :install do
+  desc 'Update files'
+  task :update do
     collection = %w[communes departements regions epci]
-    FileUtils.mkdir_p(DATA_DIR)
+    data_dir = DecoupageAdministratif::Config.data_directory
+    FileUtils.mkdir_p(data_dir)
 
     collection.each do |item|
       def download_file(url, destination)
@@ -39,13 +39,13 @@ namespace :decoupage_administratif do
       end
 
       begin
-        file = File.join(DATA_DIR, "#{item}.json")
+        file = File.join(data_dir, "#{item}.json")
         url = "https://unpkg.com/@etalab/decoupage-administratif@4.0.0/data/#{item}.json"
         download_file(url, file)
 
-        puts "Installation completed successfully!"
+        puts "Update completed successfully!"
       rescue StandardError => e
-        puts "Error during installation:"
+        puts "Error during update:"
         puts e.message
         puts e.backtrace
         exit 1
@@ -53,9 +53,10 @@ namespace :decoupage_administratif do
     end
   end
 
-  desc 'Update files'
-  task :update do
-    FileUtils.rm_rf(DATA_DIR) if File.directory?(DATA_DIR)
-    Rake::Task['decoupage_administratif:install'].invoke
+  desc 'Download files'
+  task :install do
+    data_dir = DecoupageAdministratif::Config.data_directory
+    FileUtils.rm_rf(data_dir) if File.directory?(data_dir)
+    Rake::Task['decoupage_administratif:update'].invoke
   end
 end

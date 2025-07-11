@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "decoupage_administratif/version"
+require_relative "decoupage_administratif/config"
 require_relative "decoupage_administratif/base_model"
 require_relative "decoupage_administratif/parser"
 require_relative "decoupage_administratif/commune"
