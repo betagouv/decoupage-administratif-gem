@@ -129,7 +129,7 @@ module DecoupageAdministratif
 
       @codes.each_value do |communes|
         # Find EPCIs that match all communes in the current group
-        @epcis = DecoupageAdministratif::Epci.find_by_communes_codes(communes.map(&:code))
+        @epcis = DecoupageAdministratif::Epci.search_by_communes_codes(communes.map(&:code))
         @epcis.each do |epci|
           communes.reject! do |commune|
             epci.communes.include?(commune)
