@@ -11,8 +11,9 @@ RSpec.describe DecoupageAdministratif::Departement do
   end
 
   describe '#all' do
-    let(:model) { 'departements' }
     subject { DecoupageAdministratif::Departement.all }
+
+    let(:model) { 'departements' }
 
     it "Returns all departements" do
       expect(subject.size).to eq(6)
@@ -27,14 +28,14 @@ RSpec.describe DecoupageAdministratif::Departement do
 
   describe "#find_by" do
     context 'when searching by code' do
+      subject { DecoupageAdministratif::Departement.find_by(code: code) }
+
       let(:model) { 'departements' }
       let(:code) { '78' }
 
-      subject { DecoupageAdministratif::Departement.find_by(code: code) }
-
       it 'Returns the departement with the given code' do
-        is_expected.to be_a(DecoupageAdministratif::Departement)
-        is_expected.to have_attributes(
+        expect(subject).to be_a(DecoupageAdministratif::Departement)
+        expect(subject).to have_attributes(
           code: code,
           nom: "Yvelines",
           zone: "metro",
@@ -45,13 +46,13 @@ RSpec.describe DecoupageAdministratif::Departement do
   end
 
   describe '#communes' do
+    subject { departement.communes }
+
     let(:model) { 'communes' }
     let(:departement) { DecoupageAdministratif::Departement.new(code: '72', nom: 'Sarthe', zone: 'metro', code_region: '52') }
 
-    subject { departement.communes }
-
     it 'Returns the actual communes of the departement' do
-      is_expected.to all(be_a(DecoupageAdministratif::Commune))
+      expect(subject).to all(be_a(DecoupageAdministratif::Commune))
       expect(subject.first).to have_attributes(
         code: '72180',
         nom: 'Mamers'
@@ -61,14 +62,14 @@ RSpec.describe DecoupageAdministratif::Departement do
   end
 
   describe '#region' do
+    subject { departement.region }
+
     let(:model) { 'regions' }
     let(:departement) { DecoupageAdministratif::Departement.new(code: '72', nom: 'Sarthe', zone: 'metro', code_region: '52') }
 
-    subject { departement.region }
-
     it 'Returns the region of the departement' do
-      is_expected.to be_a(DecoupageAdministratif::Region)
-      is_expected.to have_attributes(
+      expect(subject).to be_a(DecoupageAdministratif::Region)
+      expect(subject).to have_attributes(
         code: '52',
         nom: 'Pays de la Loire'
       )

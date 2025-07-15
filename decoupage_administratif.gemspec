@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop", "~> 1.21"
   spec.add_development_dependency "yard", ">= 0.9.34"
   spec.add_dependency "rake"
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end
