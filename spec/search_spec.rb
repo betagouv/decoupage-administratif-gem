@@ -21,7 +21,7 @@ RSpec.describe DecoupageAdministratif::Search do
 
   describe '#by_insee_codes' do
     context "find departement" do
-      subject { DecoupageAdministratif::Search.new(%w[01042 01015]).by_insee_codes }
+      subject { described_class.new(%w[01042 01015]).by_insee_codes }
 
       it "Returns a departement" do
         expect(subject[:departements].size).to eq(1)
@@ -35,7 +35,7 @@ RSpec.describe DecoupageAdministratif::Search do
     end
 
     context "find epci" do
-      subject { DecoupageAdministratif::Search.new(%w[72180 72039 72189 72276 72026 72215 72220 72196 72316 72101 72104 72048]).by_insee_codes }
+      subject { described_class.new(%w[72180 72039 72189 72276 72026 72215 72220 72196 72316 72101 72104 72048]).by_insee_codes }
 
       it "Returns an epci" do
         expect(subject[:epcis].size).to eq(1)
@@ -47,7 +47,7 @@ RSpec.describe DecoupageAdministratif::Search do
     end
 
     context "find communes" do
-      subject { DecoupageAdministratif::Search.new(%w[72180 72039]).by_insee_codes }
+      subject { described_class.new(%w[72180 72039]).by_insee_codes }
 
       it "Returns communes" do
         expect(subject[:communes].size).to eq(2)
@@ -69,7 +69,7 @@ RSpec.describe DecoupageAdministratif::Search do
     end
 
     context "no matching codes" do
-      subject { DecoupageAdministratif::Search.new(%w[99999 88888]).by_insee_codes }
+      subject { described_class.new(%w[99999 88888]).by_insee_codes }
 
       it "returns only empty arrays" do
         expect(subject[:regions]).to eq([])
@@ -80,7 +80,7 @@ RSpec.describe DecoupageAdministratif::Search do
     end
 
     context "partially matching codes" do
-      subject { DecoupageAdministratif::Search.new(%w[72180 99999]).by_insee_codes }
+      subject { described_class.new(%w[72180 99999]).by_insee_codes }
 
       it "returns only the valid commune" do
         expect(subject[:communes].map(&:code)).to include("72180")
