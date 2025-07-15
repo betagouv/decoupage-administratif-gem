@@ -18,7 +18,7 @@ module DecoupageAdministratif
 
       # @return [String] the root directory of the gem
       def gem_root
-        @gem_root ||= File.expand_path('../../..', __FILE__)
+        @gem_root ||= File.expand_path('../..', __dir__)
       end
 
       private
