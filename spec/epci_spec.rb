@@ -11,8 +11,9 @@ RSpec.describe DecoupageAdministratif::Epci do
   end
 
   describe '#all' do
-    let(:model) { 'epci' }
     subject { DecoupageAdministratif::Epci.all }
+
+    let(:model) { 'epci' }
 
     it "Returns all epcis" do
       expect(subject.size).to eq(2)
@@ -25,14 +26,14 @@ RSpec.describe DecoupageAdministratif::Epci do
 
   describe 'find_by' do
     context 'when searching by code' do
+      subject { DecoupageAdministratif::Epci.find_by(code: code) }
+
       let(:model) { 'epci' }
       let(:code) { '200072684' }
 
-      subject { DecoupageAdministratif::Epci.find_by(code: code) }
-
       it 'Returns the epci with the given code' do
-        is_expected.to be_a(DecoupageAdministratif::Epci)
-        is_expected.to have_attributes(
+        expect(subject).to be_a(DecoupageAdministratif::Epci)
+        expect(subject).to have_attributes(
           code: code,
           nom: "CC Le Gesnois Bilurien"
         )
@@ -41,6 +42,8 @@ RSpec.describe DecoupageAdministratif::Epci do
   end
 
   describe '#communes' do
+    subject { epci.communes }
+
     let(:model) { 'communes' }
     let(:epci) do
       DecoupageAdministratif::Epci.new(code: "200072676",
@@ -60,10 +63,9 @@ RSpec.describe DecoupageAdministratif::Epci do
                                        nom: "CC Maine Saosnois")
     end
     let(:parsed_data) { JSON.parse(File.read("spec/fixtures/epci_communes.json")) }
-    subject { epci.communes }
 
     it 'Returns the communes of the epci' do
-      is_expected.to all(be_a(DecoupageAdministratif::Commune))
+      expect(subject).to all(be_a(DecoupageAdministratif::Commune))
 
       expect(subject.first).to have_attributes(
         code: '72180',
@@ -74,13 +76,13 @@ RSpec.describe DecoupageAdministratif::Epci do
   end
 
   describe "search_by_communes_codes" do
+    subject { DecoupageAdministratif::Epci.search_by_communes_codes(codes) }
+
     let(:model) { 'epci' }
     let(:codes) { %w[72329 72241 72090 72300 72359 72335 72382 72271 72303 72094] }
 
-    subject { DecoupageAdministratif::Epci.search_by_communes_codes(codes) }
-
     it 'Returns the epci with the given communes codes' do
-      is_expected.to all(be_a(DecoupageAdministratif::Epci))
+      expect(subject).to all(be_a(DecoupageAdministratif::Epci))
       expect(subject.size).to eq(1)
       expect(subject.first).to have_attributes(
         nom: "CC Le Gesnois Bilurien",

@@ -21,9 +21,7 @@ namespace :decoupage_administratif do
 
         raise "Download failed with status: #{response.code} #{response.message}" unless response.is_a?(Net::HTTPSuccess)
 
-        File.open(destination, 'wb') do |file|
-          file.write(response.body)
-        end
+        File.binwrite(destination, response.body)
         puts "Successfully downloaded"
 
         # Validate JSON
