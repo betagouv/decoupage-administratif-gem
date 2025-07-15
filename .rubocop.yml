@@ -1,5 +1,15 @@
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
   TargetRubyVersion: 3.0
+  NewCops: enable
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'pkg/**/*'
 
 Layout/LineLength:
   Enabled: false
@@ -9,6 +19,7 @@ Metrics/AbcSize:
 
 Metrics/BlockLength:
   Enabled: false
+  ExcludedMethods: ['describe', 'context', 'shared_examples']
 
 Metrics/ClassLength:
   Enabled: false
@@ -24,3 +35,13 @@ Style/StringLiterals:
 
 Style/StringLiteralsInInterpolation:
   Enabled: false
+
+# RSpec specific configurations
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5

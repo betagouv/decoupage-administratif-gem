@@ -11,9 +11,9 @@ RSpec.describe DecoupageAdministratif::Region do
   end
 
   describe '#all' do
-    let(:model) { 'regions' }
-
     subject { DecoupageAdministratif::Region.all }
+
+    let(:model) { 'regions' }
 
     it "Returns all regions" do
       expect(subject.size).to eq(26)
@@ -27,14 +27,14 @@ RSpec.describe DecoupageAdministratif::Region do
 
   describe 'find_by' do
     context 'when searching by code' do
+      subject { DecoupageAdministratif::Region.find_by(code: code) }
+
       let(:model) { 'regions' }
       let(:code) { '53' }
 
-      subject { DecoupageAdministratif::Region.find_by(code: code) }
-
       it 'Returns the region with the given code' do
-        is_expected.to be_a(DecoupageAdministratif::Region)
-        is_expected.to have_attributes(
+        expect(subject).to be_a(DecoupageAdministratif::Region)
+        expect(subject).to have_attributes(
           code: code,
           nom: "Bretagne",
           zone: "metro"
@@ -44,14 +44,14 @@ RSpec.describe DecoupageAdministratif::Region do
   end
 
   describe 'departements' do
+    subject { region.departements }
+
     let(:model) { 'departements' }
     let!(:region) { DecoupageAdministratif::Region.new(code: '11', nom: 'Île-de-France', zone: 'metro') }
 
-    subject { region.departements }
-
     it 'Returns the departements of the region' do
       expect(subject.size).to eq(2)
-      is_expected.to all(be_a(DecoupageAdministratif::Departement))
+      expect(subject).to all(be_a(DecoupageAdministratif::Departement))
       expect(subject.first).to have_attributes(
         code: '77',
         nom: 'Seine-et-Marne'
@@ -60,14 +60,14 @@ RSpec.describe DecoupageAdministratif::Region do
   end
 
   describe 'communes' do
+    subject { region.communes }
+
     let(:model) { 'communes' }
     let!(:region) { DecoupageAdministratif::Region.new(code: '84', nom: 'Auvergne-Rhône-Alpes', zone: 'metro') }
 
-    subject { region.communes }
-
     it 'Returns the actual communes of the region' do
       expect(subject.size).to eq(1)
-      is_expected.to all(be_a(DecoupageAdministratif::Commune))
+      expect(subject).to all(be_a(DecoupageAdministratif::Commune))
       expect(subject.first).to have_attributes(
         code: '01042',
         nom: 'Bey'
