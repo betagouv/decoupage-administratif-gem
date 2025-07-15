@@ -95,7 +95,7 @@ Build la gem après avoir cloné le dépôt :
 
 Installer la gem localement :
 
-    gem install ./decoupage_administratif-0.1.0.gem
+    bundle exec rake install
 
 Vérifier la version installée :
 
@@ -241,7 +241,7 @@ Build the gem after cloning the repository:
 
 Install the gem locally:
 
-    gem install ./decoupage_administratif-0.1.0.gem
+    bundle exec rake install
 
 Check the installed version:
 
