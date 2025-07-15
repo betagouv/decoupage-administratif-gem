@@ -2,6 +2,6 @@
 
 RSpec.describe DecoupageAdministratif do
   it "has a version number" do
-    expect(DecoupageAdministratif::VERSION).not_to be nil
+    expect(DecoupageAdministratif::VERSION).not_to be_nil
   end
 end
