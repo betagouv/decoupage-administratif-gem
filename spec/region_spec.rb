@@ -11,7 +11,7 @@ RSpec.describe DecoupageAdministratif::Region do
   end
 
   describe '#all' do
-    subject { DecoupageAdministratif::Region.all }
+    subject { described_class.all }
 
     let(:model) { 'regions' }
 
@@ -27,13 +27,13 @@ RSpec.describe DecoupageAdministratif::Region do
 
   describe 'find_by' do
     context 'when searching by code' do
-      subject { DecoupageAdministratif::Region.find_by(code: code) }
+      subject { described_class.find_by(code: code) }
 
       let(:model) { 'regions' }
       let(:code) { '53' }
 
       it 'Returns the region with the given code' do
-        expect(subject).to be_a(DecoupageAdministratif::Region)
+        expect(subject).to be_a(described_class)
         expect(subject).to have_attributes(
           code: code,
           nom: "Bretagne",
@@ -47,7 +47,7 @@ RSpec.describe DecoupageAdministratif::Region do
     subject { region.departements }
 
     let(:model) { 'departements' }
-    let!(:region) { DecoupageAdministratif::Region.new(code: '11', nom: 'Île-de-France', zone: 'metro') }
+    let!(:region) { described_class.new(code: '11', nom: 'Île-de-France', zone: 'metro') }
 
     it 'Returns the departements of the region' do
       expect(subject.size).to eq(2)
@@ -63,7 +63,7 @@ RSpec.describe DecoupageAdministratif::Region do
     subject { region.communes }
 
     let(:model) { 'communes' }
-    let!(:region) { DecoupageAdministratif::Region.new(code: '84', nom: 'Auvergne-Rhône-Alpes', zone: 'metro') }
+    let!(:region) { described_class.new(code: '84', nom: 'Auvergne-Rhône-Alpes', zone: 'metro') }
 
     it 'Returns the actual communes of the region' do
       expect(subject.size).to eq(1)
