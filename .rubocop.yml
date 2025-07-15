@@ -19,7 +19,6 @@ Metrics/AbcSize:
 
 Metrics/BlockLength:
   Enabled: false
-  ExcludedMethods: ['describe', 'context', 'shared_examples']
 
 Metrics/ClassLength:
   Enabled: false
@@ -43,5 +42,14 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
 RSpec/NestedGroups:
   Max: 5
+
+RSpec/SpecFilePathFormat:
+  Enabled: false

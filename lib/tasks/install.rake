@@ -5,6 +5,29 @@ require 'uri'
 require 'json'
 require_relative '../decoupage_administratif/config'
 
+def download_file(url, destination)
+  puts "Downloading from #{url}..."
+
+  uri = URI(url)
+  response = Net::HTTP.get_response(uri)
+
+  raise "Download failed with status: #{response.code} #{response.message}" unless response.is_a?(Net::HTTPSuccess)
+
+  File.binwrite(destination, response.body)
+  puts "Successfully downloaded"
+
+  # Validate JSON
+  begin
+    JSON.parse(File.read(destination))
+    puts "JSON validation successful"
+  rescue JSON::ParserError => e
+    puts "Error: Invalid JSON file downloaded"
+    puts e.message
+    FileUtils.rm(destination)
+    raise "Download failed: Invalid JSON"
+  end
+end
+
 namespace :decoupage_administratif do
   desc 'Update files'
   task :update do
@@ -13,41 +36,16 @@ namespace :decoupage_administratif do
     FileUtils.mkdir_p(data_dir)
 
     collection.each do |item|
-      def download_file(url, destination)
-        puts "Downloading from #{url}..."
+      file = File.join(data_dir, "#{item}.json")
+      url = "https://unpkg.com/@etalab/decoupage-administratif@4.0.0/data/#{item}.json"
+      download_file(url, file)
 
-        uri = URI(url)
-        response = Net::HTTP.get_response(uri)
-
-        raise "Download failed with status: #{response.code} #{response.message}" unless response.is_a?(Net::HTTPSuccess)
-
-        File.binwrite(destination, response.body)
-        puts "Successfully downloaded"
-
-        # Validate JSON
-        begin
-          JSON.parse(File.read(destination))
-          puts "JSON validation successful"
-        rescue JSON::ParserError => e
-          puts "Error: Invalid JSON file downloaded"
-          puts e.message
-          FileUtils.rm(destination)
-          raise "Download failed: Invalid JSON"
-        end
-      end
-
-      begin
-        file = File.join(data_dir, "#{item}.json")
-        url = "https://unpkg.com/@etalab/decoupage-administratif@4.0.0/data/#{item}.json"
-        download_file(url, file)
-
-        puts "Update completed successfully!"
-      rescue StandardError => e
-        puts "Error during update:"
-        puts e.message
-        puts e.backtrace
-        exit 1
-      end
+      puts "Update completed successfully!"
+    rescue StandardError => e
+      puts "Error during update:"
+      puts e.message
+      puts e.backtrace
+      exit 1
     end
   end
 
