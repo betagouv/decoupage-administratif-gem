@@ -7,7 +7,7 @@ module DecoupageAdministratif
     # @example
     #   DecoupageAdministratif::Commune.find_by(code: '72039')
     def find_by(criteria)
-      all.find { |item| item.send(criteria.keys.first) == criteria.values.first }
+      all.find { |item| criteria.all? { |k,v| item.send(k) == v } }
     end
 
     # @param criteria [Hash] a hash with the attributes to filter by
