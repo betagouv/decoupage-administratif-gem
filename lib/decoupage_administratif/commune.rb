@@ -54,6 +54,15 @@ module DecoupageAdministratif
       @communes_actuelles ||= where(commune_type: "commune-actuelle")
     end
 
+    # @raise [NotFoundError] if no region is found for the code
+    # @return [Region] the region of the commune
+    def region
+      region = DecoupageAdministratif::Region.find_by(code: @region_code)
+      raise DecoupageAdministratif::NotFoundError, "No region found for code #{@region_code}" unless region.is_a?(DecoupageAdministratif::Region)
+
+      @region ||= region
+    end
+
     # @raise [NotFoundError] if no department is found for the code
     # @return [Departement] the department of the commune
     def departement
@@ -69,15 +78,6 @@ module DecoupageAdministratif
         epci.membres.any? { |m| m["code"] == @code }
       end
       found_epci.is_a?(DecoupageAdministratif::Epci) ? (@epci ||= found_epci) : nil
-    end
-
-    # @raise [NotFoundError] if no region is found for the code
-    # @return [Region] the region of the commune
-    def region
-      region = DecoupageAdministratif::Region.find_by(code: @region_code)
-      raise DecoupageAdministratif::NotFoundError, "No region found for code #{@region_code}" unless region.is_a?(DecoupageAdministratif::Region)
-
-      @region ||= region
     end
   end
 end
