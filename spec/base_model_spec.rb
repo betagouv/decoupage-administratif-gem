@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'json'
 
 RSpec.describe DecoupageAdministratif::BaseModel do
-  describe '.where_ilike' do
+  describe '.where avec options' do
     let(:model) { 'communes' }
     let(:parsed_data) { JSON.parse(File.read("spec/fixtures/#{model}.json")) }
     let(:parser) { instance_double(DecoupageAdministratif::Parser, data: parsed_data) }
@@ -13,14 +13,14 @@ RSpec.describe DecoupageAdministratif::BaseModel do
       allow(DecoupageAdministratif::Parser).to receive(:new).with(model).and_return(parser)
     end
 
-    it 'where_ilike trouve les communes dont le nom contient une sous-chaîne (insensible à la casse)' do
-      communes = DecoupageAdministratif::Commune.where_ilike(nom: 'mam')
+    it 'trouve les communes dont le nom contient une sous-chaîne (insensible à la casse)' do
+      communes = DecoupageAdministratif::Commune.where(nom: 'mam', case_insensitive: true, partial: true)
       noms = communes.map(&:nom)
       expect(noms).to include('Mamers')
     end
 
-    it 'where_ilike retourne un tableau vide si aucun nom ne correspond' do
-      communes = DecoupageAdministratif::Commune.where_ilike(nom: 'ville-inexistante')
+    it 'retourne un tableau vide si aucun nom ne correspond' do
+      communes = DecoupageAdministratif::Commune.where(nom: 'ville-inexistante', case_insensitive: true, partial: true)
       expect(communes).to be_empty
     end
   end
