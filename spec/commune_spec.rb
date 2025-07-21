@@ -28,7 +28,7 @@ RSpec.describe DecoupageAdministratif::Commune do
 
   describe '#communes_actuelles' do
     let(:model) { 'communes' }
-    subject { DecoupageAdministratif::Commune.communes_actuelles }
+    subject { DecoupageAdministratif::Commune.actuelles }
 
     it "Returns all communes actuelles" do
       expect(subject.size).to eq(14)

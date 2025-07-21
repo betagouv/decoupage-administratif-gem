@@ -13,4 +13,5 @@ require 'decoupage_administratif/railtie' if defined?(Rails)
 
 module DecoupageAdministratif
   class Error < StandardError; end
+  class NotFoundError < Error; end
 end

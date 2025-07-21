@@ -51,11 +51,11 @@ module DecoupageAdministratif
     end
 
     # @return [Array<Commune>] a collection of all communes that are members of the EPCI
-    # @raise [TypeError] if a commune code is not found
+    # @raise [NotFoundError] if a commune code is not found
     def communes
       @communes ||= @membres.map do |membre|
         commune = DecoupageAdministratif::Commune.find_by(code: membre["code"])
-        raise TypeError, "Commune not found for code #{membre["code"]}" unless commune.is_a?(DecoupageAdministratif::Commune)
+        raise DecoupageAdministratif::NotFoundError, "Commune not found for code #{membre["code"]}" unless commune.is_a?(DecoupageAdministratif::Commune)
 
         commune
       end.compact
