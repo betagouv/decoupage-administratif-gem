@@ -49,9 +49,9 @@ module DecoupageAdministratif
       end
     end
 
-    # @return [Array<Commune>] a collection of all actual communes
-    def self.communes_actuelles
-      @communes_actuelles ||= all.select { |commune| commune.commune_type == "commune-actuelle" }
+    # @return [Array<Commune>] a collection of all communes _actuelles_
+    def self.actuelles
+      @communes_actuelles ||= where(commune_type: "commune-actuelle")
     end
 
     # @raise [TypeError] if no department is found for the code
