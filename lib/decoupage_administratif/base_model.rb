@@ -25,7 +25,7 @@ module DecoupageAdministratif
       all.select do |item|
         args.all? do |key, value|
           item_value = item.send(key)
-          
+
           if case_insensitive && value.is_a?(String) && item_value.is_a?(String)
             if partial
               item_value.downcase.include?(value.downcase)

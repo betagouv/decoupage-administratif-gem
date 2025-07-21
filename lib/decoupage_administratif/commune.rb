@@ -51,7 +51,7 @@ module DecoupageAdministratif
 
     # @return [Array<Commune>] a collection of all communes _actuelles_
     def self.actuelles
-      @communes_actuelles ||= where(commune_type: "commune-actuelle")
+      @actuelles ||= where(commune_type: "commune-actuelle")
     end
 
     # @raise [NotFoundError] if no region is found for the code
