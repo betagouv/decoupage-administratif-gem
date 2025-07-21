@@ -17,6 +17,7 @@ module DecoupageAdministratif
     # @example
     #   DecoupageAdministratif::Departement.where(code_region: '52')
     #   DecoupageAdministratif::Commune.where(nom: 'pari', case_insensitive: true, partial: true)
+    # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def where(**args)
       # Separate options from criteria
       case_insensitive = args.delete(:case_insensitive) || false
@@ -39,6 +40,7 @@ module DecoupageAdministratif
           end
         end
       end
+      # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     end
   end
 end
