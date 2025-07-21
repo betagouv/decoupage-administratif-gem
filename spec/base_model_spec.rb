@@ -55,8 +55,8 @@ RSpec.describe DecoupageAdministratif::BaseModel do
       allow(DecoupageAdministratif::Parser).to receive(:new).with(model).and_return(parser)
     end
 
-    it 'retourne toutes les communes correspondant exactement au nom' do
-      communes = DecoupageAdministratif::Commune.where(nom: 'Mamers')
+    it 'retourne toutes les communes correspondant exactement au nom et code' do
+      communes = DecoupageAdministratif::Commune.where(nom: 'Mamers', code: "72180")
       expect(communes.map(&:nom)).to eq(['Mamers'])
     end
 

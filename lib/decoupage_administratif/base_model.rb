@@ -15,7 +15,7 @@ module DecoupageAdministratif
     # @example
     #   DecoupageAdministratif::Departement.where(code_region: '52')
     def where(criteria)
-      all.select { |item| item.send(criteria.keys.first) == criteria.values.first }
+      all.select { |item| criteria.all? { |k, v| item.send(k) == v } }
     end
 
     # @param criteria [Hash] a hash with the attributes to filter by
