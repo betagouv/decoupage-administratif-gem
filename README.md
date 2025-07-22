@@ -101,7 +101,7 @@ Vérifier la version installée :
 
     ruby -r 'decoupage_administratif' -e 'puts DecoupageAdministratif::VERSION'
 
-Mettre à jour les données :
+Mettre à jour les données (optionnel) :
 
     rake decoupage_administratif:update
 
