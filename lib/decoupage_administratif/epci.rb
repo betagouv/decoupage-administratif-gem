@@ -38,12 +38,7 @@ module DecoupageAdministratif
     def self.search_by_communes_codes(codes)
       all.select do |epci|
         epci.membres.map do |m|
-          # Normally a member is a hash, but sometimes it's a DecoupageAdministratif::Commune (bug handled)
-          if m.is_a?(DecoupageAdministratif::Commune)
-            codes.include?(m.code)
-          else
-            codes.include?(m['code'])
-          end
+          codes.include?(m['code'])
         end.all?
       end
     end
