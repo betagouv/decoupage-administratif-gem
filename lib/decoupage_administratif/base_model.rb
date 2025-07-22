@@ -2,6 +2,21 @@
 
 module DecoupageAdministratif
   module BaseModel
+    # Find a single record by its code (primary key equivalent)
+    # @param code [String] the code to search for
+    # @return [Object, nil] the element with the given code, or nil if not found
+    # @raise [NotFoundError] if the record is not found and no default block is given
+    # @example
+    #   DecoupageAdministratif::Commune.find('72039')
+    #   DecoupageAdministratif::Region.find('52')
+    def find(code)
+      result = find_by(code: code)
+      if result.nil?
+        raise DecoupageAdministratif::NotFoundError, "#{self.name.split('::').last} not found for code #{code}"
+      end
+      result
+    end
+
     # @param criteria [Hash] a hash with the attributes to filter by
     # @return [untyped] the element that matches the criteria
     # @example

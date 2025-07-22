@@ -25,6 +25,29 @@ RSpec.describe DecoupageAdministratif::BaseModel do
     end
   end
 
+  describe '.find' do
+    let(:model) { 'communes' }
+    let(:parsed_data) { JSON.parse(File.read("spec/fixtures/#{model}.json")) }
+    let(:parser) { instance_double(DecoupageAdministratif::Parser, data: parsed_data) }
+
+    before do
+      allow(DecoupageAdministratif::Parser).to receive(:new).with(model).and_return(parser)
+    end
+
+    it 'retourne la commune correspondant au code donné' do
+      commune = DecoupageAdministratif::Commune.find('72180')
+      expect(commune).not_to be_nil
+      expect(commune.code).to eq('72180')
+      expect(commune.nom).to eq('Mamers')
+    end
+
+    it 'lève une exception si aucune commune ne correspond au code' do
+      expect {
+        DecoupageAdministratif::Commune.find('99999')
+      }.to raise_error(DecoupageAdministratif::NotFoundError, 'Commune not found for code 99999')
+    end
+  end
+
   describe '.find_by' do
     let(:model) { 'communes' }
     let(:parsed_data) { JSON.parse(File.read("spec/fixtures/#{model}.json")) }
