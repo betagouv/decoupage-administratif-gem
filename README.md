@@ -34,7 +34,7 @@ DecoupageAdministratif::Region.all
 
 # Trouver une commune par code INSEE
 # Une commune a un commune_type qui peut être `commune-actuelle`, `commune-deleguee` (anciennes communes) ou `commune-associee` (anciennes communes avec un statut spécial)
-commune = DecoupageAdministratif::Commune.find_by(code: '75056')
+commune = DecoupageAdministratif::Commune.find('75056')
 puts commune.nom # => "Paris"
 
 # Trouver tous les territoires associés à une commune par son code INSEE
@@ -44,14 +44,14 @@ puts territoires[:departement] # => Département de la commune (ex : Paris)
 puts territoires[:region]      # => Région de la commune (ex : Île-de-France)
 
 # Lister les départements d'une région
-DecoupageAdministratif::Region.find_by(code: '84').departements
+DecoupageAdministratif::Region.find('84').departements
 
 # Lister toutes les communes actuelles d’un département
-departement = DecoupageAdministratif::Departement.find_by(code: '72')
+departement = DecoupageAdministratif::Departement.find('72')
 puts departement.communes
 
 # Trouver un EPCI par son SIREN
-epci = DecoupageAdministratif::Epci.find_by(code: '200054781')
+epci = DecoupageAdministratif::Epci.find('200054781')
 puts epci.nom
 
 # Lister les communes d’un EPCI
@@ -158,7 +158,7 @@ DecoupageAdministratif::Region.all
 
 # Find a municipality by INSEE code
 # A municipality has a `commune_type` which can be :commune_actuelle (current municipalities), :commune_deleguee (former municipalities), or :commune_associee (former municipalities with a special status)
-commune = DecoupageAdministratif::Commune.find_by(code: '75056')
+commune = DecoupageAdministratif::Commune.find('75056')
 puts commune.nom # => "Paris"
 
 # Find all territories associated with a municipality by its INSEE code
@@ -168,14 +168,14 @@ puts territoires[:departement] # => Department of the municipality (e.g., Paris)
 puts territoires[:region]      # => Region of the municipality (e.g., Île-de-France)
 
 # List departments of a region
-DecoupageAdministratif::Region.find_by(code: '84').departements
+DecoupageAdministratif::Region.find('84').departements
 
 # List all current municipalities of a department
-departement = DecoupageAdministratif::Departement.find_by(code: '72')
+departement = DecoupageAdministratif::Departement.find('72')
 puts departement.communes
 
 # Find an EPCI by its SIREN
-epci = DecoupageAdministratif::Epci.find_by(code: '200054781')
+epci = DecoupageAdministratif::Epci.find('200054781')
 puts epci.nom
 
 # List municipalities of an EPCI

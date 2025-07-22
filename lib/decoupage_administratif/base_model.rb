@@ -20,7 +20,7 @@ module DecoupageAdministratif
     # @param criteria [Hash] a hash with the attributes to filter by
     # @return [untyped] the element that matches the criteria
     # @example
-    #   DecoupageAdministratif::Commune.find_by(code: '72039')
+    #   DecoupageAdministratif::Commune.find_by(nom: 'Paris')
     def find_by(criteria)
       all.find { |item| criteria.all? { |k, v| item.send(k) == v } }
     end

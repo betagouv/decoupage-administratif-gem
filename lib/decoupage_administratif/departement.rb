@@ -44,10 +44,7 @@ module DecoupageAdministratif
     # @raise [NotFoundError] if no region is found for the code
     # @return [Region] the region of the department
     def region
-      region = DecoupageAdministratif::Region.find_by(code: @code_region)
-      raise DecoupageAdministratif::NotFoundError, "No region found for code #{@code_region}" unless region.is_a?(DecoupageAdministratif::Region)
-
-      @region ||= region
+      @region ||= DecoupageAdministratif::Region.find(@code_region)
     end
   end
 end

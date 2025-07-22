@@ -54,10 +54,7 @@ module DecoupageAdministratif
     # @raise [NotFoundError] if a commune code is not found
     def communes
       @communes ||= @membres.map do |membre|
-        commune = DecoupageAdministratif::Commune.find_by(code: membre["code"])
-        raise DecoupageAdministratif::NotFoundError, "Commune not found for code #{membre["code"]}" unless commune.is_a?(DecoupageAdministratif::Commune)
-
-        commune
+        DecoupageAdministratif::Commune.find(membre["code"])
       end.compact
     end
 
