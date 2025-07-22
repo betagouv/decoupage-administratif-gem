@@ -28,7 +28,7 @@ RSpec.describe DecoupageAdministratif::Commune do
   end
 
   describe '#communes_actuelles' do
-    subject { DecoupageAdministratif::Commune.actuelles }
+    subject { described_class.actuelles }
 
     let(:model) { 'communes' }
 
