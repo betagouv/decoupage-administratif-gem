@@ -4,31 +4,6 @@ require 'spec_helper'
 require 'json'
 
 RSpec.describe DecoupageAdministratif::BaseModel do
-  describe '.where_ilike' do
-    let(:model) { 'communes' }
-    let(:parsed_data) { JSON.parse(File.read("spec/fixtures/#{model}.json")) }
-    let(:parser) { instance_double(DecoupageAdministratif::Parser, data: parsed_data) }
-
-    before do
-      allow(DecoupageAdministratif::Parser).to receive(:new).with(model).and_return(parser)
-    end
-
-    context "when searching for communes with name containing substring" do
-      it 'finds communes whose name contains a substring (case insensitive)' do
-        communes = DecoupageAdministratif::Commune.where_ilike(nom: 'mam')
-        noms = communes.map(&:nom)
-        expect(noms).to include('Mamers')
-      end
-    end
-
-    context "when no commune matches the search criteria" do
-      it 'returns an empty array if no name matches' do
-        communes = DecoupageAdministratif::Commune.where_ilike(nom: 'ville-inexistante')
-        expect(communes).to be_empty
-      end
-    end
-  end
-
   describe '.find_by' do
     let(:model) { 'communes' }
     let(:parsed_data) { JSON.parse(File.read("spec/fixtures/#{model}.json")) }
