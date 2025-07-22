@@ -1,0 +1,258 @@
+[
+  {
+    "code": "72180",
+    "nom": "Mamers",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217201805",
+    "codesPostaux": [
+      "72600"
+    ],
+    "population": 5103
+  },
+  {
+    "code": "72039",
+    "nom": "Bonnétable",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "anciensCodes": [
+      "72014"
+    ],
+    "siren": "217200393",
+    "codesPostaux": [
+      "72110"
+    ],
+    "population": 3735
+  },
+  {
+    "code": "72189",
+    "nom": "Marolles-les-Braults",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "anciensCodes": [
+      "72116"
+    ],
+    "siren": "200082543",
+    "codesPostaux": [
+      "72260"
+    ],
+    "population": 2061
+  },
+  {
+    "code": "72276",
+    "nom": "Saint-Cosme-en-Vairais",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "anciensCodes": [
+      "72055",
+      "72092"
+    ],
+    "siren": "217202761",
+    "codesPostaux": [
+      "72110"
+    ],
+    "population": 1888
+  },
+  {
+    "code": "72026",
+    "nom": "Beaufay",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217200260",
+    "codesPostaux": [
+      "72110"
+    ],
+    "population": 1514
+  },
+  {
+    "code": "72215",
+    "nom": "Neufchâtel-en-Saosnois",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217202159",
+    "codesPostaux": [
+      "72600"
+    ],
+    "population": 1043
+  },
+  {
+    "code": "72220",
+    "nom": "Nogent-le-Bernard",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217202209",
+    "codesPostaux": [
+      "72110"
+    ],
+    "population": 887
+  },
+  {
+    "code": "72196",
+    "nom": "Mézières-sur-Ponthouin",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "anciensCodes": [
+      "72242"
+    ],
+    "siren": "217201961",
+    "codesPostaux": [
+      "72290"
+    ],
+    "population": 737
+  },
+  {
+    "code": "72316",
+    "nom": "Saint-Rémy-des-Monts",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217203165",
+    "codesPostaux": [
+      "72600"
+    ],
+    "population": 699
+  },
+  {
+    "code": "72101",
+    "nom": "Courcemont",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217201011",
+    "codesPostaux": [
+      "72110"
+    ],
+    "population": 677
+  },
+  {
+    "code": "72104",
+    "nom": "Courgains",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "217201045",
+    "codesPostaux": [
+      "72260"
+    ],
+    "population": 581
+  },
+  {
+    "code": "72048",
+    "nom": "Briosne-lès-Sables",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "722",
+    "departement": "72",
+    "region": "52",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "anciensCodes": [
+      "72263"
+    ],
+    "siren": "217200484",
+    "codesPostaux": [
+      "72110"
+    ],
+    "population": 515
+  },
+  {
+    "code": "13072",
+    "nom": "Peynier",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "131",
+    "departement": "13",
+    "region": "93",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "211300728",
+    "codesPostaux": [
+      "13790"
+    ],
+    "population": 3650
+  },
+  {
+    "code": "13073",
+    "nom": "Peypin",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "133",
+    "departement": "13",
+    "region": "93",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "211300736",
+    "codesPostaux": [
+      "13124"
+    ],
+    "population": 5613
+  },
+  {
+    "code": "13074",
+    "nom": "Peyrolles-en-Provence",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "arrondissement": "131",
+    "departement": "13",
+    "region": "93",
+    "type": "commune-actuelle",
+    "rangChefLieu": 0,
+    "siren": "211300744",
+    "codesPostaux": [
+      "13860"
+    ],
+    "population": 5223
+  }
+]

@@ -1,0 +1,31 @@
+module DecoupageAdministratif
+  extend BaseModel
+  class Commune
+    extend BaseModel
+    attr_reader code: String
+    attr_reader nom: String
+    attr_reader zone: String
+    attr_reader region_code: String
+    attr_reader departement_code: String
+    attr_reader commune_type: String
+
+    def initialize: (
+        code: String,
+        nom: String,
+        zone: String,
+        region_code: String,
+        departement_code: String,
+        commune_type: Symbol
+      ) -> void
+
+    def self.all: () -> Array[Commune]
+
+    def self.communes_actuelles: () -> Array[Commune]
+
+    def region: () -> Region
+
+    def departement: () -> Departement
+
+    def epci: () -> Epci?
+  end
+end
