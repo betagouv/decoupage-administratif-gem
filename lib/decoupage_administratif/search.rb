@@ -59,7 +59,7 @@ module DecoupageAdministratif
     # Group the codes by department.
     # @return [Hash<Departement, Array<Commune>>] Hash with departments as keys and their communes as values
     def group_by_departement
-      # group the codes by DecoupageAdministratif::Departement
+      # Group the codes by DecoupageAdministratif::Departement
       # and DecoupageAdministratif::Communes as values
       @codes.group_by do |code|
         code = if code[0..1] == "97"
@@ -142,7 +142,7 @@ module DecoupageAdministratif
       return if @codes.keys.uniq.count == 1 && @codes.keys.first.nil?
 
       @codes.each_value do |communes|
-        # if the departement has the same number of communes as the codes and all communes code are in code_insee we return the departement
+        # Find EPCIs that match all communes in the current group
         @epcis = DecoupageAdministratif::Epci.find_by_communes_codes(communes.map(&:code))
         @epcis.each do |epci|
           communes.reject! do |commune|
