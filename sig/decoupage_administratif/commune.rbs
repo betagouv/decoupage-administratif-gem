@@ -15,17 +15,17 @@ module DecoupageAdministratif
         zone: String,
         region_code: String,
         departement_code: String,
-        commune_type: String
+        commune_type: Symbol
       ) -> void
 
     def self.all: () -> Array[Commune]
 
     def self.communes_actuelles: () -> Array[Commune]
 
+    def region: () -> Region
+
     def departement: () -> Departement
 
     def epci: () -> Epci?
-
-    def region: () -> Region
   end
 end

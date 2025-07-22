@@ -38,7 +38,7 @@ module DecoupageAdministratif
 
     # @return [Array<Commune>] a collection of all actual communes in the department
     def communes
-      @communes ||= DecoupageAdministratif::Commune.where(departement_code: @code, commune_type: "commune-actuelle")
+      @communes ||= DecoupageAdministratif::Commune.where(departement_code: @code, commune_type: :commune_actuelle)
     end
 
     # @raise [NotFoundError] if no region is found for the code

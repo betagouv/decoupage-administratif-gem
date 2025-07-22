@@ -15,7 +15,11 @@ module DecoupageAdministratif
     # @!attribute [r] departement_code
     #   @return [String] INSEE code of the department
     # @!attribute [r] commune_type
-    #   @return [String] Type of the commune (default: "commune-actuelle")
+    #   @return [Symbol] Type of the commune. Possible values:
+    #     - :commune_actuelle: Standard current commune
+    #     - :commune_deleguee: Delegated commune
+    #     - :commune_associee: Associated commune
+    #   @note Default value is :commune_actuelle
     attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type
 
     # rubocop:disable Metrics/ParameterLists
@@ -24,8 +28,8 @@ module DecoupageAdministratif
     # @param zone [String] the zone of the commune ("metro", "drom", "com")
     # @param region_code [String] the INSEE code of the region
     # @param departement_code [String] the INSEE code of the department
-    # @param commune_type [String] the type of the commune (default: "commune-actuelle")
-    def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: "commune-actuelle")
+    # @param commune_type [Symbol] the type of the commune (default: :commune_actuelle)
+    def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: :commune_actuelle)
       @code = code
       @nom = nom
       @zone = zone
@@ -44,14 +48,14 @@ module DecoupageAdministratif
           zone: commune_data["zone"],
           region_code: commune_data["region"],
           departement_code: commune_data["departement"],
-          commune_type: commune_data["type"]
+          commune_type: commune_data["type"]&.gsub("-", "_")&.to_sym
         )
       end
     end
 
     # @return [Array<Commune>] a collection of all communes _actuelles_
     def self.actuelles
-      @actuelles ||= where(commune_type: "commune-actuelle")
+      @actuelles ||= where(commune_type: :commune_actuelle)
     end
 
     # @raise [NotFoundError] if no region is found for the code

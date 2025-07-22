@@ -79,7 +79,7 @@ module DecoupageAdministratif
           commune = DecoupageAdministratif::Commune.find_by(code: code)
           next if commune.nil?
 
-          commune.commune_type == "commune-actuelle" ? commune : nil
+          commune.commune_type == :commune_actuelle ? commune : nil
         end.compact
       end
     end

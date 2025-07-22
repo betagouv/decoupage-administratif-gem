@@ -157,7 +157,7 @@ Basic usage example:
 DecoupageAdministratif::Region.all
 
 # Find a municipality by INSEE code
-# A municipality has a `commune_type` which can be `commune-actuelle` (current municipalities), `commune-deleguee` (former municipalities), or `commune-associee` (former municipalities with a special status)
+# A municipality has a `commune_type` which can be :commune_actuelle (current municipalities), :commune_deleguee (former municipalities), or :commune_associee (former municipalities with a special status)
 commune = DecoupageAdministratif::Commune.find_by(code: '75056')
 puts commune.nom # => "Paris"
 
