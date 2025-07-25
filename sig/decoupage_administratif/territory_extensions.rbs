@@ -1,0 +1,11 @@
+module DecoupageAdministratif
+  module TerritoryExtensions
+    def territory_intersects_with_insee_codes?: (Array[String] commune_insee_codes) -> bool
+
+    def territory_insee_codes: () -> Array[String]
+
+    private
+
+    def territory_strategy: () -> TerritoryStrategies::Base
+  end
+end
