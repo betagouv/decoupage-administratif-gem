@@ -23,13 +23,11 @@ Gem::Specification.new do |spec|
       (f == gemspec) ||
         f.start_with?(*%w[bin/ test/ spec/ features/ .git .github appveyor Gemfile])
     end
-  end
+  end + Dir.glob("data/*.json")
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "rspec", "~> 3.2"
-  spec.add_development_dependency "rubocop", "~> 1.21"
-  spec.add_development_dependency "yard", ">= 0.9.34"
   spec.add_dependency "rake"
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end

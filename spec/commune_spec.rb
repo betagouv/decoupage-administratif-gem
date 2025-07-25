@@ -11,8 +11,9 @@ RSpec.describe DecoupageAdministratif::Commune do
   end
 
   describe '#all' do
+    subject { described_class.all }
+
     let(:model) { 'communes' }
-    subject { DecoupageAdministratif::Commune.all }
 
     it "Returns all communes" do
       expect(subject.size).to eq(16)
@@ -27,8 +28,9 @@ RSpec.describe DecoupageAdministratif::Commune do
   end
 
   describe '#communes_actuelles' do
+    subject { described_class.actuelles }
+
     let(:model) { 'communes' }
-    subject { DecoupageAdministratif::Commune.actuelles }
 
     it "Returns all communes actuelles" do
       expect(subject.size).to eq(14)
@@ -44,14 +46,14 @@ RSpec.describe DecoupageAdministratif::Commune do
 
   describe 'find_by' do
     context 'when searching by code' do
+      subject { described_class.find_by(code: code) }
+
       let(:model) { 'communes' }
       let(:code) { '72039' }
 
-      subject { DecoupageAdministratif::Commune.find_by(code: code) }
-
       it 'Returns the commune with the given code' do
-        is_expected.to be_a(DecoupageAdministratif::Commune)
-        is_expected.to have_attributes(
+        expect(subject).to be_a(described_class)
+        expect(subject).to have_attributes(
           code: code,
           nom: "Bonnétable",
           zone: "metro",
@@ -63,14 +65,14 @@ RSpec.describe DecoupageAdministratif::Commune do
   end
 
   describe '#departement' do
-    let(:model) { 'departements' }
-    let(:commune) { DecoupageAdministratif::Commune.new(code: '78380', nom: 'Maule', zone: 'metro', region_code: '11', departement_code: '78') }
-
     subject { commune.departement }
 
+    let(:model) { 'departements' }
+    let(:commune) { described_class.new(code: '78380', nom: 'Maule', zone: 'metro', region_code: '11', departement_code: '78') }
+
     it 'Returns the departement of the commune' do
-      is_expected.to be_a(DecoupageAdministratif::Departement)
-      is_expected.to have_attributes(
+      expect(subject).to be_a(DecoupageAdministratif::Departement)
+      expect(subject).to have_attributes(
         code: '78',
         nom: 'Yvelines'
       )
@@ -78,14 +80,14 @@ RSpec.describe DecoupageAdministratif::Commune do
   end
 
   describe '#epci' do
-    let(:model) { 'epci' }
-    let(:commune) { DecoupageAdministratif::Commune.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72') }
-
     subject { commune.epci }
 
+    let(:model) { 'epci' }
+    let(:commune) { described_class.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72') }
+
     it 'Returns the epci of the commune' do
-      is_expected.to be_a(DecoupageAdministratif::Epci)
-      is_expected.to have_attributes(
+      expect(subject).to be_a(DecoupageAdministratif::Epci)
+      expect(subject).to have_attributes(
         code: '200072676',
         nom: 'CC Maine Saosnois'
       )
@@ -93,14 +95,14 @@ RSpec.describe DecoupageAdministratif::Commune do
   end
 
   describe '#region' do
-    let(:model) { 'regions' }
-    let(:commune) { DecoupageAdministratif::Commune.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72') }
-
     subject { commune.region }
 
+    let(:model) { 'regions' }
+    let(:commune) { described_class.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72') }
+
     it "Returns the region of the commune" do
-      is_expected.to be_a(DecoupageAdministratif::Region)
-      is_expected.to have_attributes(
+      expect(subject).to be_a(DecoupageAdministratif::Region)
+      expect(subject).to have_attributes(
         code: "52",
         nom: "Pays de la Loire"
       )
