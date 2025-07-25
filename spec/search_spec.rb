@@ -87,5 +87,17 @@ RSpec.describe DecoupageAdministratif::Search do
         expect(subject[:communes].map(&:code)).not_to include("99999")
       end
     end
+
+    context "when using commune codes that include delegated communes" do
+      subject { described_class.new(%w[72180 72040 01015]).by_insee_codes }
+
+      it "returns only communes actuelles from the cache" do
+        expect(subject[:communes].size).to eq(1)
+        expect(subject[:communes].first.code).to eq("72180")
+        expect(subject[:communes].first.commune_type).to eq(:commune_actuelle)
+        expect(subject[:communes].map(&:code)).not_to include("72040")
+        expect(subject[:communes].map(&:code)).not_to include("01015")
+      end
+    end
   end
 end

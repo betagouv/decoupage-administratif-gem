@@ -44,16 +44,20 @@ module DecoupageAdministratif
     private
 
     # Class-level caches for performance optimization
+    # rubocop:disable Style/ClassVars
     @@departements_cache = nil
     @@communes_cache = nil
+    # rubocop:enable Style/ClassVars
 
     # Initialize class-level caches for performance optimization
     # @return [void]
     def initialize_class_caches
       return if @@departements_cache && @@communes_cache
 
+      # rubocop:disable Style/ClassVars
       @@departements_cache = DecoupageAdministratif::Departement.all.each_with_object({}) { |dept, hash| hash[dept.code] = dept }
-      @@communes_cache = DecoupageAdministratif::Commune.all.each_with_object({}) { |commune, hash| hash[commune.code] = commune }
+      @@communes_cache = DecoupageAdministratif::Commune.actuelles.each_with_object({}) { |commune, hash| hash[commune.code] = commune }
+      # rubocop:enable Style/ClassVars
     end
 
     # Group the codes by department.
