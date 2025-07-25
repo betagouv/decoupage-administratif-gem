@@ -3,6 +3,7 @@
 module DecoupageAdministratif
   class Region
     extend BaseModel
+    include TerritoryExtensions
 
     # @!attribute [r] code
     #   @return [String] INSEE code of the region

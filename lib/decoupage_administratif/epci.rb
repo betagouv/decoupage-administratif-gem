@@ -3,6 +3,7 @@
 module DecoupageAdministratif
   class Epci
     extend BaseModel
+    include TerritoryExtensions
 
     # @!attribute [r] code
     #   @return [String] SIREN code of the EPCI
