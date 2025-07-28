@@ -3,6 +3,8 @@
 require_relative "decoupage_administratif/version"
 require_relative "decoupage_administratif/config"
 require_relative "decoupage_administratif/base_model"
+require_relative "decoupage_administratif/territory_strategies"
+require_relative "decoupage_administratif/territory_extensions"
 require_relative "decoupage_administratif/parser"
 require_relative "decoupage_administratif/commune"
 require_relative "decoupage_administratif/departement"
