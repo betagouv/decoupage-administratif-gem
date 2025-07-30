@@ -1,11 +1,3 @@
-# lib/decoupage_administratif/version.rb
-# frozen_string_literal: true
-
-module DecoupageAdministratif
-  VERSION = "0.1.0"
-end
-
-# decoupage_administratif.gemspec
 # frozen_string_literal: true
 
 require_relative "lib/decoupage_administratif/version"
@@ -13,11 +5,11 @@ require_relative "lib/decoupage_administratif/version"
 Gem::Specification.new do |spec|
   spec.name = "decoupage_administratif"
   spec.version = DecoupageAdministratif::VERSION
-  spec.authors = ["Lucien"]
+  spec.authors = ["Lucien Mollard"]
   spec.email = ["lucien.mollard@beta.gouv.fr"]
 
-  spec.summary = "Accès aux données du découpage administratif français"
-  spec.description = "Une bibliothèque Ruby pour accéder aux données de communes, départements, régions et EPCIs de France"
+  spec.summary = "Access to French administrative division data"
+  spec.description = "A Ruby library to access data about French communes, departments, regions, and EPCIs."
   spec.homepage = "https://github.com/betagouv/decoupage-administratif-gem"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
@@ -38,4 +30,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "rspec", "~> 3.2"
   spec.add_development_dependency "rubocop", "~> 1.21"
+  spec.add_development_dependency "yard", ">= 0.9.34"
+  spec.add_dependency "rake"
 end

@@ -1,0 +1,20 @@
+module DecoupageAdministratif
+  class Search
+    attr_reader codes: Array[String] | nil
+    attr_reader regions: Array[Region] | nil
+    attr_reader departements: Array[Departement] | nil
+    attr_reader epcis: Array[Epci] | nil
+    attr_reader communes: Array[Commune] | nil
+
+    def by_insee_codes: () -> Hash[Symbol, Array[Region] | Array[Departement] | Array[Epci] | Array[Commune]]
+
+    private
+
+    def find_communes_by_codes: () -> Hash[Departement, Array[Commune]]
+
+    def search_for_communes: () -> void
+    def search_for_departements: () -> void
+    def search_for_epcis: () -> void
+    def search_for_region: () -> void
+  end
+end

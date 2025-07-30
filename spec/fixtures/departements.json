@@ -1,0 +1,50 @@
+[
+  {
+    "code":"01",
+    "region":"84",
+    "chefLieu":"01053",
+    "nom":"Ain",
+    "typeLiaison":5,
+    "zone":"metro"
+  },
+  {
+    "code":"26",
+    "region":"84",
+    "chefLieu":"26362",
+    "nom":"Drôme",
+    "typeLiaison":3,
+    "zone":"metro"
+  },
+  {
+    "code":"72",
+    "region":"52",
+    "chefLieu":"72181",
+    "nom":"Sarthe",
+    "typeLiaison":3,
+    "zone":"metro"
+  },
+  {
+    "code": "76",
+    "region": "28",
+    "chefLieu": "76540",
+    "nom": "Seine-Maritime",
+    "typeLiaison": 3,
+    "zone": "metro"
+  },
+  {
+    "code": "77",
+    "region": "11",
+    "chefLieu": "77288",
+    "nom": "Seine-et-Marne",
+    "typeLiaison": 0,
+    "zone": "metro"
+  },
+  {
+    "code": "78",
+    "region": "11",
+    "chefLieu": "78646",
+    "nom": "Yvelines",
+    "typeLiaison": 4,
+    "zone": "metro"
+  }
+]

@@ -1,0 +1,176 @@
+[
+  {
+    "code": "200072676",
+    "nom": "CC Maine Saosnois",
+    "type": "CC",
+    "modeFinancement": "FPU",
+    "populationTotale": 28075,
+    "populationMunicipale": 27534,
+    "membres": [
+      {
+        "code": "72180",
+        "siren": "217201805",
+        "nom": "Mamers",
+        "populationTotale": 5266,
+        "populationMunicipale": 5103
+      },
+      {
+        "code": "72039",
+        "siren": "217200393",
+        "nom": "Bonnétable",
+        "populationTotale": 3792,
+        "populationMunicipale": 3735
+      },
+      {
+        "code": "72189",
+        "siren": "200082543",
+        "nom": "Marolles-les-Braults",
+        "populationTotale": 2087,
+        "populationMunicipale": 2061
+      },
+      {
+        "code": "72276",
+        "siren": "217202761",
+        "nom": "Saint-Cosme-en-Vairais",
+        "populationTotale": 1930,
+        "populationMunicipale": 1888
+      },
+      {
+        "code": "72026",
+        "siren": "217200260",
+        "nom": "Beaufay",
+        "populationTotale": 1529,
+        "populationMunicipale": 1514
+      },
+      {
+        "code": "72215",
+        "siren": "217202159",
+        "nom": "Neufchâtel-en-Saosnois",
+        "populationTotale": 1055,
+        "populationMunicipale": 1043
+      },
+      {
+        "code": "72220",
+        "siren": "217202209",
+        "nom": "Nogent-le-Bernard",
+        "populationTotale": 921,
+        "populationMunicipale": 887
+      },
+      {
+        "code": "72196",
+        "siren": "217201961",
+        "nom": "Mézières-sur-Ponthouin",
+        "populationTotale": 743,
+        "populationMunicipale": 737
+      },
+      {
+        "code": "72316",
+        "siren": "217203165",
+        "nom": "Saint-Rémy-des-Monts",
+        "populationTotale": 712,
+        "populationMunicipale": 699
+      },
+      {
+        "code": "72101",
+        "siren": "217201011",
+        "nom": "Courcemont",
+        "populationTotale": 689,
+        "populationMunicipale": 677
+      },
+      {
+        "code": "72104",
+        "siren": "217201045",
+        "nom": "Courgains",
+        "populationTotale": 597,
+        "populationMunicipale": 581
+      },
+      {
+        "code": "72048",
+        "siren": "217200484",
+        "nom": "Briosne-lès-Sables",
+        "populationTotale": 519,
+        "populationMunicipale": 515
+      }
+    ]
+  },
+  {
+    "code": "200072684",
+    "nom": "CC Le Gesnois Bilurien",
+    "type": "CC",
+    "modeFinancement": "FPU",
+    "populationTotale": 30708,
+    "populationMunicipale": 30234,
+    "membres": [
+      {
+        "code": "72329",
+        "siren": "217203298",
+        "nom": "Savigné-l'Évêque",
+        "populationTotale": 4139,
+        "populationMunicipale": 4054
+      },
+      {
+        "code": "72241",
+        "siren": "217202415",
+        "nom": "Montfort-le-Gesnois",
+        "populationTotale": 2955,
+        "populationMunicipale": 2917
+      },
+      {
+        "code": "72090",
+        "siren": "217200906",
+        "nom": "Connerré",
+        "populationTotale": 2942,
+        "populationMunicipale": 2895
+      },
+      {
+        "code": "72300",
+        "siren": "217203009",
+        "nom": "Saint-Mars-la-Brière",
+        "populationTotale": 2731,
+        "populationMunicipale": 2699
+      },
+      {
+        "code": "72359",
+        "siren": "217203595",
+        "nom": "Torcé-en-Vallée",
+        "populationTotale": 1446,
+        "populationMunicipale": 1436
+      },
+      {
+        "code": "72335",
+        "siren": "217203355",
+        "nom": "Sillé-le-Philippe",
+        "populationTotale": 1089,
+        "populationMunicipale": 1073
+      },
+      {
+        "code": "72382",
+        "siren": "217203827",
+        "nom": "Volnay",
+        "populationTotale": 982,
+        "populationMunicipale": 964
+      },
+      {
+        "code": "72271",
+        "siren": "217202712",
+        "nom": "Saint-Célerin",
+        "populationTotale": 896,
+        "populationMunicipale": 889
+      },
+      {
+        "code": "72303",
+        "siren": "217203033",
+        "nom": "Saint-Michel-de-Chavaignes",
+        "populationTotale": 738,
+        "populationMunicipale": 729
+      },
+      {
+        "code": "72094",
+        "siren": "217200948",
+        "nom": "Coudrecieux",
+        "populationTotale": 643,
+        "populationMunicipale": 630
+      }
+    ]
+  }
+]
