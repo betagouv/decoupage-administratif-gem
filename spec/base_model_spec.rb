@@ -78,14 +78,38 @@ RSpec.describe DecoupageAdministratif::BaseModel do
       allow(DecoupageAdministratif::Parser).to receive(:new).with(model).and_return(parser)
     end
 
-    it 'returns all communes matching exactly the name and code' do
-      communes = DecoupageAdministratif::Commune.where(nom: 'Mamers', code: "72180")
-      expect(communes.map(&:nom)).to eq(['Mamers'])
+    context 'with exact matching' do
+      context 'when matching name and code' do
+        let(:communes) { DecoupageAdministratif::Commune.where(nom: 'Mamers', code: "72180") }
+
+        it 'returns all communes matching exactly' do
+          expect(communes.map(&:nom)).to eq(['Mamers'])
+        end
+      end
+
+      context 'when no commune matches' do
+        let(:communes) { DecoupageAdministratif::Commune.where(nom: 'ville-inexistante') }
+
+        it 'returns an empty array' do
+          expect(communes).to be_empty
+        end
+      end
     end
 
-    it 'returns an empty array if no commune matches' do
-      communes = DecoupageAdministratif::Commune.where(nom: 'ville-inexistante')
-      expect(communes).to be_empty
+    context 'with case_insensitive option' do
+      let(:communes) { DecoupageAdministratif::Commune.where(nom: 'MAMERS', case_insensitive: true) }
+
+      it 'finds communes regardless of case' do
+        expect(communes.map(&:nom)).to eq(['Mamers'])
+      end
+    end
+
+    context 'with partial option' do
+      let(:communes) { DecoupageAdministratif::Commune.where(nom: 'Mam', partial: true) }
+
+      it 'finds communes with partial name match' do
+        expect(communes.map(&:nom)).to eq(['Mamers'])
+      end
     end
   end
 end
