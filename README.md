@@ -61,7 +61,7 @@ puts epci.communes
 DecoupageAdministratif::Commune.search('paris')
 
 # Lister les départements d’une région
-region = DecoupageAdministratif::Region.search('Bretagne').first
+region = DecoupageAdministratif::Region.find_by(nom: 'Bretagne')
 puts region.departements
 ```
 
@@ -185,7 +185,7 @@ puts epci.communes
 DecoupageAdministratif::Commune.search('paris')
 
 # List departments of a region
-region = DecoupageAdministratif::Region.search('Bretagne').first
+region = DecoupageAdministratif::Region.find_by(nom: 'Bretagne')
 puts region.departements
 ```
 
