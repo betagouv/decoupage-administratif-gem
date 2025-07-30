@@ -23,6 +23,10 @@ Mise à jour des données (optionnel) :
 
     rake decoupage_administratif:update
 
+Vérifier la version des données embarquées :
+
+    rake decoupage_administratif:info
+
 ### Configuration
 
 **Données embarquées :** La gem inclut maintenant les données par défaut et fonctionne directement sans installation additionnelle.
@@ -169,6 +173,10 @@ Or install it directly:
 Update data files (optional):
 
     rake decoupage_administratif:update
+
+Check embedded data version:
+
+    rake decoupage_administratif:info
 
 ### Configuration
 

@@ -4,6 +4,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 require_relative '../decoupage_administratif/config'
+require_relative '../decoupage_administratif/version'
 
 def download_file(url, destination)
   puts "Downloading from #{url}..."
@@ -37,7 +38,7 @@ namespace :decoupage_administratif do
 
     collection.each do |item|
       file = File.join(data_dir, "#{item}.json")
-      url = "https://unpkg.com/@etalab/decoupage-administratif@4.0.0/data/#{item}.json"
+      url = "https://unpkg.com/#{DecoupageAdministratif::DATA_SOURCE}@#{DecoupageAdministratif::DATA_VERSION}/data/#{item}.json"
       download_file(url, file)
 
       puts "Update completed successfully!"
@@ -54,5 +55,14 @@ namespace :decoupage_administratif do
     data_dir = DecoupageAdministratif::Config.data_directory
     FileUtils.rm_rf(data_dir) if File.directory?(data_dir)
     Rake::Task['decoupage_administratif:update'].invoke
+  end
+
+  desc 'Show data version information'
+  task :info do
+    puts "DecoupageAdministratif Gem Information:"
+    puts "  Gem version: #{DecoupageAdministratif::VERSION}"
+    puts "  Data version: #{DecoupageAdministratif::DATA_VERSION}"
+    puts "  Data source: #{DecoupageAdministratif::DATA_SOURCE}"
+    puts "  Data directory: #{DecoupageAdministratif::Config.data_directory}"
   end
 end
