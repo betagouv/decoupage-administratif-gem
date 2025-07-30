@@ -8,8 +8,6 @@ module DecoupageAdministratif
 
     def by_insee_codes: () -> Hash[Symbol, Array[Region] | Array[Departement] | Array[Epci] | Array[Commune]]
 
-    def find_territories_by_commune_insee_code: (String) -> Hash[Symbol, Epci | Departement | Region | nil]
-
     private
 
     def find_communes_by_codes: () -> Hash[Departement, Array[Commune]]
