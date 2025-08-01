@@ -21,32 +21,25 @@ module DecoupageAdministratif
       @membres = membres
     end
 
-    class << self
-      # @return [Array<Epci>] a collection of all EPCI
-      def all
-        Parser.new('epci').data.map do |epci_data|
-          Epci.new(
-            code: epci_data["code"],
-            nom: epci_data["nom"],
-            membres: epci_data["membres"].map { |membre| membre.slice("nom", "code") }
-          )
-        end
+    # @return [Array<Epci>] a collection of all EPCI
+    def self.all
+      Parser.new('epci').data.map do |epci_data|
+        Epci.new(
+          code: epci_data["code"],
+          nom: epci_data["nom"],
+          membres: epci_data["membres"].map { |membre| membre.slice("nom", "code") }
+        )
       end
+    end
 
-      # Search for an EPCI that includes all the specified codes
-      # @param codes [Array<String>] an array of commune codes
-      # @return [Array<Epci>] a collection of EPCI that include all the specified codes
-      def find_by_communes_codes(codes)
-        all.select do |epci|
-          epci.membres.map do |m|
-            # Normally a member is a hash, but sometimes it's a DecoupageAdministratif::Commune (bug handled)
-            if m.is_a?(DecoupageAdministratif::Commune)
-              codes.include?(m.code)
-            else
-              codes.include?(m['code'])
-            end
-          end.all?
-        end
+    # Search for an EPCI that includes all the specified codes
+    # @param codes [Array<String>] an array of commune codes
+    # @return [Array<Epci>] a collection of EPCI that include all the specified codes
+    def self.search_by_communes_codes(codes)
+      all.select do |epci|
+        epci.membres.map do |m|
+          codes.include?(m['code'])
+        end.all?
       end
     end
 

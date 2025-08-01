@@ -16,6 +16,7 @@ module DecoupageAdministratif
 
     def initialize(codes = nil)
       @codes = codes&.uniq
+      initialize_class_caches
     end
 
     # Search for territories by municipality.
@@ -42,18 +43,31 @@ module DecoupageAdministratif
 
     private
 
+    # Class-level caches for performance optimization
+    # rubocop:disable Style/ClassVars
+    @@departements_cache = nil
+    @@communes_cache = nil
+    # rubocop:enable Style/ClassVars
+
+    # Initialize class-level caches for performance optimization
+    # @return [void]
+    def initialize_class_caches
+      return if @@departements_cache && @@communes_cache
+
+      # rubocop:disable Style/ClassVars
+      @@departements_cache = DecoupageAdministratif::Departement.all.each_with_object({}) { |dept, hash| hash[dept.code] = dept }
+      @@communes_cache = DecoupageAdministratif::Commune.actuelles.each_with_object({}) { |commune, hash| hash[commune.code] = commune }
+      # rubocop:enable Style/ClassVars
+    end
+
     # Group the codes by department.
     # @return [Hash<Departement, Array<Commune>>] Hash with departments as keys and their communes as values
     def group_by_departement
       # Group the codes by DecoupageAdministratif::Departement
       # and DecoupageAdministratif::Communes as values
       @codes.group_by do |code|
-        code = if code[0..1] == "97"
-                 code[0..2]
-               else
-                 code[0..1]
-               end
-        DecoupageAdministratif::Departement.find_by(code: code)
+        dept_code = code[0..1] == "97" ? code[0..2] : code[0..1]
+        @@departements_cache[dept_code]
       end
     end
 
@@ -61,12 +75,12 @@ module DecoupageAdministratif
     # @return [Array<Commune>] List of communes matching the codes
     def find_communes_by_codes
       @codes.transform_values do |codes_insee|
-        codes_insee.map do |code|
-          commune = DecoupageAdministratif::Commune.find_by(code: code)
+        codes_insee.filter_map do |code|
+          commune = @@communes_cache[code]
           next if commune.nil?
 
           commune.commune_type == :commune_actuelle ? commune : nil
-        end.compact
+        end
       end
     end
 
@@ -129,7 +143,7 @@ module DecoupageAdministratif
 
       @codes.each_value do |communes|
         # Find EPCIs that match all communes in the current group
-        @epcis = DecoupageAdministratif::Epci.find_by_communes_codes(communes.map(&:code))
+        @epcis = DecoupageAdministratif::Epci.search_by_communes_codes(communes.map(&:code))
         @epcis.each do |epci|
           communes.reject! do |commune|
             epci.communes.include?(commune)

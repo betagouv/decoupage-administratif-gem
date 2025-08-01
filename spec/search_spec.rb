@@ -3,25 +3,25 @@
 require 'spec_helper'
 
 RSpec.describe DecoupageAdministratif::Search do
-  let(:parsed_data1) { JSON.parse(File.read("spec/fixtures/departements.json")) }
-  let(:parsed_data2) { JSON.parse(File.read("spec/fixtures/communes.json")) }
-  let(:parsed_data3) { JSON.parse(File.read("spec/fixtures/epci.json")) }
-  let(:parsed_data4) { JSON.parse(File.read("spec/fixtures/regions.json")) }
-  let(:parser1) { instance_double(DecoupageAdministratif::Parser, data: parsed_data1) }
-  let(:parser2) { instance_double(DecoupageAdministratif::Parser, data: parsed_data2) }
-  let(:parser3) { instance_double(DecoupageAdministratif::Parser, data: parsed_data3) }
-  let(:parser4) { instance_double(DecoupageAdministratif::Parser, data: parsed_data4) }
+  let(:parsed_data_departements) { JSON.parse(File.read("spec/fixtures/departements.json")) }
+  let(:parsed_data_communes) { JSON.parse(File.read("spec/fixtures/communes.json")) }
+  let(:parsed_data_epci) { JSON.parse(File.read("spec/fixtures/epci.json")) }
+  let(:parsed_data_regions) { JSON.parse(File.read("spec/fixtures/regions.json")) }
+  let(:parser_departements) { instance_double(DecoupageAdministratif::Parser, data: parsed_data_departements) }
+  let(:parser_communes) { instance_double(DecoupageAdministratif::Parser, data: parsed_data_communes) }
+  let(:parser_epci) { instance_double(DecoupageAdministratif::Parser, data: parsed_data_epci) }
+  let(:parser_regions) { instance_double(DecoupageAdministratif::Parser, data: parsed_data_regions) }
 
   before do
-    allow(DecoupageAdministratif::Parser).to receive(:new).with('departements').and_return(parser1)
-    allow(DecoupageAdministratif::Parser).to receive(:new).with('communes').and_return(parser2)
-    allow(DecoupageAdministratif::Parser).to receive(:new).with('epci').and_return(parser3)
-    allow(DecoupageAdministratif::Parser).to receive(:new).with('regions').and_return(parser4)
+    allow(DecoupageAdministratif::Parser).to receive(:new).with('departements').and_return(parser_departements)
+    allow(DecoupageAdministratif::Parser).to receive(:new).with('communes').and_return(parser_communes)
+    allow(DecoupageAdministratif::Parser).to receive(:new).with('epci').and_return(parser_epci)
+    allow(DecoupageAdministratif::Parser).to receive(:new).with('regions').and_return(parser_regions)
   end
 
   describe '#by_insee_codes' do
-    context "find departement" do
-      subject { DecoupageAdministratif::Search.new(%w[01042 01015]).by_insee_codes }
+    context "when finding departement" do
+      subject { described_class.new(%w[01042 01015]).by_insee_codes }
 
       it "Returns a departement" do
         expect(subject[:departements].size).to eq(1)
@@ -34,8 +34,8 @@ RSpec.describe DecoupageAdministratif::Search do
       end
     end
 
-    context "find epci" do
-      subject { DecoupageAdministratif::Search.new(%w[72180 72039 72189 72276 72026 72215 72220 72196 72316 72101 72104 72048]).by_insee_codes }
+    context "when finding epci" do
+      subject { described_class.new(%w[72180 72039 72189 72276 72026 72215 72220 72196 72316 72101 72104 72048]).by_insee_codes }
 
       it "Returns an epci" do
         expect(subject[:epcis].size).to eq(1)
@@ -46,8 +46,8 @@ RSpec.describe DecoupageAdministratif::Search do
       end
     end
 
-    context "find communes" do
-      subject { DecoupageAdministratif::Search.new(%w[72180 72039]).by_insee_codes }
+    context "when finding communes" do
+      subject { described_class.new(%w[72180 72039]).by_insee_codes }
 
       it "Returns communes" do
         expect(subject[:communes].size).to eq(2)
@@ -68,8 +68,8 @@ RSpec.describe DecoupageAdministratif::Search do
       end
     end
 
-    context "no matching codes" do
-      subject { DecoupageAdministratif::Search.new(%w[99999 88888]).by_insee_codes }
+    context "with no matching codes" do
+      subject { described_class.new(%w[99999 88888]).by_insee_codes }
 
       it "returns only empty arrays" do
         expect(subject[:regions]).to eq([])
@@ -79,12 +79,24 @@ RSpec.describe DecoupageAdministratif::Search do
       end
     end
 
-    context "partially matching codes" do
-      subject { DecoupageAdministratif::Search.new(%w[72180 99999]).by_insee_codes }
+    context "with partially matching codes" do
+      subject { described_class.new(%w[72180 99999]).by_insee_codes }
 
       it "returns only the valid commune" do
         expect(subject[:communes].map(&:code)).to include("72180")
         expect(subject[:communes].map(&:code)).not_to include("99999")
+      end
+    end
+
+    context "when using commune codes that include delegated communes" do
+      subject { described_class.new(%w[72180 72040 01015]).by_insee_codes }
+
+      it "returns only communes actuelles from the cache" do
+        expect(subject[:communes].size).to eq(1)
+        expect(subject[:communes].first.code).to eq("72180")
+        expect(subject[:communes].first.commune_type).to eq(:commune_actuelle)
+        expect(subject[:communes].map(&:code)).not_to include("72040")
+        expect(subject[:communes].map(&:code)).not_to include("01015")
       end
     end
   end

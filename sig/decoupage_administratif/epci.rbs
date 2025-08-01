@@ -13,7 +13,7 @@ module DecoupageAdministratif
 
     def self.all: () -> Array[Epci]
 
-    def self.find_by_communes_codes: (Array[String]) -> Array[Epci]
+    def self.search_by_communes_codes: (Array[String]) -> Array[Epci]
 
     def communes: () -> Array[Commune]
 

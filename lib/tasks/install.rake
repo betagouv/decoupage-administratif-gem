@@ -3,59 +3,66 @@
 require 'net/http'
 require 'uri'
 require 'json'
+require_relative '../decoupage_administratif/config'
+require_relative '../decoupage_administratif/version'
 
-DATA_DIR = File.join(Gem::Specification.find_by_name('decoupage_administratif').gem_dir, 'data')
+def download_file(url, destination)
+  puts "Downloading from #{url}..."
+
+  uri = URI(url)
+  response = Net::HTTP.get_response(uri)
+
+  raise "Download failed with status: #{response.code} #{response.message}" unless response.is_a?(Net::HTTPSuccess)
+
+  File.binwrite(destination, response.body)
+  puts "Successfully downloaded"
+
+  # Validate JSON
+  begin
+    JSON.parse(File.read(destination))
+    puts "JSON validation successful"
+  rescue JSON::ParserError => e
+    puts "Error: Invalid JSON file downloaded"
+    puts e.message
+    FileUtils.rm(destination)
+    raise "Download failed: Invalid JSON"
+  end
+end
 
 namespace :decoupage_administratif do
-  desc 'Download files'
-  task :install do
+  desc 'Update files'
+  task :update do
     collection = %w[communes departements regions epci]
-    FileUtils.mkdir_p(DATA_DIR)
+    data_dir = DecoupageAdministratif::Config.data_directory
+    FileUtils.mkdir_p(data_dir)
 
     collection.each do |item|
-      def download_file(url, destination)
-        puts "Downloading from #{url}..."
+      file = File.join(data_dir, "#{item}.json")
+      url = "https://unpkg.com/#{DecoupageAdministratif::DATA_SOURCE}@#{DecoupageAdministratif::DATA_VERSION}/data/#{item}.json"
+      download_file(url, file)
 
-        uri = URI(url)
-        response = Net::HTTP.get_response(uri)
-
-        raise "Download failed with status: #{response.code} #{response.message}" unless response.is_a?(Net::HTTPSuccess)
-
-        File.open(destination, 'wb') do |file|
-          file.write(response.body)
-        end
-        puts "Successfully downloaded"
-
-        # Validate JSON
-        begin
-          JSON.parse(File.read(destination))
-          puts "JSON validation successful"
-        rescue JSON::ParserError => e
-          puts "Error: Invalid JSON file downloaded"
-          puts e.message
-          FileUtils.rm(destination)
-          raise "Download failed: Invalid JSON"
-        end
-      end
-
-      begin
-        file = File.join(DATA_DIR, "#{item}.json")
-        url = "https://unpkg.com/@etalab/decoupage-administratif@4.0.0/data/#{item}.json"
-        download_file(url, file)
-
-        puts "Installation completed successfully!"
-      rescue StandardError => e
-        puts "Error during installation:"
-        puts e.message
-        puts e.backtrace
-        exit 1
-      end
+      puts "Update completed successfully!"
+    rescue StandardError => e
+      puts "Error during update:"
+      puts e.message
+      puts e.backtrace
+      exit 1
     end
   end
 
-  desc 'Update files'
-  task :update do
-    FileUtils.rm_rf(DATA_DIR) if File.directory?(DATA_DIR)
-    Rake::Task['decoupage_administratif:install'].invoke
+  desc 'Download files'
+  task :install do
+    data_dir = DecoupageAdministratif::Config.data_directory
+    FileUtils.rm_rf(data_dir) if File.directory?(data_dir)
+    Rake::Task['decoupage_administratif:update'].invoke
+  end
+
+  desc 'Show data version information'
+  task :info do
+    puts "DecoupageAdministratif Gem Information:"
+    puts "  Gem version: #{DecoupageAdministratif::VERSION}"
+    puts "  Data version: #{DecoupageAdministratif::DATA_VERSION}"
+    puts "  Data source: #{DecoupageAdministratif::DATA_SOURCE}"
+    puts "  Data directory: #{DecoupageAdministratif::Config.data_directory}"
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "decoupage_administratif/version"
+require_relative "decoupage_administratif/config"
 require_relative "decoupage_administratif/base_model"
 require_relative "decoupage_administratif/parser"
 require_relative "decoupage_administratif/commune"
@@ -14,4 +15,10 @@ require 'decoupage_administratif/railtie' if defined?(Rails)
 module DecoupageAdministratif
   class Error < StandardError; end
   class NotFoundError < Error; end
+
+  # Returns information about the embedded data version
+  # @return [String] formatted string with data version information
+  def self.data_info
+    "Data version: #{DATA_VERSION} (from #{DATA_SOURCE})"
+  end
 end

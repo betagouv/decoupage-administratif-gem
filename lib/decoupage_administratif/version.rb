@@ -2,4 +2,6 @@
 
 module DecoupageAdministratif
   VERSION = "0.1.0"
+  DATA_VERSION = "5.2.0"
+  DATA_SOURCE = "@etalab/decoupage-administratif"
 end
