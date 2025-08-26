@@ -23,10 +23,6 @@ Mise à jour des données (optionnel) :
 
     rake decoupage_administratif:update
 
-Vérifier la version des données embarquées :
-
-    rake decoupage_administratif:info
-
 ### Configuration
 
 **Données embarquées :** La gem inclut maintenant les données par défaut et fonctionne directement sans installation additionnelle.
@@ -86,9 +82,23 @@ puts epci.communes
 # Rechercher une commune par nom (insensible à la casse)
 DecoupageAdministratif::Commune.where('paris', case_insensitive: true)
 
-# Lister les départements d’une région
+# Lister les départements d'une région
 region = DecoupageAdministratif::Region.find_by(nom: 'Bretagne')
 puts region.departements
+```
+
+### Extensions territoriales
+
+La gem propose des méthodes pour vérifier la correspondance entre territoires et listes de codes INSEE :
+
+```ruby
+# Vérifier si un territoire contient au moins une commune d'une liste
+commune_codes = ['75001', '75002', '69001']
+departement = DecoupageAdministratif::Departement.find('75')
+departement.territory_intersects_with_insee_codes?(commune_codes) # => true
+
+# Obtenir tous les codes INSEE des communes d'un territoire
+departement.territory_insee_codes # => ["75001", "75002", "75003", ...]
 ```
 
 ## Développement
@@ -174,10 +184,6 @@ Update data files (optional):
 
     rake decoupage_administratif:update
 
-Check embedded data version:
-
-    rake decoupage_administratif:info
-
 ### Configuration
 
 **Embedded data:** The gem now includes default data and works directly without additional installation.
@@ -240,6 +246,20 @@ DecoupageAdministratif::Commune.where('paris', case_insensitive: true)
 # List departments of a region
 region = DecoupageAdministratif::Region.find_by(nom: 'Bretagne')
 puts region.departements
+```
+
+### Territory extensions
+
+The gem provides methods to check intersections between territories and INSEE code lists:
+
+```ruby
+# Check if a territory intersects with municipality INSEE codes
+commune_codes = ['75001', '75002', '69001']
+departement = DecoupageAdministratif::Departement.find('75')
+departement.territory_intersects_with_insee_codes?(commune_codes) # => true
+
+# Get all INSEE codes of municipalities in a territory
+departement.territory_insee_codes # => ["75001", "75002", "75003", ...]
 ```
 
 ## Development

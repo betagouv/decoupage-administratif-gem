@@ -2,6 +2,7 @@ module DecoupageAdministratif
   extend BaseModel
   class Commune
     extend BaseModel
+    include TerritoryExtensions
     attr_reader code: String
     attr_reader nom: String
     attr_reader zone: String

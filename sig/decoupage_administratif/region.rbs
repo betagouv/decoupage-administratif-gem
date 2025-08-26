@@ -1,6 +1,7 @@
 module DecoupageAdministratif
   class Region
     extend BaseModel
+    include TerritoryExtensions
     attr_reader code: String
     attr_reader nom: String
     attr_reader zone: String
