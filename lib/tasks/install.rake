@@ -38,6 +38,7 @@ namespace :decoupage_administratif do
     collection.each do |item|
       file = File.join(data_dir, "#{item}.json")
       url = "https://unpkg.com/@etalab/decoupage-administratif@4.0.0/data/#{item}.json"
+
       download_file(url, file)
 
       puts "Update completed successfully!"
