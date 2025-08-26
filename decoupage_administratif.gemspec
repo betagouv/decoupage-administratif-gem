@@ -8,14 +8,14 @@ Gem::Specification.new do |spec|
   spec.authors = ["Lucien Mollard"]
   spec.email = ["lucien.mollard@beta.gouv.fr"]
 
-  spec.summary = "Access to French administrative division data"
-  spec.description = "A Ruby library to access data about French communes, departments, regions, and EPCIs."
+  spec.summary = "French administrative divisions - Découpage administratif français"
+  spec.description = "Ruby gem for French administrative divisions (découpage administratif français). Access data about all French communes (municipalities), départements, régions, and EPCIs (intercommunalités). Official data from @etalab/decoupage-administratif."
   spec.homepage = "https://github.com/betagouv/decoupage-administratif-gem"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["changelog_uri"] = "https://github.com/betagouv/decoupage-administratif-gem/changelog.md"
+  spec.metadata["changelog_uri"] = "https://github.com/betagouv/decoupage-administratif-gem/blob/main/CHANGELOG.md"
 
   gemspec = File.basename(__FILE__)
   spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
