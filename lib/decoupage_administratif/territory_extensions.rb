@@ -2,11 +2,11 @@
 
 module DecoupageAdministratif
   module TerritoryExtensions
-    # Check if this territory intersects with a list of commune INSEE codes
+    # Check if this territory includes any of the specified commune codes
     # @param commune_insee_codes [Array<String>] array of commune INSEE codes to check against
-    # @return [Boolean] true if territory intersects with any of the provided codes
-    def territory_intersects_with_insee_codes?(commune_insee_codes)
-      territory_strategy.intersects_with_insee_codes?(commune_insee_codes)
+    # @return [Boolean] true if territory includes any of the provided commune codes
+    def includes_any_commune_code?(commune_insee_codes)
+      territory_strategy.includes_any_commune_code?(commune_insee_codes)
     end
 
     # Get commune INSEE codes for this territory

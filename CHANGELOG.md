@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.2.0] - 2025-08-29
+
+### Changed
+- **Breaking**: Renamed `territory_intersects_with_insee_codes?` method to `includes_any_commune_code?` for better clarity and consistency with Ruby conventions
+- Method now has a more intuitive name that clearly indicates it checks if a territory includes any of the specified commune codes
+
 ## [0.1.1] - 2025-08-29
 
 ### Fixed
@@ -24,7 +30,7 @@
   - Search territories by INSEE codes
   - Find complete territories (departments, regions, EPCIs) from commune codes
   - Support for partial matching and case-insensitive searches
-- Territory intersection methods:
+- Territory inclusion methods:
   - `territory_intersects_with_insee_codes?`: Check if territory contains any of the given INSEE codes
   - `territory_insee_codes`: Get all INSEE codes for a territory
 - Flexible data configuration:
