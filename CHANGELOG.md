@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.1.1] - 2025-08-29
+
+### Fixed
+- Include territory_extensions.rb and territory_strategies.rb files in the gem package
+- Fix NoMethodError for `territory_intersects_with_insee_codes?` method in production environments
+
 ## [0.1.0] - 2025-08-26
 
 ### Added

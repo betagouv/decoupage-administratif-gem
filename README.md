@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/decoupage_administratif.svg)](https://badge.fury.io/rb/decoupage_administratif)
+
 # DecoupageAdministratif
 English version below
 
