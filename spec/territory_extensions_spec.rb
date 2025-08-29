@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe DecoupageAdministratif::TerritoryExtensions do
-  describe '#territory_intersects_with_insee_codes?' do
-    subject { territory.territory_intersects_with_insee_codes?(commune_insee_codes) }
+  describe '#includes_any_commune_code?' do
+    subject { territory.includes_any_commune_code?(commune_insee_codes) }
 
     context 'with empty array' do
       let(:territory) { DecoupageAdministratif::Commune.all.first }

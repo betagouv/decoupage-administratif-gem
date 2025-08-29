@@ -7,10 +7,10 @@ module DecoupageAdministratif
         @territory = territory
       end
 
-      def intersects_with_insee_codes?(commune_insee_codes)
+      def includes_any_commune_code?(commune_insee_codes)
         return false if commune_insee_codes.empty?
 
-        perform_intersection(commune_insee_codes)
+        check_inclusion(commune_insee_codes)
       end
 
       def insee_codes
@@ -21,7 +21,7 @@ module DecoupageAdministratif
 
       attr_reader :territory
 
-      def perform_intersection(commune_insee_codes)
+      def check_inclusion(commune_insee_codes)
         raise NotImplementedError, "Must be implemented by subclass"
       end
 
@@ -33,7 +33,7 @@ module DecoupageAdministratif
     class CommuneStrategy < Base
       private
 
-      def perform_intersection(commune_insee_codes)
+      def check_inclusion(commune_insee_codes)
         commune_insee_codes.include?(territory.code)
       end
 
@@ -45,7 +45,7 @@ module DecoupageAdministratif
     class DepartementStrategy < Base
       private
 
-      def perform_intersection(commune_insee_codes)
+      def check_inclusion(commune_insee_codes)
         departement_prefix = territory.code.length == 2 ? territory.code : territory.code[0..1]
         commune_insee_codes.any? { |commune_code| commune_code.start_with?(departement_prefix) }
       end
@@ -58,7 +58,7 @@ module DecoupageAdministratif
     class RegionStrategy < Base
       private
 
-      def perform_intersection(commune_insee_codes)
+      def check_inclusion(commune_insee_codes)
         departement_codes = territory.departements.map(&:code)
         commune_insee_codes.any? do |commune_code|
           dept_code = commune_code.length >= 3 && commune_code[0..1].to_i >= 96 ? commune_code[0..2] : commune_code[0..1]
@@ -74,7 +74,7 @@ module DecoupageAdministratif
     class EpciStrategy < Base
       private
 
-      def perform_intersection(commune_insee_codes)
+      def check_inclusion(commune_insee_codes)
         epci_commune_codes = territory.membres.map { |membre| membre[:code] || membre["code"] }
         (epci_commune_codes & commune_insee_codes).any?
       end
