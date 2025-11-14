@@ -43,7 +43,17 @@ module DecoupageAdministratif
           item_value = item.send(key)
 
           if value.is_a?(Array)
-            value.include?(item_value)
+            if case_insensitive && value.all? { |v| v.is_a?(String) } && item_value.is_a?(String)
+              if partial
+                value.any? { |v| item_value.downcase.include?(v.downcase) }
+              else
+                value.any? { |v| v.downcase == item_value.downcase }
+              end
+            elsif partial && value.all? { |v| v.is_a?(String) } && item_value.is_a?(String)
+              value.any? { |v| item_value.include?(v) }
+            else
+              value.include?(item_value)
+            end
           elsif case_insensitive && value.is_a?(String) && item_value.is_a?(String)
             if partial
               item_value.downcase.include?(value.downcase)
