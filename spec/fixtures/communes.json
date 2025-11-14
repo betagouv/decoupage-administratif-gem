@@ -234,5 +234,31 @@
     "arrondissement": "011",
     "departement": "01",
     "region": "84"
+  },
+  {
+    "code": "75101",
+    "nom": "Paris 1er Arrondissement",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "type": "arrondissement-municipal",
+    "commune": "75056",
+    "arrondissement": "751",
+    "departement": "75",
+    "region": "11",
+    "codesPostaux": ["75001"],
+    "population": 15919
+  },
+  {
+    "code": "75102",
+    "nom": "Paris 2e Arrondissement",
+    "typeLiaison": 0,
+    "zone": "metro",
+    "type": "arrondissement-municipal",
+    "commune": "75056",
+    "arrondissement": "751",
+    "departement": "75",
+    "region": "11",
+    "codesPostaux": ["75002"],
+    "population": 21119
   }
 ]

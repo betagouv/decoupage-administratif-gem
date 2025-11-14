@@ -8,7 +8,7 @@ module DecoupageAdministratif
     attr_reader zone: String
     attr_reader region_code: String
     attr_reader departement_code: String
-    attr_reader commune_type: String
+    attr_reader commune_type: Symbol
 
     def initialize: (
         code: String,
@@ -21,7 +21,7 @@ module DecoupageAdministratif
 
     def self.all: () -> Array[Commune]
 
-    def self.communes_actuelles: () -> Array[Commune]
+    def self.actuelles: () -> Array[Commune]
 
     def region: () -> Region
 

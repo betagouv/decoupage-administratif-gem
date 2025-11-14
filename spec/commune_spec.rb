@@ -16,7 +16,7 @@ RSpec.describe DecoupageAdministratif::Commune do
     let(:model) { 'communes' }
 
     it "Returns all communes" do
-      expect(subject.size).to eq(16)
+      expect(subject.size).to eq(18)
       expect(subject.first).to have_attributes(
         code: "72180",
         nom: "Mamers",
@@ -27,19 +27,18 @@ RSpec.describe DecoupageAdministratif::Commune do
     end
   end
 
-  describe '#communes_actuelles' do
+  describe '#actuelles' do
     subject { described_class.actuelles }
 
     let(:model) { 'communes' }
 
-    it "Returns all communes actuelles" do
-      expect(subject.size).to eq(14)
-      expect(subject.last).to have_attributes(
-        code: "01042",
-        nom: "Bey",
-        zone: "metro",
-        region_code: "84",
-        departement_code: "01"
+    it "Returns all communes actuelles and municipal districts" do
+      expect(subject.size).to eq(16)
+      expect(subject.map(&:commune_type)).to include(:commune_actuelle, :arrondissement_municipal)
+      expect(subject.find { |c| c.code == "75101" }).to have_attributes(
+        code: "75101",
+        nom: "Paris 1er Arrondissement",
+        commune_type: :arrondissement_municipal
       )
     end
   end
