@@ -31,6 +31,7 @@ module DecoupageAdministratif
     # @example
     #   DecoupageAdministratif::Departement.where(code_region: '52')
     #   DecoupageAdministratif::Commune.where(nom: 'pari', case_insensitive: true, partial: true)
+    #   DecoupageAdministratif::Commune.where(commune_type: [:commune_actuelle, :arrondissement_municipal])
     # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def where(**args)
       # Separate options from criteria
@@ -41,7 +42,9 @@ module DecoupageAdministratif
         args.all? do |key, value|
           item_value = item.send(key)
 
-          if case_insensitive && value.is_a?(String) && item_value.is_a?(String)
+          if value.is_a?(Array)
+            value.include?(item_value)
+          elsif case_insensitive && value.is_a?(String) && item_value.is_a?(String)
             if partial
               item_value.downcase.include?(value.downcase)
             else

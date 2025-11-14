@@ -52,5 +52,18 @@ RSpec.describe DecoupageAdministratif::BaseModel do
         expect(communes).to be_empty
       end
     end
+
+    context "when searching with array of values" do
+      it 'returns communes matching any value in the array' do
+        communes = DecoupageAdministratif::Commune.where(commune_type: %i[commune_actuelle arrondissement_municipal])
+        expect(communes).not_to be_empty
+        expect(communes.all? { |c| %i[commune_actuelle arrondissement_municipal].include?(c.commune_type) }).to be true
+      end
+
+      it 'excludes communes not matching any value in the array' do
+        communes = DecoupageAdministratif::Commune.where(commune_type: %i[commune_actuelle arrondissement_municipal])
+        expect(communes.any? { |c| c.commune_type == :commune_deleguee }).to be false
+      end
+    end
   end
 end

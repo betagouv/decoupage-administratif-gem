@@ -2,6 +2,6 @@ module DecoupageAdministratif
   module BaseModel
     def find: (String) -> untyped
     def find_by: (Hash[Symbol, untyped]) -> untyped
-    def where: (Hash[Symbol, untyped]) -> Array[untyped]
+    def where: (**untyped) -> Array[untyped]
   end
 end
