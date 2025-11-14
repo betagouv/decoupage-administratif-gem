@@ -1,5 +1,18 @@
 ## [Unreleased]
 
+## [0.3.0] - 2025-11-14
+
+### Added
+- **BaseModel**: Support for array values in `where` method to filter on multiple values (e.g., `where(commune_type: [:commune_actuelle, :arrondissement_municipal])`)
+- **Commune**: Municipal districts (arrondissements of Paris, Lyon, Marseille) are now included in `Commune.actuelles` method
+- New commune type `:arrondissement_municipal` for municipal districts
+
+### Changed
+- `Commune.actuelles` now returns both current communes and municipal districts (`:commune_actuelle` and `:arrondissement_municipal`)
+
+### Fixed
+- RBS type signature for `commune_type` attribute corrected from `String` to `Symbol`
+
 ## [0.2.0] - 2025-08-29
 
 ### Changed
