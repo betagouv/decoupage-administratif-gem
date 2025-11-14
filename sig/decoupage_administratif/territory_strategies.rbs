@@ -11,7 +11,7 @@ module DecoupageAdministratif
 
       attr_reader territory: untyped
 
-      def check_inclusion: (Array[String] commune_insee_codes) -> bool
+      def check_inclusion?: (Array[String] commune_insee_codes) -> bool
 
       def calculate_insee_codes: () -> Array[String]
     end
@@ -19,7 +19,7 @@ module DecoupageAdministratif
     class CommuneStrategy < Base
       private
 
-      def check_inclusion: (Array[String] commune_insee_codes) -> bool
+      def check_inclusion?: (Array[String] commune_insee_codes) -> bool
 
       def calculate_insee_codes: () -> Array[String]
     end
@@ -27,7 +27,7 @@ module DecoupageAdministratif
     class DepartementStrategy < Base
       private
 
-      def check_inclusion: (Array[String] commune_insee_codes) -> bool
+      def check_inclusion?: (Array[String] commune_insee_codes) -> bool
 
       def calculate_insee_codes: () -> Array[String]
     end
@@ -35,7 +35,7 @@ module DecoupageAdministratif
     class RegionStrategy < Base
       private
 
-      def check_inclusion: (Array[String] commune_insee_codes) -> bool
+      def check_inclusion?: (Array[String] commune_insee_codes) -> bool
 
       def calculate_insee_codes: () -> Array[String]
     end
@@ -43,7 +43,7 @@ module DecoupageAdministratif
     class EpciStrategy < Base
       private
 
-      def check_inclusion: (Array[String] commune_insee_codes) -> bool
+      def check_inclusion?: (Array[String] commune_insee_codes) -> bool
 
       def calculate_insee_codes: () -> Array[String]
     end

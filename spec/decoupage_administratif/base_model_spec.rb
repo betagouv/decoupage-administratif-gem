@@ -68,7 +68,7 @@ RSpec.describe DecoupageAdministratif::BaseModel do
 
     context "when searching with array of values and case_insensitive option" do
       it 'returns communes matching any value in the array with case insensitive comparison' do
-        communes = DecoupageAdministratif::Commune.where(nom: ['mamers', 'PARIS'], case_insensitive: true)
+        communes = DecoupageAdministratif::Commune.where(nom: %w[mamers PARIS], case_insensitive: true)
         expect(communes).not_to be_empty
         expect(communes.any? { |c| c.nom.downcase == 'mamers' }).to be true
       end
@@ -81,7 +81,7 @@ RSpec.describe DecoupageAdministratif::BaseModel do
 
     context "when searching with array of values and partial option" do
       it 'returns communes where the name contains any of the partial values' do
-        communes = DecoupageAdministratif::Commune.where(nom: ['Mam', 'Pari'], partial: true)
+        communes = DecoupageAdministratif::Commune.where(nom: %w[Mam Pari], partial: true)
         expect(communes).not_to be_empty
         expect(communes.any? { |c| c.nom.include?('Mam') }).to be true
       end
@@ -89,7 +89,7 @@ RSpec.describe DecoupageAdministratif::BaseModel do
 
     context "when searching with array of values and both case_insensitive and partial options" do
       it 'returns communes matching with case insensitive and partial matching combined' do
-        communes = DecoupageAdministratif::Commune.where(nom: ['mam', 'pari'], case_insensitive: true, partial: true)
+        communes = DecoupageAdministratif::Commune.where(nom: %w[mam pari], case_insensitive: true, partial: true)
         expect(communes).not_to be_empty
         expect(communes.any? { |c| c.nom.downcase.include?('mam') }).to be true
       end

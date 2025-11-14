@@ -118,7 +118,7 @@ module DecoupageAdministratif
     # Check if only one key and it is nil
     # @return [Boolean]
     def only_nil_key?
-      @codes.keys.uniq.count == 1 && @codes.keys.first.nil?
+      @codes.keys.uniq.one? && @codes.keys.first.nil?
     end
 
     # Should add departement to result?
@@ -154,7 +154,7 @@ module DecoupageAdministratif
     # @return [void]
     def search_for_epcis
       @epcis = []
-      return if @codes.keys.uniq.count == 1 && @codes.keys.first.nil?
+      return if @codes.keys.uniq.one? && @codes.keys.first.nil?
 
       @codes.each_value do |communes|
         # Find EPCIs that match all communes in the current group
@@ -171,7 +171,7 @@ module DecoupageAdministratif
     # @return [void]
     def search_for_communes
       @communes = []
-      return if @codes.keys.uniq.count == 1 && @codes.keys.first.nil?
+      return if @codes.keys.uniq.one? && @codes.keys.first.nil?
 
       @codes.each_value do |communes|
         communes.map { |commune| @communes << commune }

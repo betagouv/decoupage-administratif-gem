@@ -4,6 +4,7 @@ module DecoupageAdministratif
   class Departement
     extend BaseModel
     include TerritoryExtensions
+
     # @!attribute [r] code
     #   @return [String] INSEE code of the department
     # @!attribute [r] nom
