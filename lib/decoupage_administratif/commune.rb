@@ -20,6 +20,7 @@ module DecoupageAdministratif
     #     - :commune_actuelle: Standard current commune
     #     - :commune_deleguee: Delegated commune
     #     - :commune_associee: Associated commune
+    #     - :arrondissement_municipal: Municipal district (Paris, Lyon, Marseille)
     #   @note Default value is :commune_actuelle
     attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type
 
@@ -54,9 +55,9 @@ module DecoupageAdministratif
       end
     end
 
-    # @return [Array<Commune>] a collection of all communes _actuelles_
+    # @return [Array<Commune>] a collection of all communes _actuelles_ and municipal districts
     def self.actuelles
-      @actuelles ||= where(commune_type: :commune_actuelle)
+      @actuelles ||= where(commune_type: %i[commune_actuelle arrondissement_municipal])
     end
 
     # @raise [NotFoundError] if no region is found for the code

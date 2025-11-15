@@ -63,9 +63,12 @@ Exemple d’utilisation basique :
 DecoupageAdministratif::Region.all
 
 # Trouver une commune par code INSEE
-# Une commune a un commune_type qui peut être `commune-actuelle`, `commune-deleguee` (anciennes communes) ou `commune-associee` (anciennes communes avec un statut spécial)
+# Une commune a un commune_type qui peut être :commune_actuelle, :commune_deleguee (anciennes communes), :commune_associee (anciennes communes avec un statut spécial) ou :arrondissement_municipal (arrondissements de Paris, Lyon, Marseille)
 commune = DecoupageAdministratif::Commune.find('75056')
 puts commune.nom # => "Paris"
+
+# Lister toutes les communes actuelles (communes actuelles + arrondissements municipaux)
+DecoupageAdministratif::Commune.actuelles
 
 # Lister les départements d'une région
 DecoupageAdministratif::Region.find('84').departements
@@ -224,9 +227,12 @@ Basic usage example:
 DecoupageAdministratif::Region.all
 
 # Find a municipality by INSEE code
-# A municipality has a `commune_type` which can be :commune_actuelle (current municipalities), :commune_deleguee (former municipalities), or :commune_associee (former municipalities with a special status)
+# A municipality has a `commune_type` which can be :commune_actuelle (current municipalities), :commune_deleguee (former municipalities), :commune_associee (former municipalities with a special status), or :arrondissement_municipal (municipal districts of Paris, Lyon, Marseille)
 commune = DecoupageAdministratif::Commune.find('75056')
 puts commune.nom # => "Paris"
+
+# List all current municipalities (current communes + municipal districts)
+DecoupageAdministratif::Commune.actuelles
 
 # List departments of a region
 DecoupageAdministratif::Region.find('84').departements
