@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+## [0.3.1] - 2025-11-15
+
+### Fixed
+- **Departement**: `communes` method now includes municipal districts (arrondissements) in addition to current communes
+- **Region**: `communes` method now includes municipal districts (arrondissements) in addition to current communes
+- **Search**: `find_communes_by_codes` method now correctly includes municipal districts (arrondissements)
+
 ## [0.3.0] - 2025-11-14
 
 ### Added

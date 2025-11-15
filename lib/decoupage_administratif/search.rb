@@ -94,7 +94,7 @@ module DecoupageAdministratif
           commune = @@communes_cache[code]
           next if commune.nil?
 
-          commune.commune_type == :commune_actuelle ? commune : nil
+          %i[commune_actuelle arrondissement_municipal].include?(commune.commune_type) ? commune : nil
         end
       end
     end

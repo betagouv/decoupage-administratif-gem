@@ -43,7 +43,7 @@ module DecoupageAdministratif
     # @return [Array<Commune>] a collection of all actual communes in the region
     def communes
       @communes ||= DecoupageAdministratif::Commune.all.select do |commune|
-        commune.region_code == @code && commune.commune_type == :commune_actuelle
+        commune.region_code == @code && %i[commune_actuelle arrondissement_municipal].include?(commune.commune_type)
       end
     end
   end
