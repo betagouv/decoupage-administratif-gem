@@ -2,6 +2,14 @@ module DecoupageAdministratif
   module BaseModel
     def find: (String) -> untyped
     def find_by: (Hash[Symbol, untyped]) -> untyped
-    def where: (Hash[Symbol, untyped]) -> Array[untyped]
+    def where: (**untyped) -> Array[untyped]
+
+    private
+
+    def matches?: (untyped item_value, untyped filter_value, bool case_insensitive, bool partial) -> bool
+    def match_array?: (untyped item_value, Array[untyped] filter_array, bool case_insensitive, bool partial) -> bool
+    def match_single_value?: (String item_value, String filter_value, bool case_insensitive, bool partial) -> bool
+    def strings?: (untyped value1, untyped value2) -> bool
+    def apply_string_options?: (untyped item_value, Array[untyped] filter_array) -> bool
   end
 end
