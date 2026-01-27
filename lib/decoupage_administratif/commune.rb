@@ -22,7 +22,9 @@ module DecoupageAdministratif
     #     - :commune_associee: Associated commune
     #     - :arrondissement_municipal: Municipal district (Paris, Lyon, Marseille)
     #   @note Default value is :commune_actuelle
-    attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type
+    # @!attribute [r] codes_postaux
+    #   @return [Array<String>] Postal codes of the commune
+    attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type, :codes_postaux
 
     # rubocop:disable Metrics/ParameterLists
     # @param code [String] the INSEE code of the commune
@@ -31,13 +33,16 @@ module DecoupageAdministratif
     # @param region_code [String] the INSEE code of the region
     # @param departement_code [String] the INSEE code of the department
     # @param commune_type [Symbol] the type of the commune (default: :commune_actuelle)
-    def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: :commune_actuelle)
+    # @param codes_postaux [Array<String>] the postal codes of the commune (default: [])
+    def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: :commune_actuelle,
+                   codes_postaux: [])
       @code = code
       @nom = nom
       @zone = zone
       @region_code = region_code
       @departement_code = departement_code
       @commune_type = commune_type
+      @codes_postaux = codes_postaux
     end
     # rubocop:enable Metrics/ParameterLists
 
@@ -50,7 +55,8 @@ module DecoupageAdministratif
           zone: commune_data["zone"],
           region_code: commune_data["region"],
           departement_code: commune_data["departement"],
-          commune_type: commune_data["type"]&.gsub("-", "_")&.to_sym
+          commune_type: commune_data["type"]&.gsub("-", "_")&.to_sym,
+          codes_postaux: commune_data["codesPostaux"] || []
         )
       end
     end

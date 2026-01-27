@@ -7,6 +7,7 @@ module DecoupageAdministratif
     private
 
     def matches?: (untyped item_value, untyped filter_value, bool case_insensitive, bool partial) -> bool
+    def match_item_array?: (Array[untyped] item_array, Array[untyped] filter_values, bool case_insensitive, bool partial) -> bool
     def match_array?: (untyped item_value, Array[untyped] filter_array, bool case_insensitive, bool partial) -> bool
     def match_single_value?: (String item_value, String filter_value, bool case_insensitive, bool partial) -> bool
     def strings?: (untyped value1, untyped value2) -> bool

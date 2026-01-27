@@ -9,6 +9,7 @@ module DecoupageAdministratif
     attr_reader region_code: String
     attr_reader departement_code: String
     attr_reader commune_type: Symbol
+    attr_reader codes_postaux: Array[String]
 
     def initialize: (
         code: String,
@@ -16,7 +17,8 @@ module DecoupageAdministratif
         zone: String,
         region_code: String,
         departement_code: String,
-        commune_type: Symbol
+        ?commune_type: Symbol,
+        ?codes_postaux: Array[String]
       ) -> void
 
     def self.all: () -> Array[Commune]

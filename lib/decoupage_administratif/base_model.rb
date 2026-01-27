@@ -71,10 +71,26 @@ module DecoupageAdministratif
     # @param partial [Boolean] whether to perform partial (contains) matching
     # @return [Boolean] true if the value matches the filter
     def matches?(item_value, filter_value, case_insensitive, partial)
+      return match_item_array?(item_value, filter_value, case_insensitive, partial) if item_value.is_a?(Array)
       return match_array?(item_value, filter_value, case_insensitive, partial) if filter_value.is_a?(Array)
       return match_single_value?(item_value, filter_value, case_insensitive, partial) if strings?(item_value, filter_value)
 
       item_value == filter_value
+    end
+
+    # Check if any element of the item array matches the filter values
+    #
+    # @param item_array [Array] the array value from the item being filtered
+    # @param filter_values [Array] the array of values to filter by
+    # @param case_insensitive [Boolean] whether to perform case-insensitive matching
+    # @param partial [Boolean] whether to perform partial (contains) matching
+    # @return [Boolean] true if any element of the item array matches any filter value
+    def match_item_array?(item_array, filter_values, case_insensitive, partial)
+      return false unless filter_values.is_a?(Array)
+
+      item_array.any? do |element|
+        filter_values.any? { |fv| matches?(element, fv, case_insensitive, partial) }
+      end
     end
 
     # Check if item_value matches any value in the filter array
