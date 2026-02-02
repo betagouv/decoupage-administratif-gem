@@ -11,7 +11,12 @@ module DecoupageAdministratif
     #   DecoupageAdministratif::Region.find('52')
     def find(code)
       result = find_by(code: code)
-      raise DecoupageAdministratif::NotFoundError, "#{name.split('::').last} introuvable pour le code #{code}" if result.nil?
+      if result.nil?
+        raise DecoupageAdministratif::NotFoundError.new(
+          "#{name.split('::').last} not found for code #{code}",
+          code: code
+        )
+      end
 
       result
     end

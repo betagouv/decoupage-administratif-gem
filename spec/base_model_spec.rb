@@ -44,7 +44,13 @@ RSpec.describe DecoupageAdministratif::BaseModel do
     it 'raises an exception if no commune matches the code' do
       expect do
         DecoupageAdministratif::Commune.find('99999')
-      end.to raise_error(DecoupageAdministratif::NotFoundError, 'Commune introuvable pour le code 99999')
+      end.to raise_error(DecoupageAdministratif::NotFoundError, 'Commune not found for code 99999')
+    end
+
+    it 'provides the code attribute when raising NotFoundError' do
+      DecoupageAdministratif::Commune.find('99999')
+    rescue DecoupageAdministratif::NotFoundError => e
+      expect(e.code).to eq('99999')
     end
   end
 
