@@ -16,7 +16,15 @@ require 'decoupage_administratif/railtie' if defined?(Rails)
 
 module DecoupageAdministratif
   class Error < StandardError; end
-  class NotFoundError < Error; end
+
+  class NotFoundError < Error
+    attr_reader :code
+
+    def initialize(message, code:)
+      @code = code
+      super(message)
+    end
+  end
 
   # Returns information about the embedded data version
   # @return [String] formatted string with data version information

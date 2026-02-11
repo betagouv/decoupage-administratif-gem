@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## [0.4.0] - 2026-01-27
+
+### Added
+- **Commune**: `codes_postaux` attribute exposing postal codes from source data (e.g., `commune.codes_postaux # => ["72110"]`)
+- **BaseModel**: `where` now supports filtering on array attributes (e.g., `Commune.where(codes_postaux: ["72110", "72600"])`)
+
 ## [0.3.1] - 2025-11-15
 
 ### Fixed

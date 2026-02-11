@@ -22,7 +22,8 @@ RSpec.describe DecoupageAdministratif::Commune do
         nom: "Mamers",
         zone: "metro",
         region_code: "52",
-        departement_code: "72"
+        departement_code: "72",
+        codes_postaux: ["72600"]
       )
     end
   end
@@ -57,7 +58,8 @@ RSpec.describe DecoupageAdministratif::Commune do
           nom: "Bonnétable",
           zone: "metro",
           region_code: "52",
-          departement_code: "72"
+          departement_code: "72",
+          codes_postaux: ["72110"]
         )
       end
     end
@@ -67,7 +69,7 @@ RSpec.describe DecoupageAdministratif::Commune do
     subject { commune.departement }
 
     let(:model) { 'departements' }
-    let(:commune) { described_class.new(code: '78380', nom: 'Maule', zone: 'metro', region_code: '11', departement_code: '78') }
+    let(:commune) { described_class.new(code: '78380', nom: 'Maule', zone: 'metro', region_code: '11', departement_code: '78', codes_postaux: []) }
 
     it 'Returns the departement of the commune' do
       expect(subject).to be_a(DecoupageAdministratif::Departement)
@@ -82,7 +84,7 @@ RSpec.describe DecoupageAdministratif::Commune do
     subject { commune.epci }
 
     let(:model) { 'epci' }
-    let(:commune) { described_class.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72') }
+    let(:commune) { described_class.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72', codes_postaux: []) }
 
     it 'Returns the epci of the commune' do
       expect(subject).to be_a(DecoupageAdministratif::Epci)
@@ -93,11 +95,45 @@ RSpec.describe DecoupageAdministratif::Commune do
     end
   end
 
+  describe '.where with codes_postaux' do
+    subject { described_class.where(codes_postaux: codes_postaux) }
+
+    let(:model) { 'communes' }
+
+    context 'when communes match the postal codes' do
+      let(:codes_postaux) { ['72110'] }
+
+      it 'Returns all communes with the given postal code' do
+        expect(subject).to all(be_a(described_class))
+        expect(subject.map(&:nom)).to contain_exactly(
+          "Saint-Cosme-en-Vairais", "Beaufay", "Nogent-le-Bernard",
+          "Bonnétable", "Courcemont", "Briosne-lès-Sables"
+        )
+      end
+    end
+
+    context 'when searching with multiple postal codes' do
+      let(:codes_postaux) { %w[72110 72600] }
+
+      it 'Returns all communes matching any of the given postal codes' do
+        expect(subject.map(&:nom)).to include("Bonnétable", "Mamers")
+      end
+    end
+
+    context 'when no commune matches the postal codes' do
+      let(:codes_postaux) { ['00000'] }
+
+      it 'Returns an empty array' do
+        expect(subject).to eq([])
+      end
+    end
+  end
+
   describe '#region' do
     subject { commune.region }
 
     let(:model) { 'regions' }
-    let(:commune) { described_class.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72') }
+    let(:commune) { described_class.new(code: '72039', nom: 'Bonnétable', zone: 'metro', region_code: '52', departement_code: '72', codes_postaux: []) }
 
     it "Returns the region of the commune" do
       expect(subject).to be_a(DecoupageAdministratif::Region)
