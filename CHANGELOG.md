@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+
+- **BaseModel**: improve find by code performance.
+
 ## [0.4.0] - 2026-01-27
 
 ### Added
