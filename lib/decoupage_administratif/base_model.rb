@@ -151,7 +151,7 @@ module DecoupageAdministratif
     # @param filter_array [Array] the filter array
     # @return [Boolean] true if string options should be applied
     def apply_string_options?(item_value, filter_array)
-      item_value.is_a?(String) && filter_array.all? { |v| v.is_a?(String) }
+      item_value.is_a?(String) && filter_array.all?(String)
     end
   end
 end
