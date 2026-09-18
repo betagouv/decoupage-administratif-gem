@@ -10,7 +10,7 @@ module DecoupageAdministratif
     #   DecoupageAdministratif::Commune.find('72039')
     #   DecoupageAdministratif::Region.find('52')
     def find(code)
-      result = find_by(code: code)
+      result = code_index[code]
       if result.nil?
         raise DecoupageAdministratif::NotFoundError.new(
           "#{name.split('::').last} not found for code #{code}",
@@ -19,6 +19,16 @@ module DecoupageAdministratif
       end
 
       result
+    end
+
+    # Memonized index of all records by code
+    # @return [Hash]
+    def code_index
+      @code_index ||= begin
+        result = {}
+        all.each { |record| result[record.code] = record }
+        result
+      end
     end
 
     # @param criteria [Hash] a hash with the attributes to filter by
