@@ -48,9 +48,8 @@ module DecoupageAdministratif
 
     # @return [Hash<String,Commune>] a collection of all communes
     def self.all
-      @all ||= Parser.new('communes').data.to_h do |commune_data|
-        [
-          commune_data["code"],
+      @all ||= begin
+        communes = Parser.new('communes').data.map do |commune_data|
           Commune.new(
             code: commune_data["code"],
             nom: commune_data["nom"],
@@ -60,7 +59,17 @@ module DecoupageAdministratif
             commune_type: commune_data["type"]&.gsub("-", "_")&.to_sym,
             codes_postaux: commune_data["codesPostaux"] || []
           )
-        ]
+        end
+
+        hash = {}
+        communes.each do |commune|
+          existing_commune_with_same_code = hash[commune.code]
+          if existing_commune_with_same_code.nil? ||
+             %i[commune_deleguee commune_associee].include?(existing_commune_with_same_code.commune_type)
+            hash[commune.code] = commune
+          end
+        end
+        hash
       end
     end
 

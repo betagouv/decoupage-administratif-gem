@@ -26,6 +26,10 @@ RSpec.describe DecoupageAdministratif::Commune do
         codes_postaux: ["72600"]
       )
     end
+
+    it "Prioritizes actuelles" do
+      expect(subject["01015"].nom).to eq "Arboys en Bugey"
+    end
   end
 
   describe '#actuelles' do
@@ -34,13 +38,17 @@ RSpec.describe DecoupageAdministratif::Commune do
     let(:model) { 'communes' }
 
     it "Returns all communes actuelles and municipal districts" do
-      expect(subject.size).to eq(16)
-      expect(subject.values.map(&:commune_type)).to include(:commune_actuelle, :arrondissement_municipal)
+      expect(subject.size).to eq(17)
+      expect(subject.values.map(&:commune_type).uniq).to eq %i[commune_actuelle arrondissement_municipal]
       expect(subject["75101"]).to have_attributes(
         code: "75101",
         nom: "Paris 1er Arrondissement",
         commune_type: :arrondissement_municipal
       )
+    end
+
+    it "Does not include deleguees" do
+      expect(subject.values.map(&:nom)).not_to include("Arbignieu")
     end
   end
 

@@ -44,7 +44,7 @@ module DecoupageAdministratif
     # @param code_insee [String] the INSEE code of the commune
     # @return [Hash] a hash containing the EPCI, department, and region associated with the commune
     def find_territories_by_commune_insee_code(code_insee)
-      commune = DecoupageAdministratif::Commune.actuelles[code_insee]
+      commune = DecoupageAdministratif::Commune.all[code_insee]
       return {} if commune.nil?
 
       {
