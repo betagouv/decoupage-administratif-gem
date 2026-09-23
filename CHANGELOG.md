@@ -2,7 +2,8 @@
 
 ### Added
 
-- **BaseModel**: improve find by code performance.
+- **BaseModel**: improve find performance.
+- **BaseModel**: Breaking change: The .all methods now return a hash of models, indexed by Insee code.
 
 ## [0.4.0] - 2026-01-27
 

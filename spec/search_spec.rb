@@ -106,7 +106,7 @@ RSpec.describe DecoupageAdministratif::Search do
       let(:commune) { instance_double(DecoupageAdministratif::Commune, code: "94068", epci: "Métropole du Grand Paris", departement: "Val-de-Marne", region: "Île-de-France") }
 
       before do
-        allow(DecoupageAdministratif::Commune).to receive(:find_by).with(code: "94068").and_return(commune)
+        allow(DecoupageAdministratif::Commune).to receive(:actuelles).and_return({ "94068" => commune })
       end
 
       it "returns the associated territories" do

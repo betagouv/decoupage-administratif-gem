@@ -17,7 +17,7 @@ RSpec.describe DecoupageAdministratif::Epci do
 
     it "Returns all epcis" do
       expect(subject.size).to eq(2)
-      expect(subject.first).to have_attributes(
+      expect(subject.values.first).to have_attributes(
         code: "200072676",
         nom: "CC Maine Saosnois"
       )

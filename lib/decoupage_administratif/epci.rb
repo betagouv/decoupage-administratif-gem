@@ -22,14 +22,17 @@ module DecoupageAdministratif
       @membres = membres
     end
 
-    # @return [Array<Epci>] a collection of all EPCI
+    # @return [Hash<String,Epci>] a collection of all EPCI
     def self.all
-      Parser.new('epci').data.map do |epci_data|
-        Epci.new(
-          code: epci_data["code"],
-          nom: epci_data["nom"],
-          membres: epci_data["membres"].map { |membre| membre.slice("nom", "code") }
-        )
+      @all ||= Parser.new('epci').data.to_h do |epci_data|
+        [
+          epci_data["code"],
+          Epci.new(
+            code: epci_data["code"],
+            nom: epci_data["nom"],
+            membres: epci_data["membres"].map { |membre| membre.slice("nom", "code") }
+          )
+        ]
       end
     end
 
@@ -37,7 +40,7 @@ module DecoupageAdministratif
     # @param codes [Array<String>] an array of commune codes
     # @return [Array<Epci>] a collection of EPCI that include all the specified codes
     def self.search_by_communes_codes(codes)
-      all.select do |epci|
+      all.values.select do |epci|
         epci.membres.map do |m|
           codes.include?(m['code'])
         end.all?

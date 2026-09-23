@@ -12,7 +12,7 @@ module DecoupageAdministratif
         membres: Array[{ code: String, nom: String }]
       ) -> void
 
-    def self.all: () -> Array[Epci]
+    def self.all: () -> Hash[String, Epci]
 
     def self.search_by_communes_codes: (Array[String]) -> Array[Epci]
 

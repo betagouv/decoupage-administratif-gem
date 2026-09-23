@@ -10,7 +10,7 @@ module DecoupageAdministratif
     #   DecoupageAdministratif::Commune.find('72039')
     #   DecoupageAdministratif::Region.find('52')
     def find(code)
-      result = code_index[code]
+      result = all[code]
       if result.nil?
         raise DecoupageAdministratif::NotFoundError.new(
           "#{name.split('::').last} not found for code #{code}",
@@ -21,22 +21,12 @@ module DecoupageAdministratif
       result
     end
 
-    # Memonized index of all records by code
-    # @return [Hash]
-    def code_index
-      @code_index ||= begin
-        result = {}
-        all.each { |record| result[record.code] = record }
-        result
-      end
-    end
-
     # @param criteria [Hash] a hash with the attributes to filter by
     # @return [untyped] the element that matches the criteria
     # @example
     #   DecoupageAdministratif::Commune.find_by(nom: 'Paris')
     def find_by(criteria)
-      all.find { |item| criteria.all? { |k, v| item.send(k) == v } }
+      all.values.find { |item| criteria.all? { |k, v| item.send(k) == v } }
     end
 
     # Filter records based on criteria with optional case-insensitive and partial matching
@@ -71,7 +61,7 @@ module DecoupageAdministratif
       case_insensitive = args.delete(:case_insensitive) || false
       partial = args.delete(:partial) || false
 
-      all.select do |item|
+      all.values.select do |item|
         args.all? { |key, value| matches?(item.send(key), value, case_insensitive, partial) }
       end
     end

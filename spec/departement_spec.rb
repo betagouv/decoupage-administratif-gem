@@ -17,7 +17,7 @@ RSpec.describe DecoupageAdministratif::Departement do
 
     it "Returns all departements" do
       expect(subject.size).to eq(6)
-      expect(subject.first).to have_attributes(
+      expect(subject.values.first).to have_attributes(
         code: "01",
         nom: "Ain",
         code_region: "84",

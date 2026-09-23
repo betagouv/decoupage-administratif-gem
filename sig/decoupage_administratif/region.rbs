@@ -12,7 +12,7 @@ module DecoupageAdministratif
         zone: String,
       ) -> void
 
-    def self.all: () -> Array[Region]
+    def self.all: () -> Hash[String, Region]
 
     def communes: () -> Array[Commune]
 

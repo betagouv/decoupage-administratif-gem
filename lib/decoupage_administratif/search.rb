@@ -16,7 +16,6 @@ module DecoupageAdministratif
 
     def initialize(codes = nil)
       @codes = codes&.uniq
-      initialize_class_caches
     end
 
     # Search for territories by municipality.
@@ -45,8 +44,7 @@ module DecoupageAdministratif
     # @param code_insee [String] the INSEE code of the commune
     # @return [Hash] a hash containing the EPCI, department, and region associated with the commune
     def find_territories_by_commune_insee_code(code_insee)
-      # Use cache if available, fallback to find_by for compatibility with tests
-      commune = @@communes_cache&.[](code_insee) || DecoupageAdministratif::Commune.find_by(code: code_insee)
+      commune = DecoupageAdministratif::Commune.actuelles[code_insee]
       return {} if commune.nil?
 
       {
@@ -58,23 +56,6 @@ module DecoupageAdministratif
 
     private
 
-    # Class-level caches for performance optimization
-    # rubocop:disable Style/ClassVars
-    @@departements_cache = nil
-    @@communes_cache = nil
-    # rubocop:enable Style/ClassVars
-
-    # Initialize class-level caches for performance optimization
-    # @return [void]
-    def initialize_class_caches
-      return if @@departements_cache && @@communes_cache
-
-      # rubocop:disable Style/ClassVars
-      @@departements_cache = DecoupageAdministratif::Departement.all.to_h { |dept| [dept.code, dept] }
-      @@communes_cache = DecoupageAdministratif::Commune.actuelles.to_h { |commune| [commune.code, commune] }
-      # rubocop:enable Style/ClassVars
-    end
-
     # Group the codes by department.
     # @return [Hash<Departement, Array<Commune>>] Hash with departments as keys and their communes as values
     def group_by_departement
@@ -82,7 +63,7 @@ module DecoupageAdministratif
       # and DecoupageAdministratif::Communes as values
       @codes.group_by do |code|
         dept_code = code[0..1] == "97" ? code[0..2] : code[0..1]
-        @@departements_cache[dept_code]
+        DecoupageAdministratif::Departement.all[dept_code]
       end
     end
 
@@ -91,7 +72,7 @@ module DecoupageAdministratif
     def find_communes_by_codes
       @codes.transform_values do |codes_insee|
         codes_insee.filter_map do |code|
-          commune = @@communes_cache[code]
+          commune = DecoupageAdministratif::Commune.actuelles[code]
           next if commune.nil?
 
           %i[commune_actuelle arrondissement_municipal].include?(commune.commune_type) ? commune : nil
@@ -137,7 +118,7 @@ module DecoupageAdministratif
       @regions = []
       return if @departements.empty?
 
-      regions = DecoupageAdministratif::Region.all
+      regions = DecoupageAdministratif::Region.all.values
       regions.each do |region|
         next unless region.departements.all? do |departement|
           @departements.map(&:code).include? departement.code

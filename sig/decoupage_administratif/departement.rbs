@@ -15,7 +15,7 @@ module DecoupageAdministratif
       ) -> void
 
 
-    def self.all: () -> Array[Departement]
+    def self.all: () -> Hash[String, Departement]
 
     def communes: () -> Array[Commune]
 

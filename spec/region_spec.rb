@@ -17,7 +17,7 @@ RSpec.describe DecoupageAdministratif::Region do
 
     it "Returns all regions" do
       expect(subject.size).to eq(26)
-      expect(subject.first).to have_attributes(
+      expect(subject.values.first).to have_attributes(
         code: "01",
         nom: "Guadeloupe",
         zone: "drom"

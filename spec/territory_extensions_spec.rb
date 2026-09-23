@@ -7,7 +7,7 @@ RSpec.describe DecoupageAdministratif::TerritoryExtensions do
     subject { territory.includes_any_commune_code?(commune_insee_codes) }
 
     context 'with empty array' do
-      let(:territory) { DecoupageAdministratif::Commune.all.first }
+      let(:territory) { DecoupageAdministratif::Commune.all.values.first }
       let(:commune_insee_codes) { [] }
 
       it { is_expected.to be false }
@@ -74,7 +74,7 @@ RSpec.describe DecoupageAdministratif::TerritoryExtensions do
     end
 
     context 'with Epci' do
-      let(:territory) { DecoupageAdministratif::Epci.all.first }
+      let(:territory) { DecoupageAdministratif::Epci.all.values.first }
 
       context 'when any member commune is in the array' do
         let(:member_code) { territory.membres.first["code"] }
@@ -138,7 +138,7 @@ RSpec.describe DecoupageAdministratif::TerritoryExtensions do
     end
 
     context 'with Epci' do
-      let(:territory) { DecoupageAdministratif::Epci.all.first }
+      let(:territory) { DecoupageAdministratif::Epci.all.values.first }
       let(:expected_codes) { territory.membres.map { |m| m["code"] } }
 
       it { is_expected.to eq(expected_codes) }

@@ -46,24 +46,29 @@ module DecoupageAdministratif
     end
     # rubocop:enable Metrics/ParameterLists
 
-    # @return [Array<Commune>] a collection of all communes
+    # @return [Hash<String,Commune>] a collection of all communes
     def self.all
-      @all ||= Parser.new('communes').data.map do |commune_data|
-        Commune.new(
-          code: commune_data["code"],
-          nom: commune_data["nom"],
-          zone: commune_data["zone"],
-          region_code: commune_data["region"],
-          departement_code: commune_data["departement"],
-          commune_type: commune_data["type"]&.gsub("-", "_")&.to_sym,
-          codes_postaux: commune_data["codesPostaux"] || []
-        )
+      @all ||= Parser.new('communes').data.to_h do |commune_data|
+        [
+          commune_data["code"],
+          Commune.new(
+            code: commune_data["code"],
+            nom: commune_data["nom"],
+            zone: commune_data["zone"],
+            region_code: commune_data["region"],
+            departement_code: commune_data["departement"],
+            commune_type: commune_data["type"]&.gsub("-", "_")&.to_sym,
+            codes_postaux: commune_data["codesPostaux"] || []
+          )
+        ]
       end
     end
 
-    # @return [Array<Commune>] a collection of all communes _actuelles_ and municipal districts
+    # @return [Hash<Code, Commune>] a collection of all communes _actuelles_ and municipal districts
     def self.actuelles
-      @actuelles ||= where(commune_type: %i[commune_actuelle arrondissement_municipal])
+      @actuelles ||= all.select do |_code, item|
+        %i[commune_actuelle arrondissement_municipal].include? item.commune_type
+      end
     end
 
     # @raise [NotFoundError] if no region is found for the code
@@ -80,7 +85,7 @@ module DecoupageAdministratif
 
     # @return [Epci, nil] the EPCI of the commune, if it belongs to one
     def epci
-      found_epci = DecoupageAdministratif::Epci.all.find do |epci|
+      found_epci = DecoupageAdministratif::Epci.all.values.find do |epci|
         epci.membres.any? { |m| m["code"] == @code }
       end
       found_epci.is_a?(DecoupageAdministratif::Epci) ? (@epci ||= found_epci) : nil
