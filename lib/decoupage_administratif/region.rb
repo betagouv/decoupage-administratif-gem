@@ -22,27 +22,30 @@ module DecoupageAdministratif
       @zone = zone
     end
 
-    # @return [Array<Region>] a collection of all regions
+    # @return [Hash<String, Region>] a collection of all regions
     def self.all
-      @all ||= Parser.new('regions').data.map do |region_data|
-        Region.new(
-          code: region_data["code"],
-          nom: region_data["nom"],
-          zone: region_data["zone"]
-        )
+      @all ||= Parser.new('regions').data.to_h do |region_data|
+        [
+          region_data["code"],
+          Region.new(
+            code: region_data["code"],
+            nom: region_data["nom"],
+            zone: region_data["zone"]
+          )
+        ]
       end
     end
 
     # @return [Array<Departement>] a collection of all departments in the region
     def departements
-      @departements ||= DecoupageAdministratif::Departement.all.select do |departement|
+      @departements ||= DecoupageAdministratif::Departement.all.values.select do |departement|
         departement.code_region == @code
       end
     end
 
     # @return [Array<Commune>] a collection of all actual communes in the region
     def communes
-      @communes ||= DecoupageAdministratif::Commune.all.select do |commune|
+      @communes ||= DecoupageAdministratif::Commune.all.values.select do |commune|
         commune.region_code == @code && %i[commune_actuelle arrondissement_municipal].include?(commune.commune_type)
       end
     end

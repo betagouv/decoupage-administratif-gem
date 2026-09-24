@@ -26,15 +26,18 @@ module DecoupageAdministratif
       @code_region = code_region
     end
 
-    # @return [Array<Departement>] a collection of all departments
+    # @return [Hash<String, Departement>] a collection of all departments
     def self.all
-      @all ||= Parser.new('departements').data.map do |departement_data|
-        DecoupageAdministratif::Departement.new(
-          code: departement_data["code"],
-          nom: departement_data["nom"],
-          zone: departement_data["zone"],
-          code_region: departement_data["region"]
-        )
+      @all ||= Parser.new('departements').data.to_h do |departement_data|
+        [
+          departement_data["code"],
+          DecoupageAdministratif::Departement.new(
+            code: departement_data["code"],
+            nom: departement_data["nom"],
+            zone: departement_data["zone"],
+            code_region: departement_data["region"]
+          )
+        ]
       end
     end
 

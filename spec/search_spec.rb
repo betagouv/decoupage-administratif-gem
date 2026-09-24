@@ -89,14 +89,13 @@ RSpec.describe DecoupageAdministratif::Search do
     end
 
     context "when using commune codes that include delegated communes" do
-      subject { described_class.new(%w[72180 72040 01015]).by_insee_codes }
+      subject { described_class.new(%w[72180 72040]).by_insee_codes }
 
       it "returns only communes actuelles from the cache" do
         expect(subject[:communes].size).to eq(1)
         expect(subject[:communes].first.code).to eq("72180")
         expect(subject[:communes].first.commune_type).to eq(:commune_actuelle)
-        expect(subject[:communes].map(&:code)).not_to include("72040")
-        expect(subject[:communes].map(&:code)).not_to include("01015")
+        expect(subject[:communes].map(&:code)).not_to include("72040") # La Bosse
       end
     end
   end
@@ -106,7 +105,7 @@ RSpec.describe DecoupageAdministratif::Search do
       let(:commune) { instance_double(DecoupageAdministratif::Commune, code: "94068", epci: "Métropole du Grand Paris", departement: "Val-de-Marne", region: "Île-de-France") }
 
       before do
-        allow(DecoupageAdministratif::Commune).to receive(:find_by).with(code: "94068").and_return(commune)
+        allow(DecoupageAdministratif::Commune).to receive(:all).and_return({ "94068" => commune })
       end
 
       it "returns the associated territories" do

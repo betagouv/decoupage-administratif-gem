@@ -225,6 +225,21 @@
     "population": 290
   },
   {
+    "code":"01015",
+    "nom":"Arboys en Bugey",
+    "typeLiaison":1,
+    "zone":"metro",
+    "arrondissement":"011",
+    "departement":"01",
+    "region":"84",
+    "type":"commune-actuelle",
+    "rangChefLieu":0,
+    "anciensCodes":["01340"],
+    "siren":"200053668",
+    "codesPostaux":["01300"],
+    "population":667
+  },
+  {
     "code": "01015",
     "nom": "Arbignieu",
     "typeLiaison": 1,
