@@ -46,8 +46,10 @@ module DecoupageAdministratif
     end
     # rubocop:enable Metrics/ParameterLists
 
-    # @return [Hash<String,Commune>] a collection of all communes
-    def self.all
+    # @return [Hash<String,Commune>] a collection of communes by their code insee.
+    # Some communes associées and déléguées will *not* be in the returned hash:
+    # this method returns only one Commune per insee code. The commune déléguées that share the same insee code as their chef-lien are *not* in the values.
+    def self.all # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       @all ||= begin
         communes = Parser.new('communes').data.map do |commune_data|
           Commune.new(
@@ -64,10 +66,7 @@ module DecoupageAdministratif
         hash = {}
         communes.each do |commune|
           existing_commune_with_same_code = hash[commune.code]
-          if existing_commune_with_same_code.nil? ||
-             %i[commune_deleguee commune_associee].include?(existing_commune_with_same_code.commune_type)
-            hash[commune.code] = commune
-          end
+          hash[commune.code] = commune if existing_commune_with_same_code.nil? || !existing_commune_with_same_code.actuelle?
         end
         hash
       end
@@ -75,9 +74,12 @@ module DecoupageAdministratif
 
     # @return [Hash<Code, Commune>] a collection of all communes _actuelles_ and municipal districts
     def self.actuelles
-      @actuelles ||= all.select do |_code, item|
-        %i[commune_actuelle arrondissement_municipal].include? item.commune_type
-      end
+      @actuelles ||= all.select { |_code, commune| commune.actuelle? }
+    end
+
+    # @return [TrueClass, FalseClass]
+    def actuelle?
+      %i[commune_actuelle arrondissement_municipal].include? commune_type
     end
 
     # @raise [NotFoundError] if no region is found for the code
