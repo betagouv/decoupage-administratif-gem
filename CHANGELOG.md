@@ -9,6 +9,9 @@
 - **CI**: test matrix now covers maintained Ruby versions only (3.3, 3.4, 4.0); Rubocop workflow now runs on Ruby 4.0 (was 2.6)
 - **Dependencies**: development dependencies refreshed (Bundler 4.0, RuboCop 1.91, json 3.0) so the bundle installs on Ruby 4.0
 
+### Added
+- **BaseModel**: improve find by code performance.
+
 ## [0.4.0] - 2026-01-27
 
 ### Added
