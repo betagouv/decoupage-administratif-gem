@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### Removed
+- **Breaking**: support for Ruby < 3.3 dropped (`required_ruby_version` is now `>= 3.3.0`); Ruby 3.0, 3.1 and 3.2 are end-of-life
+
+### Changed
+- **CI**: test matrix now covers maintained Ruby versions only (3.3, 3.4, 4.0); Rubocop workflow now runs on Ruby 4.0 (was 2.6)
+- **Dependencies**: development dependencies refreshed (Bundler 4.0, RuboCop 1.91, json 3.0) so the bundle installs on Ruby 4.0
+
 ## [0.4.0] - 2026-01-27
 
 ### Added
