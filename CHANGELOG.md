@@ -4,6 +4,8 @@
 - **Breaking**: support for Ruby < 3.3 dropped (`required_ruby_version` is now `>= 3.3.0`); Ruby 3.0, 3.1 and 3.2 are end-of-life
 
 ### Changed
+- **Data**: embedded data updated from @etalab/decoupage-administratif 6.0.0 (was 4.0.0): communes merged or split since the previous release (34,969 current communes, was 35,029), refreshed population figures, EPCI names and members
+- **Rake**: source dataset version extracted into the `ETALAB_DATASET_VERSION` constant in `decoupage_administratif:update`
 - **CI**: test matrix now covers maintained Ruby versions only (3.3, 3.4, 4.0); Rubocop workflow now runs on Ruby 4.0 (was 2.6)
 - **Dependencies**: development dependencies refreshed (Bundler 4.0, RuboCop 1.91, json 3.0) so the bundle installs on Ruby 4.0
 
