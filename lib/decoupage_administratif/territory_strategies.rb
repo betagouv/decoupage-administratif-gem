@@ -76,7 +76,7 @@ module DecoupageAdministratif
 
       def check_inclusion?(commune_insee_codes)
         epci_commune_codes = territory.membres.map { |membre| membre[:code] || membre["code"] }
-        (epci_commune_codes & commune_insee_codes).any?
+        epci_commune_codes.intersect?(commune_insee_codes)
       end
 
       def calculate_insee_codes
