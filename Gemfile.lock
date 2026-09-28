@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    decoupage_administratif (0.4.0)
+    decoupage_administratif (0.5.0)
       rake
 
 GEM
