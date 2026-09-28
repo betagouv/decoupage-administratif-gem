@@ -25,6 +25,10 @@ module DecoupageAdministratif
 
     def self.actuelles: () -> Array[Commune]
 
+    def actuelle?: -> bool
+
+    def all_by_code: -> Hash[String, instance]
+
     def region: () -> Region
 
     def departement: () -> Departement

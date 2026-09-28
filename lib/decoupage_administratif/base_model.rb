@@ -10,7 +10,7 @@ module DecoupageAdministratif
     #   DecoupageAdministratif::Commune.find('72039')
     #   DecoupageAdministratif::Region.find('52')
     def find(code)
-      result = find_by(code: code)
+      result = all_by_code[code]
       if result.nil?
         raise DecoupageAdministratif::NotFoundError.new(
           "#{name.split('::').last} not found for code #{code}",
@@ -19,6 +19,16 @@ module DecoupageAdministratif
       end
 
       result
+    end
+
+    # Memoized index of all records by code
+    # @return [Hash]
+    def all_by_code
+      @all_by_code ||= begin
+        result = {}
+        all.each { |record| result[record.code] = record }
+        result
+      end
     end
 
     # @param criteria [Hash] a hash with the attributes to filter by
@@ -141,7 +151,7 @@ module DecoupageAdministratif
     # @param filter_array [Array] the filter array
     # @return [Boolean] true if string options should be applied
     def apply_string_options?(item_value, filter_array)
-      item_value.is_a?(String) && filter_array.all? { |v| v.is_a?(String) }
+      item_value.is_a?(String) && filter_array.all?(String)
     end
   end
 end

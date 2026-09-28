@@ -70,8 +70,8 @@ module DecoupageAdministratif
       return if @@departements_cache && @@communes_cache
 
       # rubocop:disable Style/ClassVars
-      @@departements_cache = DecoupageAdministratif::Departement.all.each_with_object({}) { |dept, hash| hash[dept.code] = dept }
-      @@communes_cache = DecoupageAdministratif::Commune.actuelles.each_with_object({}) { |commune, hash| hash[commune.code] = commune }
+      @@departements_cache = DecoupageAdministratif::Departement.all.to_h { |dept| [dept.code, dept] }
+      @@communes_cache = DecoupageAdministratif::Commune.actuelles.to_h { |commune| [commune.code, commune] }
       # rubocop:enable Style/ClassVars
     end
 

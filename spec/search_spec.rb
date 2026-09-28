@@ -92,11 +92,9 @@ RSpec.describe DecoupageAdministratif::Search do
       subject { described_class.new(%w[72180 72040 01015]).by_insee_codes }
 
       it "returns only communes actuelles from the cache" do
-        expect(subject[:communes].size).to eq(1)
-        expect(subject[:communes].first.code).to eq("72180")
-        expect(subject[:communes].first.commune_type).to eq(:commune_actuelle)
-        expect(subject[:communes].map(&:code)).not_to include("72040")
-        expect(subject[:communes].map(&:code)).not_to include("01015")
+        expect(subject[:communes].size).to eq(2)
+        expect(subject[:communes].map(&:code)).to eq(%w[72180 01015])
+        expect(subject[:communes].map(&:commune_type)).to eq(%i[commune_actuelle commune_actuelle])
       end
     end
   end

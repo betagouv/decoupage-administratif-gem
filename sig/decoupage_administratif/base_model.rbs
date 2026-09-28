@@ -1,5 +1,7 @@
 module DecoupageAdministratif
   module BaseModel
+    def all_by_code: -> Hash[String, instance]
+
     def find: (String) -> untyped
     def find_by: (Hash[Symbol, untyped]) -> untyped
     def where: (**untyped) -> Array[untyped]

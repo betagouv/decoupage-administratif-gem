@@ -61,9 +61,26 @@ module DecoupageAdministratif
       end
     end
 
+    def self.all_by_code
+      @all_by_code ||= begin
+        hash = {}
+        all.each do |commune|
+          # prioritize communes actuelles over communes déléguées in the result
+          existing_same_code = hash[commune.code]
+          hash[commune.code] = commune if existing_same_code.nil? || !existing_same_code.actuelle?
+        end
+        hash
+      end
+    end
+
     # @return [Array<Commune>] a collection of all communes _actuelles_ and municipal districts
     def self.actuelles
-      @actuelles ||= where(commune_type: %i[commune_actuelle arrondissement_municipal])
+      @actuelles ||= all.select(&:actuelle?)
+    end
+
+    # @return [TrueClass, FalseClass]
+    def actuelle?
+      %i[commune_actuelle arrondissement_municipal].include? commune_type
     end
 
     # @raise [NotFoundError] if no region is found for the code
