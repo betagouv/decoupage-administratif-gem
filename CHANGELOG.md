@@ -1,16 +1,23 @@
 ## [Unreleased]
 
-### Removed
-- **Breaking**: support for Ruby < 3.3 dropped (`required_ruby_version` is now `>= 3.3.0`); Ruby 3.0, 3.1 and 3.2 are end-of-life
+## [0.5.0] - 2026-09-28
+
+### Added
+- **Commune**: `actuelle?` predicate, true for current communes and municipal districts (`:commune_actuelle` and `:arrondissement_municipal`)
 
 ### Changed
+- **BaseModel**: `find` now looks records up through a memoized index by code (`all_by_code`) instead of scanning the whole collection
+- **Commune**: when several communes share the same code (e.g. a commune actuelle and a commune déléguée), `Commune.find` now returns the commune actuelle
 - **Data**: embedded data updated from @etalab/decoupage-administratif 6.0.0 (was 4.0.0): communes merged or split since the previous release (34,969 current communes, was 35,029), refreshed population figures, EPCI names and members
 - **Rake**: source dataset version extracted into the `ETALAB_DATASET_VERSION` constant in `decoupage_administratif:update`
 - **CI**: test matrix now covers maintained Ruby versions only (3.3, 3.4, 4.0); Rubocop workflow now runs on Ruby 4.0 (was 2.6)
 - **Dependencies**: development dependencies refreshed (Bundler 4.0, RuboCop 1.91, json 3.0) so the bundle installs on Ruby 4.0
 
-### Added
-- **BaseModel**: improve find by code performance.
+### Removed
+- **Breaking**: support for Ruby < 3.3 dropped (`required_ruby_version` is now `>= 3.3.0`); Ruby 3.0, 3.1 and 3.2 are end-of-life
+
+### Fixed
+- `DecoupageAdministratif::DATA_VERSION` now reports the version of the embedded data (6.0.0, was wrongly `5.2.0`)
 
 ## [0.4.0] - 2026-01-27
 
