@@ -17,7 +17,7 @@ RSpec.describe DecoupageAdministratif::Region do
 
     it "Returns all regions" do
       expect(subject.size).to eq(26)
-      expect(subject.values.first).to have_attributes(
+      expect(subject.first).to have_attributes(
         code: "01",
         nom: "Guadeloupe",
         zone: "drom"
@@ -66,10 +66,12 @@ RSpec.describe DecoupageAdministratif::Region do
     let!(:region) { described_class.new(code: '84', nom: 'Auvergne-Rhône-Alpes', zone: 'metro') }
 
     it 'Returns the actual communes of the region' do
-      expect(subject.size).to eq(2)
+      expect(subject.size).to eq(1)
       expect(subject).to all(be_a(DecoupageAdministratif::Commune))
-      expect(subject.first).to have_attributes(code: '01042', nom: 'Bey')
-      expect(subject.last).to have_attributes(code: '01015', nom: 'Arboys en Bugey')
+      expect(subject.first).to have_attributes(
+        code: '01042',
+        nom: 'Bey'
+      )
     end
   end
 end

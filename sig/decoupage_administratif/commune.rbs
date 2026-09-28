@@ -21,11 +21,9 @@ module DecoupageAdministratif
         ?codes_postaux: Array[String]
       ) -> void
 
-    def self.all: () -> Hash[String, Commune]
+    def self.all: () -> Array[Commune]
 
-    def self.actuelles: () -> Hash[String, Commune]
-
-    def actuelle?: -> bool
+    def self.actuelles: () -> Array[Commune]
 
     def region: () -> Region
 
