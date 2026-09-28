@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "Ruby gem for French administrative divisions (découpage administratif français). Access data about all French communes (municipalities), départements, régions, and EPCIs (intercommunalités). Official data from @etalab/decoupage-administratif."
   spec.homepage = "https://github.com/betagouv/decoupage-administratif-gem"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.0.0"
+  spec.required_ruby_version = ">= 3.3.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["changelog_uri"] = "https://github.com/betagouv/decoupage-administratif-gem/blob/main/CHANGELOG.md"
