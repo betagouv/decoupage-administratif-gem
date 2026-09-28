@@ -16,7 +16,7 @@ RSpec.describe DecoupageAdministratif::Commune do
     let(:model) { 'communes' }
 
     it "Returns all communes" do
-      expect(subject.size).to eq(18)
+      expect(subject.size).to eq(19)
       expect(subject.first).to have_attributes(
         code: "72180",
         nom: "Mamers",
@@ -28,19 +28,34 @@ RSpec.describe DecoupageAdministratif::Commune do
     end
   end
 
+  describe '#all_by_code' do
+    subject { described_class.all_by_code }
+
+    let(:model) { 'communes' }
+
+    it "Returns communes indexed by insee codes, prioritizing communes actuelles" do
+      expect(subject.size).to eq(18)
+      expect(subject["75101"].nom).to eq "Paris 1er Arrondissement"
+      expect(subject["01015"].nom).to eq "Arboys en Bugey"
+      expect(subject["72040"].nom).to eq "La Bosse"
+    end
+  end
+
   describe '#actuelles' do
     subject { described_class.actuelles }
 
     let(:model) { 'communes' }
 
     it "Returns all communes actuelles and municipal districts" do
-      expect(subject.size).to eq(16)
-      expect(subject.map(&:commune_type)).to include(:commune_actuelle, :arrondissement_municipal)
+      expect(subject.size).to eq(17)
+      expect(subject.map(&:commune_type).uniq).to eq(%i[commune_actuelle arrondissement_municipal])
       expect(subject.find { |c| c.code == "75101" }).to have_attributes(
         code: "75101",
         nom: "Paris 1er Arrondissement",
         commune_type: :arrondissement_municipal
       )
+      expect(subject.map(&:nom)).not_to include "La Bosse"
+      expect(subject.map(&:nom)).not_to include "Arbignieu"
     end
   end
 
