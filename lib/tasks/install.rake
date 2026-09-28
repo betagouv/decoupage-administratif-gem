@@ -28,6 +28,9 @@ def download_file(url, destination)
   end
 end
 
+# Version of @etalab/decoupage-administratif the data is fetched from.
+ETALAB_DATASET_VERSION = '6.0.0'
+
 namespace :decoupage_administratif do
   desc 'Update files'
   task :update do
@@ -37,7 +40,7 @@ namespace :decoupage_administratif do
 
     collection.each do |item|
       file = File.join(data_dir, "#{item}.json")
-      url = "https://unpkg.com/@etalab/decoupage-administratif@4.0.0/data/#{item}.json"
+      url = "https://unpkg.com/@etalab/decoupage-administratif@#{ETALAB_DATASET_VERSION}/data/#{item}.json"
 
       download_file(url, file)
 
