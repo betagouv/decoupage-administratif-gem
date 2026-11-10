@@ -29,9 +29,7 @@ module DecoupageAdministratif
 
     def self.find_actuelle: (String code) -> Commune
 
-    def self.actuelles_by_code: () -> Hash[String, Commune]
-
-    def self.actuelles_by_ancien_code: () -> Hash[String, Commune]
+    private def self.actuelles_by_any_code: () -> Hash[String, Commune]
 
     def actuelle?: -> bool
 

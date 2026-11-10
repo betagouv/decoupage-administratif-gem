@@ -91,23 +91,26 @@ module DecoupageAdministratif
     # @example
     #   DecoupageAdministratif::Commune.find_actuelle('72287').nom # => "Laigné-Saint-Gervais"
     def self.find_actuelle(code)
-      commune = actuelles_by_code[code] || actuelles_by_ancien_code[code]
+      commune = actuelles_by_any_code[code]
       raise NotFoundError.new("Commune not found for code #{code}", code: code) if commune.nil?
 
       commune
     end
 
-    # @return [Hash{String => Commune}] communes actuelles indexed by their INSEE code
-    def self.actuelles_by_code
-      @actuelles_by_code ||= actuelles.to_h { |commune| [commune.code, commune] }
+    # Communes actuelles indexed by their current INSEE code and by each of their former codes.
+    # When a code is both the current code of a commune and a former code of another one,
+    # the commune whose current code it is wins.
+    # @return [Hash{String => Commune}]
+    def self.actuelles_by_any_code
+      @actuelles_by_any_code ||= begin
+        by_ancien_code = actuelles.flat_map do |commune|
+          commune.anciens_codes.map { |ancien_code| [ancien_code, commune] }
+        end.to_h
+        by_code = actuelles.to_h { |commune| [commune.code, commune] }
+        by_ancien_code.merge(by_code)
+      end
     end
-
-    # @return [Hash{String => Commune}] communes actuelles indexed by each of their former INSEE codes
-    def self.actuelles_by_ancien_code
-      @actuelles_by_ancien_code ||= actuelles.flat_map do |commune|
-        commune.anciens_codes.map { |ancien_code| [ancien_code, commune] }
-      end.to_h
-    end
+    private_class_method :actuelles_by_any_code
 
     # @return [TrueClass, FalseClass]
     def actuelle?
