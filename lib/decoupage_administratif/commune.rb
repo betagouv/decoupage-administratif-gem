@@ -24,7 +24,9 @@ module DecoupageAdministratif
     #   @note Default value is :commune_actuelle
     # @!attribute [r] codes_postaux
     #   @return [Array<String>] Postal codes of the commune
-    attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type, :codes_postaux
+    # @!attribute [r] anciens_codes
+    #   @return [Array<String>] Former INSEE codes of the communes merged into this one
+    attr_reader :code, :nom, :zone, :region_code, :departement_code, :commune_type, :codes_postaux, :anciens_codes
 
     # rubocop:disable Metrics/ParameterLists
     # @param code [String] the INSEE code of the commune
@@ -34,8 +36,9 @@ module DecoupageAdministratif
     # @param departement_code [String] the INSEE code of the department
     # @param commune_type [Symbol] the type of the commune (default: :commune_actuelle)
     # @param codes_postaux [Array<String>] the postal codes of the commune (default: [])
+    # @param anciens_codes [Array<String>] the former INSEE codes merged into the commune (default: [])
     def initialize(code:, nom:, zone:, region_code:, departement_code:, commune_type: :commune_actuelle,
-                   codes_postaux: [])
+                   codes_postaux: [], anciens_codes: [])
       @code = code
       @nom = nom
       @zone = zone
@@ -43,6 +46,7 @@ module DecoupageAdministratif
       @departement_code = departement_code
       @commune_type = commune_type
       @codes_postaux = codes_postaux
+      @anciens_codes = anciens_codes
     end
     # rubocop:enable Metrics/ParameterLists
 
@@ -56,7 +60,8 @@ module DecoupageAdministratif
           region_code: commune_data["region"],
           departement_code: commune_data["departement"],
           commune_type: commune_data["type"]&.gsub("-", "_")&.to_sym,
-          codes_postaux: commune_data["codesPostaux"] || []
+          codes_postaux: commune_data["codesPostaux"] || [],
+          anciens_codes: commune_data["anciensCodes"] || []
         )
       end
     end
@@ -76,6 +81,32 @@ module DecoupageAdministratif
     # @return [Array<Commune>] a collection of all communes _actuelles_ and municipal districts
     def self.actuelles
       @actuelles ||= all.select(&:actuelle?)
+    end
+
+    # Find the commune actuelle for a current or former INSEE code.
+    # Unlike {find}, it accepts the code of a commune that has since been merged into another one.
+    # @param code [String] a current or former INSEE code
+    # @return [Commune] the commune actuelle (or municipal district) with this code, otherwise the one that absorbed it
+    # @raise [NotFoundError] if no commune actuelle matches the code
+    # @example
+    #   DecoupageAdministratif::Commune.find_actuelle('72287').nom # => "Laigné-Saint-Gervais"
+    def self.find_actuelle(code)
+      commune = actuelles_by_code[code] || actuelles_by_ancien_code[code]
+      raise NotFoundError.new("Commune not found for code #{code}", code: code) if commune.nil?
+
+      commune
+    end
+
+    # @return [Hash{String => Commune}] communes actuelles indexed by their INSEE code
+    def self.actuelles_by_code
+      @actuelles_by_code ||= actuelles.to_h { |commune| [commune.code, commune] }
+    end
+
+    # @return [Hash{String => Commune}] communes actuelles indexed by each of their former INSEE codes
+    def self.actuelles_by_ancien_code
+      @actuelles_by_ancien_code ||= actuelles.flat_map do |commune|
+        commune.anciens_codes.map { |ancien_code| [ancien_code, commune] }
+      end.to_h
     end
 
     # @return [TrueClass, FalseClass]

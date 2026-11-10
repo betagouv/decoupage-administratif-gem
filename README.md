@@ -67,6 +67,12 @@ DecoupageAdministratif::Region.all
 commune = DecoupageAdministratif::Commune.find('75056')
 puts commune.nom # => "Paris"
 
+# Retrouver la commune actuelle à partir d'un code INSEE actuel ou ancien
+# (find lève NotFoundError pour un code obsolète, find_actuelle renvoie la commune qui l'a absorbé)
+commune = DecoupageAdministratif::Commune.find_actuelle('72287')
+puts commune.nom # => "Laigné-Saint-Gervais"
+commune.anciens_codes # => ["72287"]
+
 # Lister toutes les communes actuelles (communes actuelles + arrondissements municipaux)
 DecoupageAdministratif::Commune.actuelles
 
@@ -233,6 +239,12 @@ DecoupageAdministratif::Region.all
 # A municipality has a `commune_type` which can be :commune_actuelle (current municipalities), :commune_deleguee (former municipalities), :commune_associee (former municipalities with a special status), or :arrondissement_municipal (municipal districts of Paris, Lyon, Marseille)
 commune = DecoupageAdministratif::Commune.find('75056')
 puts commune.nom # => "Paris"
+
+# Find the current municipality from a current or former INSEE code
+# (find raises NotFoundError for an obsolete code, find_actuelle returns the municipality that absorbed it)
+commune = DecoupageAdministratif::Commune.find_actuelle('72287')
+puts commune.nom # => "Laigné-Saint-Gervais"
+commune.anciens_codes # => ["72287"]
 
 # List all current municipalities (current communes + municipal districts)
 DecoupageAdministratif::Commune.actuelles

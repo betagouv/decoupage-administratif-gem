@@ -10,6 +10,7 @@ module DecoupageAdministratif
     attr_reader departement_code: String
     attr_reader commune_type: Symbol
     attr_reader codes_postaux: Array[String]
+    attr_reader anciens_codes: Array[String]
 
     def initialize: (
         code: String,
@@ -18,12 +19,19 @@ module DecoupageAdministratif
         region_code: String,
         departement_code: String,
         ?commune_type: Symbol,
-        ?codes_postaux: Array[String]
+        ?codes_postaux: Array[String],
+        ?anciens_codes: Array[String]
       ) -> void
 
     def self.all: () -> Array[Commune]
 
     def self.actuelles: () -> Array[Commune]
+
+    def self.find_actuelle: (String code) -> Commune
+
+    def self.actuelles_by_code: () -> Hash[String, Commune]
+
+    def self.actuelles_by_ancien_code: () -> Hash[String, Commune]
 
     def actuelle?: -> bool
 
