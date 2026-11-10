@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- **Commune**: `anciens_codes` attribute exposing the former INSEE codes of the communes merged into a commune, read from the `anciensCodes` field of the source data
+- **Commune**: `Commune.find_actuelle(code)` returns the commune actuelle for a current or former INSEE code (e.g. `Commune.find_actuelle('72287')` returns Laigné-Saint-Gervais, `72155`), and raises `NotFoundError` when nothing matches. `Commune.find` is unchanged and still rejects obsolete codes
+
 ## [0.5.0] - 2026-09-28
 
 ### Added

@@ -80,6 +80,80 @@ RSpec.describe DecoupageAdministratif::Commune do
     end
   end
 
+  describe '#anciens_codes' do
+    let(:model) { 'communes' }
+
+    it 'Returns the former INSEE codes absorbed by the commune' do
+      expect(described_class.find('72039').anciens_codes).to eq(['72014'])
+    end
+
+    it 'Returns an empty array when the commune has no former code' do
+      expect(described_class.find('72180').anciens_codes).to eq([])
+    end
+  end
+
+  describe '.find_actuelle' do
+    subject { described_class.find_actuelle(code) }
+
+    let(:model) { 'communes' }
+
+    context 'when the code is the code of a commune actuelle' do
+      let(:code) { '72039' }
+
+      it 'Returns that commune' do
+        expect(subject).to have_attributes(code: '72039', nom: 'Bonnétable')
+      end
+    end
+
+    context 'when the code is a former code of a commune actuelle' do
+      let(:code) { '72014' }
+
+      it 'Returns the commune that absorbed it' do
+        expect(subject).to have_attributes(code: '72039', nom: 'Bonnétable')
+      end
+    end
+
+    context 'when a commune actuelle and a commune déléguée share the code' do
+      let(:code) { '01015' }
+
+      it 'Returns the commune actuelle' do
+        expect(subject).to have_attributes(nom: 'Arboys en Bugey', commune_type: :commune_actuelle)
+      end
+    end
+
+    context 'when the code is a municipal district' do
+      let(:code) { '75101' }
+
+      it 'Returns the municipal district' do
+        expect(subject).to have_attributes(nom: 'Paris 1er Arrondissement')
+      end
+    end
+
+    context 'when the code only belongs to a commune déléguée' do
+      let(:code) { '72040' }
+
+      it 'Raises NotFoundError instead of returning a commune that is not actuelle' do
+        expect { subject }.to raise_error(DecoupageAdministratif::NotFoundError) { |error| expect(error.code).to eq(code) }
+      end
+    end
+
+    context 'when the code is unknown' do
+      let(:code) { '00000' }
+
+      it 'Raises NotFoundError' do
+        expect { subject }.to raise_error(DecoupageAdministratif::NotFoundError, 'Commune not found for code 00000')
+      end
+    end
+  end
+
+  describe '.find with a former code' do
+    let(:model) { 'communes' }
+
+    it 'Still raises NotFoundError, so obsolete codes are not accepted in validation' do
+      expect { described_class.find('72014') }.to raise_error(DecoupageAdministratif::NotFoundError)
+    end
+  end
+
   describe '#departement' do
     subject { commune.departement }
 
